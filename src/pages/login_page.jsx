@@ -335,7 +335,7 @@ const LoginPage = () => {
                   bg="#4682B4"
                   _hover={{ bg: "#4682B4" }}
                   color={"white"}
-                  onClick={() => navigate("/main")}
+                  onClick={() => navigate("/crm")}
                 >
                   Вход
                 </Button>

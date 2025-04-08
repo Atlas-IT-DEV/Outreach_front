@@ -1,16 +1,16 @@
 import { createMemoryRouter, RouterProvider } from "react-router";
 
 import PageContainer from "./pages/page_container";
-import LoginPage from "./pages/login_page";
-import MainPage from "./pages/main_page";
-import CallsPage from "./pages/calls_page";
-import CommentsPage from "./pages/settings_page";
+
 import Footer from "./components/footer";
 import { VStack } from "@chakra-ui/react";
-import ModulePage from "./pages/module_page";
-import AdminPage from "./pages/admin_page";
-import VideoPage from "./pages/video_page";
-import BasesPage from "./pages/bases_page";
+
+import LoginPage from "./pages/login_page";
+import CallsPage from "./pages/calls_page";
+import CrmPage from "./pages/crm_page";
+import AutomationPage from "./pages/automation_page";
+import BasePage from "./pages/base_page";
+import MailingPage from "./pages/mailing_page";
 
 const router = createMemoryRouter([
   {
@@ -23,10 +23,19 @@ const router = createMemoryRouter([
     ),
   },
   {
-    path: "/main",
+    path: "/crm",
     element: (
       <PageContainer>
-        <MainPage />
+        <CrmPage />
+      </PageContainer>
+    ),
+  },
+
+  {
+    path: "/automation",
+    element: (
+      <PageContainer>
+        <AutomationPage />
       </PageContainer>
     ),
   },
@@ -39,42 +48,18 @@ const router = createMemoryRouter([
     ),
   },
   {
-    path: "/bases",
+    path: "/base",
     element: (
       <PageContainer>
-        <BasesPage />
+        <BasePage />
       </PageContainer>
     ),
   },
   {
-    path: "/module",
+    path: "/mailing",
     element: (
       <PageContainer>
-        <ModulePage />
-      </PageContainer>
-    ),
-  },
-  {
-    path: "/comments",
-    element: (
-      <PageContainer>
-        <CommentsPage />
-      </PageContainer>
-    ),
-  },
-  {
-    path: "/admin",
-    element: (
-      <PageContainer>
-        <AdminPage />
-      </PageContainer>
-    ),
-  },
-  {
-    path: "/video",
-    element: (
-      <PageContainer>
-        <VideoPage />
+        <MailingPage />
       </PageContainer>
     ),
   },
