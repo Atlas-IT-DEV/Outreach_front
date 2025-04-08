@@ -1,0 +1,68 @@
+{
+  "homepage": ".",
+  "name": "airpods_admin",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@chakra-ui/icons": "^2.2.4",
+    "@chakra-ui/react": "2.10.4",
+    "@emotion/react": "^11.14.0",
+    "@emotion/styled": "^11.14.0",
+    "@fontsource/montserrat": "^5.1.1",
+    "@fontsource/montserrat-alternates": "^5.1.0",
+    "@react-oauth/google": "^0.12.1",
+    "@testing-library/jest-dom": "^5.17.0",
+    "@testing-library/react": "^13.4.0",
+    "@testing-library/user-event": "^13.5.0",
+    "chart.js": "^4.4.8",
+    "crypto-js": "^4.2.0",
+    "formik": "^2.4.6",
+    "framer-motion": "^11.15.0",
+    "hls.js": "^1.5.20",
+    "js-cookie": "^3.0.5",
+    "jwt-decode": "^4.0.0",
+    "mobx": "^6.13.5",
+    "mobx-react-lite": "^4.0.7",
+    "mux.js": "^6.3.0",
+    "react": "^18.3.1",
+    "react-beautiful-dnd": "^13.1.1",
+    "react-chartjs-2": "^5.3.0",
+    "react-dnd": "^16.0.1",
+    "react-dnd-html5-backend": "^16.0.1",
+    "react-dom": "^18.3.1",
+    "react-dropzone": "^14.3.8",
+    "react-icons": "^5.4.0",
+    "react-player": "^2.16.0",
+    "react-router": "^7.0.2",
+    "react-router-dom": "^7.0.2",
+    "react-scripts": "5.0.1",
+    "swiper": "^11.2.4",
+    "victory": "^37.3.6",
+    "web-vitals": "^2.1.4",
+    "yup": "^1.4.0"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
+}
