@@ -1,16 +1,4 @@
-import {
-  Button,
-  Stack,
-  Table,
-  Tbody,
-  Td,
-  Text,
-  Th,
-  Thead,
-  Tr,
-  VStack,
-} from "@chakra-ui/react";
-import { MdNotStarted } from "react-icons/md";
+import { Table, Tbody, Td, Text, Th, Thead, Tr } from "@chakra-ui/react";
 
 const TableReport = () => {
   return (

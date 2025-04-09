@@ -14,6 +14,53 @@ class PageStore {
   all_views = [];
   videos = [];
 
+  leads = [
+    {
+      number: "+78005553535",
+      callType: "Входящий",
+      callStatus: "Пропущен",
+      stage: "",
+      createDate: "22.02.2022",
+      responsible: "Иван Иванов",
+    },
+    {
+      number: "+79999999999",
+      callType: "Исходящий",
+      callStatus: "Завершен",
+      stage: "",
+      createDate: "11.11.2025",
+      responsible: "Петр Петров",
+    },
+    {
+      number: "+89998887766",
+      callType: "Входящий",
+      callStatus: "Пропущен",
+      stage: "",
+      createDate: "22.02.2022",
+      responsible: "Алексей Алексеев",
+    },
+    {
+      number: "+79990001122",
+      callType: "Исходящий",
+      callStatus: "Завершен",
+      stage: "",
+      createDate: "23.05.2024",
+      responsible: "John Doe",
+    },
+    {
+      number: "+79876543210",
+      callType: "Входящий",
+      callStatus: "Пропущен",
+      stage: "",
+      createDate: "22.02.2022",
+      responsible: "No Name",
+    },
+  ];
+
+  addLead = (item) => {
+    this.leads.push(item);
+  };
+
   constructor() {
     makeAutoObservable(this);
   }

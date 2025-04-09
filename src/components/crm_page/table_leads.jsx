@@ -11,8 +11,13 @@ import {
   Tr,
   VStack,
 } from "@chakra-ui/react";
+import ModalEditLead from "./modal_edit_lead";
+import { observer } from "mobx-react-lite";
+import { useStores } from "../../store/store_context";
 
-const TableLeads = () => {
+const TableLeads = observer(() => {
+  const { pageStore } = useStores();
+
   return (
     <Table width={"100%"} padding={"10px"} border={"2px solid #4682B4"}>
       <Thead bg={"#4682B4"} borderBottom={"none"}>
@@ -41,74 +46,71 @@ const TableLeads = () => {
         </Tr>
       </Thead>
       <Tbody>
-        <Tr color={"black"}>
-          <Td border={"1px solid rgba(200,200,200,1)"}>
-            <Text>8 800 555 35 35</Text>
-          </Td>
-          <Td border={"1px solid rgba(200,200,200,1)"}>
-            <Text>Входящий</Text>
-          </Td>
-          <Td border={"1px solid rgba(200,200,200,1)"}>
-            <Text>Пропущен</Text>
-          </Td>
-          <Td border={"1px solid rgba(200,200,200,1)"}>
-            <VStack align={"flex-start"} gap={"2px"}>
-              <HStack width={"100%"} gap={0}>
-                <Stack
-                  height={"10px"}
-                  width={"100%"}
-                  border={"1px solid #4682B4"}
-                  borderRadius={"4px"}
-                  bg={"#4682B4"}
-                ></Stack>
-                <Stack
-                  height={"10px"}
-                  width={"100%"}
-                  border={"1px solid #4682B4"}
-                  borderRadius={"4px"}
-                ></Stack>
-                <Stack
-                  height={"10px"}
-                  width={"100%"}
-                  border={"1px solid #4682B4"}
-                  borderRadius={"4px"}
-                ></Stack>
-                <Stack
-                  height={"10px"}
-                  width={"100%"}
-                  border={"1px solid #4682B4"}
-                  borderRadius={"4px"}
-                ></Stack>
-              </HStack>
+        {pageStore.leads?.length > 0
+          ? pageStore.leads?.map((item, index) => (
+              <Tr color={"black"} key={index}>
+                <Td border={"1px solid rgba(200,200,200,1)"}>
+                  <Text>{item?.number}</Text>
+                </Td>
+                <Td border={"1px solid rgba(200,200,200,1)"}>
+                  <Text>{item?.callType}</Text>
+                </Td>
+                <Td border={"1px solid rgba(200,200,200,1)"}>
+                  <Text>{item?.callStatus}</Text>
+                </Td>
+                <Td border={"1px solid rgba(200,200,200,1)"}>
+                  <VStack align={"flex-start"} gap={"2px"}>
+                    <HStack width={"100%"} gap={0}>
+                      <Stack
+                        height={"10px"}
+                        width={"100%"}
+                        border={"1px solid #4682B4"}
+                        borderRadius={"4px"}
+                        bg={"#4682B4"}
+                      ></Stack>
+                      <Stack
+                        height={"10px"}
+                        width={"100%"}
+                        border={"1px solid #4682B4"}
+                        borderRadius={"4px"}
+                      ></Stack>
+                      <Stack
+                        height={"10px"}
+                        width={"100%"}
+                        border={"1px solid #4682B4"}
+                        borderRadius={"4px"}
+                      ></Stack>
+                      <Stack
+                        height={"10px"}
+                        width={"100%"}
+                        border={"1px solid #4682B4"}
+                        borderRadius={"4px"}
+                      ></Stack>
+                    </HStack>
 
-              <Text>Новый лид</Text>
-            </VStack>
-          </Td>
-          <Td border={"1px solid rgba(200,200,200,1)"}>
-            <Text>10.10.2022</Text>
-          </Td>
-          <Td border={"1px solid rgba(200,200,200,1)"}>
-            <Text>Фамилия Имя</Text>
-          </Td>
-          <Td width={"min-content"}>
-            <HStack justify={"center"}>
-              <Button
-                boxShadow={"-2px 2px 0 0 #4682B4"}
-                borderRadius={"0px"}
-                border={"1px solid #4682B4"}
-                bg={"white"}
-                color={"black"}
-                _hover={{ bg: "#4682B4", color: "white" }}
-                flexShrink={0}
-              >
-                <Text>Подробнее</Text>
-              </Button>
-            </HStack>
-          </Td>
-        </Tr>
+                    <Text>Новый лид</Text>
+                  </VStack>
+                </Td>
+                <Td border={"1px solid rgba(200,200,200,1)"}>
+                  <Text>{item?.createDate}</Text>
+                </Td>
+                <Td border={"1px solid rgba(200,200,200,1)"}>
+                  <Text>{item?.responsible}</Text>
+                </Td>
+                <Td
+                  width={"min-content"}
+                  border={"1px solid rgba(200,200,200,1)"}
+                >
+                  <HStack justify={"center"}>
+                    <ModalEditLead obj={item} />
+                  </HStack>
+                </Td>
+              </Tr>
+            ))
+          : null}
       </Tbody>
     </Table>
   );
-};
+});
 
 export default TableLeads;

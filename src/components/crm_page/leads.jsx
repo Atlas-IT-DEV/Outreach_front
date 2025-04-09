@@ -3,6 +3,7 @@ import { useState } from "react";
 
 import Searcher from "../searcher";
 import TableLeads from "./table_leads";
+import ModalCreateLead from "./modal_create_lead";
 
 const Leads = () => {
   const [typeView, setTypeView] = useState("kanban");
@@ -13,17 +14,7 @@ const Leads = () => {
       </HStack>
 
       <HStack width={"100%"} justify={"space-between"} marginTop={"20px"}>
-        <Button
-          boxShadow={"-2px 2px 0 0 #4682B4"}
-          borderRadius={"0px"}
-          border={"1px solid #4682B4"}
-          bg={"white"}
-          color={"black"}
-          _hover={{ bg: "#4682B4", color: "white" }}
-          flexShrink={0}
-        >
-          <Text>Создать новый</Text>
-        </Button>
+        <ModalCreateLead />
 
         <HStack>
           <Button
@@ -35,7 +26,7 @@ const Leads = () => {
             _hover={{ bg: "#4682B4", color: "white" }}
             flexShrink={0}
           >
-            <Text>Загрузить лиды</Text>
+            <Text>Загрузить лида</Text>
           </Button>
           <Button
             boxShadow={"-2px 2px 0 0 #4682B4"}
