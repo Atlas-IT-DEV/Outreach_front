@@ -9,8 +9,11 @@ import {
   Tr,
   VStack,
 } from "@chakra-ui/react";
+import { observer } from "mobx-react-lite";
+import { useStores } from "../../store/store_context";
 
-const TableBase = () => {
+const TableBase = observer(() => {
+  const { pageStore } = useStores();
   return (
     <Table width={"100%"} padding={"10px"} border={"2px solid #4682B4"}>
       <Thead bg={"#4682B4"} borderBottom={"none"}>
@@ -42,55 +45,61 @@ const TableBase = () => {
         </Tr>
       </Thead>
       <Tbody>
-        <Tr color={"black"}>
-          <Td border={"1px solid rgba(200,200,200,1)"}>
-            <Text>22.02.2022</Text>
-          </Td>
-          <Td border={"1px solid rgba(200,200,200,1)"}>
-            <Text>База название</Text>
-          </Td>
-          <Td border={"1px solid rgba(200,200,200,1)"}>
-            <Text>Фамилия Имя Отчество</Text>
-          </Td>
-          <Td border={"1px solid rgba(200,200,200,1)"}>
-            <Text>ООО Компания</Text>
-          </Td>
-          <Td border={"1px solid rgba(200,200,200,1)"}>
-            <Text>12345678901</Text>
-          </Td>
-          <Td border={"1px solid rgba(200,200,200,1)"}>
-            {/* временный VStack */}
-            <VStack>
-              <Stack
-                cursor={"pointer"}
-                color={"black"}
-                bg={"rgba(121, 228, 155, 1)"}
-                borderRadius={"4px"}
-                padding={"4px 10px"}
-              >
-                <Text>Добавлено в СРМ</Text>
-              </Stack>
-              <Stack
-                cursor={"pointer"}
-                color={"white"}
-                bg={"rgba(89, 89, 89, 1)"}
-                borderRadius={"4px"}
-                padding={"4px 10px"}
-              >
-                <Text>Добавить в СРМ</Text>
-              </Stack>
-            </VStack>
-          </Td>
-          <Td border={"1px solid rgba(200,200,200,1)"}>
-            <Text>Фамилия Имя</Text>
-          </Td>
-          <Td border={"1px solid rgba(200,200,200,1)"}>
-            <Text>+78005553535</Text>
-          </Td>
-        </Tr>
+        {pageStore.database?.length > 0
+          ? pageStore.database.map((item, index) => (
+              <Tr color={"black"} key={index}>
+                <Td border={"1px solid rgba(200,200,200,1)"}>
+                  <Text>{item?.date}</Text>
+                </Td>
+                <Td border={"1px solid rgba(200,200,200,1)"}>
+                  <Text>{item?.segment}</Text>
+                </Td>
+                <Td border={"1px solid rgba(200,200,200,1)"}>
+                  <Text>{item?.fullName}</Text>
+                </Td>
+                <Td border={"1px solid rgba(200,200,200,1)"}>
+                  <Text>{item?.company}</Text>
+                </Td>
+                <Td border={"1px solid rgba(200,200,200,1)"}>
+                  <Text>{item?.inn}</Text>
+                </Td>
+                <Td border={"1px solid rgba(200,200,200,1)"}>
+                  {item?.addedToCRM ? (
+                    <Stack
+                      cursor={"pointer"}
+                      color={"white"}
+                      bg={"rgba(89, 89, 89, 1)"}
+                      borderRadius={"4px"}
+                      padding={"4px 10px"}
+                      width={"max-content"}
+                    >
+                      <Text>Добавить в СРМ</Text>
+                    </Stack>
+                  ) : (
+                    <Stack
+                      cursor={"pointer"}
+                      color={"black"}
+                      bg={"rgba(121, 228, 155, 1)"}
+                      borderRadius={"4px"}
+                      padding={"4px 10px"}
+                      width={"max-content"}
+                    >
+                      <Text>Добавлено в СРМ</Text>
+                    </Stack>
+                  )}
+                </Td>
+                <Td border={"1px solid rgba(200,200,200,1)"}>
+                  <Text>{item?.uploadAuthor}</Text>
+                </Td>
+                <Td border={"1px solid rgba(200,200,200,1)"}>
+                  <Text width={"max-content"}>{item?.phoneNumber}</Text>
+                </Td>
+              </Tr>
+            ))
+          : null}
       </Tbody>
     </Table>
   );
-};
+});
 
 export default TableBase;

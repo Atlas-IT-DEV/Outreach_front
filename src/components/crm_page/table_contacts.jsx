@@ -1,12 +1,11 @@
 import { Table, Tbody, Td, Text, Th, Thead, Tr } from "@chakra-ui/react";
+import { observer } from "mobx-react-lite";
+import { useStores } from "../../store/store_context";
 
-const TableContacts = () => {
+const TableContacts = observer(() => {
+  const { pageStore } = useStores();
   return (
-    <Table
-      width={"100%"}
-      padding={"10px"}
-      border={"2px solid #4682B4"}
-    >
+    <Table width={"100%"} padding={"10px"} border={"2px solid #4682B4"}>
       <Thead bg={"#4682B4"} borderBottom={"none"}>
         <Tr borderBottom={"2px solid #4682B4"}>
           <Th color={"white"}>
@@ -30,29 +29,35 @@ const TableContacts = () => {
         </Tr>
       </Thead>
       <Tbody>
-        <Tr color={"black"}>
-          <Td border={"1px solid rgba(200,200,200,1)"}>
-            <Text>1</Text>
-          </Td>
-          <Td border={"1px solid rgba(200,200,200,1)"}>
-            <Text>Фамилия Имя ОТчество</Text>
-          </Td>
-          <Td border={"1px solid rgba(200,200,200,1)"}>
-            <Text>8 800 555 35 35</Text>
-          </Td>
-          <Td border={"1px solid rgba(200,200,200,1)"}>
-            <Text>ООО Компания</Text>
-          </Td>
-          <Td border={"1px solid rgba(200,200,200,1)"}>
-            <Text>mailname@mail.ru</Text>
-          </Td>
-          <Td border={"1px solid rgba(200,200,200,1)"}>
-            <Text>12345678901</Text>
-          </Td>
-        </Tr>
+        {pageStore.crm_contacts.length > 0
+          ? pageStore.crm_contacts?.map((item, index) => {
+              return (
+                <Tr color={"black"} key={index}>
+                  <Td border={"1px solid rgba(200,200,200,1)"}>
+                    <Text>{item?.id}</Text>
+                  </Td>
+                  <Td border={"1px solid rgba(200,200,200,1)"}>
+                    <Text>{item?.fullName}</Text>
+                  </Td>
+                  <Td border={"1px solid rgba(200,200,200,1)"}>
+                    <Text>{item?.phoneNumber}</Text>
+                  </Td>
+                  <Td border={"1px solid rgba(200,200,200,1)"}>
+                    <Text>{item?.company}</Text>
+                  </Td>
+                  <Td border={"1px solid rgba(200,200,200,1)"}>
+                    <Text>{item?.email}</Text>
+                  </Td>
+                  <Td border={"1px solid rgba(200,200,200,1)"}>
+                    <Text>{item?.inn}</Text>
+                  </Td>
+                </Tr>
+              );
+            })
+          : null}
       </Tbody>
     </Table>
   );
-};
+});
 
 export default TableContacts;
