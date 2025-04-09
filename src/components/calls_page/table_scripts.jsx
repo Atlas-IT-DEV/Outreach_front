@@ -66,11 +66,17 @@ const TableScripts = observer(() => {
           >
             <VStack align={"flex-start"} width={"100%"}>
               <Text>Цель рассылки</Text>
-              <Input placeholder="Цель рассылки" />
+              <Input
+                placeholder="Цель рассылки"
+                value={pageStore.selected_script?.purpose}
+              />
             </VStack>
             <VStack align={"flex-start"} width={"100%"}>
               <Text>Целевая аудитория</Text>
-              <Input placeholder="Целевая аудитория" />
+              <Input
+                placeholder="Целевая аудитория"
+                value={pageStore.selected_script?.targetAudience}
+              />
             </VStack>
             <VStack align={"flex-start"} width={"100%"}>
               <Text>Предложение/продукт</Text>
@@ -78,11 +84,17 @@ const TableScripts = observer(() => {
             </VStack>
             <VStack align={"flex-start"} width={"100%"}>
               <Text>Целевое действие</Text>
-              <Input placeholder="Целевое действие" />
+              <Input
+                placeholder="Целевое действие"
+                value={pageStore.selected_script?.targetAction}
+              />
             </VStack>
             <VStack align={"flex-start"} width={"100%"}>
               <Text>Образ автора</Text>
-              <Input placeholder="Образ автора" />
+              <Input
+                placeholder="Образ автора"
+                value={pageStore.selected_script?.authorImage}
+              />
             </VStack>
             <VStack align={"flex-start"} width={"100%"}>
               <Text>Прочее</Text>
@@ -92,11 +104,18 @@ const TableScripts = observer(() => {
           <VStack width={"60%"} align={"flex-start"} fontWeight={"600"}>
             <VStack align={"flex-start"} width={"100%"}>
               <Text>Название</Text>
-              <Input placeholder="Название" />
+              <Input
+                placeholder="Название"
+                value={pageStore.selected_script?.templateName}
+              />
             </VStack>
             <VStack align={"flex-start"} width={"100%"}>
               <Text>Текст рассылки</Text>
-              <Textarea placeholder="Текст рассылки" height={"420px"} />
+              <Textarea
+                placeholder="Текст рассылки"
+                height={"420px"}
+                value={pageStore.selected_script?.message}
+              />
             </VStack>
 
             <HStack width={"100%"} justify={"flex-end"}>

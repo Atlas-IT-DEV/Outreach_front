@@ -9,10 +9,10 @@ const Reports = () => {
       <Stack w={"100%"} marginTop={"20px"}>
         <Searcher />
       </Stack>
-      <HStack w={"100%"} justify={"flex-end"}>
+      <HStack w={"100%"} justify={"flex-end"} marginTop={"10px"}>
         <ModalNewScript />
       </HStack>
-      <Stack marginTop={"20px"} width={"100%"}>
+      <Stack marginTop={"10px"} width={"100%"}>
         <TableReport />
       </Stack>
     </VStack>
