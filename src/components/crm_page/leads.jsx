@@ -8,7 +8,7 @@ const Leads = () => {
   const [typeView, setTypeView] = useState("kanban");
   return (
     <VStack w={"100%"}>
-      <HStack width={"100%"} marginTop={"20px"}>
+      <HStack width={"100%"} marginTop={"20px"} align={"center"}>
         <Searcher />
       </HStack>
 

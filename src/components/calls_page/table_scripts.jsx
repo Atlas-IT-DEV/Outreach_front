@@ -8,7 +8,7 @@ import {
 } from "@chakra-ui/react";
 import { MdOutlineStarBorder, MdOutlineStar } from "react-icons/md";
 
-const Patterns = () => {
+const TableScripts = () => {
   return (
     <VStack width={"100%"} align={"flex-start"} marginTop={"20px"}>
       <HStack width={"100%"} justify={"space-between"} align={"flex-start"}>
@@ -121,4 +121,4 @@ const Patterns = () => {
   );
 };
 
-export default Patterns;
+export default TableScripts;

@@ -6,7 +6,7 @@ const AutomationPage = () => {
 
   return (
     <VStack
-      width={"70%"}
+      width={"100%"}
       minHeight={"100vh"}
       height={"auto"}
       overflow={"hidden scroll"}
@@ -14,7 +14,7 @@ const AutomationPage = () => {
       marginLeft={"280px"}
       padding={"40px"}
     >
-      <HStack width={"100%"} gap={"10px"} justify={"space-between"}>
+      <HStack width={"80%"} gap={"10px"} justify={"space-between"}>
         <VStack>
           <Stack
             borderRadius={"100px"}
