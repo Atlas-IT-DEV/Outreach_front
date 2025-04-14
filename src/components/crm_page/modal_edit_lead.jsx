@@ -95,7 +95,7 @@ const ModalEditLead = observer(({ obj = {} }) => {
                   marginTop={"20px"}
                 >
                   <Text color={"black"} fontWeight={"600"}>
-                    Контакт
+                    Редактирование лида
                   </Text>
                   <VStack width={"100%"} gap={"10px"} marginTop={"10px"}>
                     <FormControl
@@ -225,26 +225,6 @@ const ModalEditLead = observer(({ obj = {} }) => {
                       />
                       <FormErrorMessage marginTop={"2px"}>
                         {errors.ogrn}
-                      </FormErrorMessage>
-                    </FormControl>
-
-                    <FormControl
-                      isInvalid={errors.activity && touched.activity}
-                    >
-                      <Text fontWeight={"500"}>Направление деятельности</Text>
-                      <Input
-                        value={values?.activity}
-                        placeholder="Направление деятельности"
-                        marginTop={"4px"}
-                        border={"2px solid #4682B4"}
-                        borderRadius={"0"}
-                        _hover={{ border: "2px solid #4682B4" }}
-                        name="activity"
-                        onChange={handleChange}
-                        onBlur={handleBlur}
-                      />
-                      <FormErrorMessage marginTop={"2px"}>
-                        {errors.activity}
                       </FormErrorMessage>
                     </FormControl>
                   </VStack>

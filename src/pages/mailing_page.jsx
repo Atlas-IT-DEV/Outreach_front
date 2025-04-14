@@ -2,11 +2,13 @@ import { Button, HStack, Stack, Text, VStack } from "@chakra-ui/react";
 import { useState } from "react";
 
 import Journal from "../components/mailing_page/journal";
-import Patterns from "../components/mailing_page/patterns";
 import Report from "../components/mailing_page/report";
+import useWindowDimensions from "../windowDimensions";
+import TableScripts from "../components/table_scripts";
 
 const MailingPage = () => {
   const [selected, setSelected] = useState([1, 0, 0]);
+  const { width } = useWindowDimensions();
 
   return (
     <VStack
@@ -15,8 +17,9 @@ const MailingPage = () => {
       height={"auto"}
       overflow={"hidden scroll"}
       align={"flex-start"}
-      marginLeft={"280px"}
-      padding={"40px"}
+      marginLeft={width >= 1400 ? "280px" : 0}
+      padding={width >= 1400 ? "40px" : ["10px", "20px"]}
+      marginTop={width >= 1400 ? "10px" : ["40px", "30px"]}
     >
       <HStack width={"100%"} gap={"10px"} justify={"space-between"}>
         <Button
@@ -29,7 +32,7 @@ const MailingPage = () => {
           onClick={() => setSelected([1, 0, 0])}
           _hover={{ bg: "#4682B4", color: "white" }}
         >
-          <Text>Журнал</Text>
+          <Text fontSize={width >= 1000 ? "16px" : "14px"}>Журнал</Text>
         </Button>
         <Button
           width={"100%"}
@@ -41,7 +44,7 @@ const MailingPage = () => {
           onClick={() => setSelected([0, 1, 0])}
           _hover={{ bg: "#4682B4", color: "white" }}
         >
-          <Text>Шаблоны</Text>
+          <Text fontSize={width >= 1000 ? "16px" : "14px"}>Шаблоны</Text>
         </Button>
         <Button
           width={"100%"}
@@ -53,13 +56,13 @@ const MailingPage = () => {
           onClick={() => setSelected([0, 0, 1])}
           _hover={{ bg: "#4682B4", color: "white" }}
         >
-          <Text>Отчетность</Text>
+          <Text fontSize={width >= 1000 ? "16px" : "14px"}>Отчетность</Text>
         </Button>
       </HStack>
       {selected[0] == 1 ? (
         <Journal />
       ) : selected[1] == 1 ? (
-        <Patterns />
+        <TableScripts />
       ) : (
         <Report />
       )}

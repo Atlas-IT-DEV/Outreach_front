@@ -1,116 +1,278 @@
 import { Button, HStack, Stack, Text, VStack } from "@chakra-ui/react";
 import { useState } from "react";
+import useWindowDimensions from "../windowDimensions";
 
 const AutomationPage = () => {
   const [selected, setSelected] = useState([1, 0, 0, 0, 0]);
+  const { width } = useWindowDimensions();
 
   return (
     <VStack
       width={"100%"}
       minHeight={"100vh"}
       height={"auto"}
-      overflow={"hidden scroll"}
+      overflow={"hidden"}
       align={"flex-start"}
-      marginLeft={"280px"}
-      padding={"40px"}
+      marginLeft={width >= 1400 ? "280px" : 0}
+      padding={width >= 1400 ? "40px" : ["10px", "20px"]}
+      marginTop={width >= 1400 ? "10px" : ["40px", "30px"]}
     >
-      <HStack width={"80%"} gap={"10px"} justify={"space-between"}>
-        <VStack>
-          <Stack
-            borderRadius={"100px"}
-            width={"50px"}
-            height={"50px"}
-            border={selected[0] == 1 ? "1px solid #4682B4" : "1px solid black"}
+      {width >= 900 ? (
+        <HStack
+          width={"100%"}
+          gap={"10px"}
+          justify={"space-between"}
+          margin={width >= 1400 ? "0 auto" : 0}
+        >
+          <VStack cursor={"pointer"}>
+            <Stack
+              borderRadius={"100px"}
+              width={"50px"}
+              height={"50px"}
+              border={
+                selected[0] == 1 ? "1px solid #4682B4" : "1px solid black"
+              }
+              justify={"center"}
+              align={"center"}
+              bg={selected[0] == 1 ? "#4682B4" : "none"}
+              color={selected[0] == 1 ? "white" : "black"}
+              fontWeight={"600"}
+              fontSize={"20px"}
+            >
+              <Text>1</Text>
+            </Stack>
+            <Text ontWeight={"600"} fontSize={width >= 1400 ? "20px" : "14px"}>
+              Автоматизация
+            </Text>
+          </VStack>
+          <VStack cursor={"pointer"}>
+            <Stack
+              borderRadius={"100px"}
+              width={"50px"}
+              height={"50px"}
+              border={
+                selected[1] == 1 ? "1px solid #4682B4" : "1px solid black"
+              }
+              justify={"center"}
+              align={"center"}
+              bg={selected[1] == 1 ? "#4682B4" : "none"}
+              color={selected[1] == 1 ? "white" : "black"}
+              fontWeight={"600"}
+              fontSize={"20px"}
+            >
+              <Text>2</Text>
+            </Stack>
+            <Text
+              ontWeight={"600"}
+              fontSize={width >= 1400 ? "20px" : "14px"}
+              width={"max-content"}
+            >
+              Выбор базы
+            </Text>
+          </VStack>
+          <VStack cursor={"pointer"}>
+            <Stack
+              borderRadius={"100px"}
+              width={"50px"}
+              height={"50px"}
+              border={
+                selected[2] == 1 ? "1px solid #4682B4" : "1px solid black"
+              }
+              justify={"center"}
+              align={"center"}
+              bg={selected[2] == 1 ? "#4682B4" : "none"}
+              color={selected[2] == 1 ? "white" : "black"}
+              fontWeight={"600"}
+              fontSize={"20px"}
+            >
+              <Text>3</Text>
+            </Stack>
+            <Text ontWeight={"600"} fontSize={width >= 1400 ? "20px" : "14px"}>
+              Настройка
+            </Text>
+          </VStack>
+          <VStack cursor={"pointer"}>
+            <Stack
+              borderRadius={"100px"}
+              width={"50px"}
+              height={"50px"}
+              border={
+                selected[3] == 1 ? "1px solid #4682B4" : "1px solid black"
+              }
+              justify={"center"}
+              align={"center"}
+              bg={selected[3] == 1 ? "#4682B4" : "none"}
+              color={selected[3] == 1 ? "white" : "black"}
+              fontWeight={"600"}
+              fontSize={"20px"}
+            >
+              <Text>4</Text>
+            </Stack>
+            <Text ontWeight={"600"} fontSize={width >= 1400 ? "20px" : "14px"}>
+              Запуск
+            </Text>
+          </VStack>
+          <VStack cursor={"pointer"}>
+            <Stack
+              borderRadius={"100px"}
+              width={"50px"}
+              height={"50px"}
+              border={
+                selected[4] == 1 ? "1px solid #4682B4" : "1px solid black"
+              }
+              justify={"center"}
+              align={"center"}
+              bg={selected[4] == 1 ? "#4682B4" : "none"}
+              color={selected[4] == 1 ? "white" : "black"}
+              fontWeight={"600"}
+              fontSize={"20px"}
+            >
+              <Text>5</Text>
+            </Stack>
+            <Text ontWeight={"600"} fontSize={width >= 1400 ? "20px" : "14px"}>
+              Отчёт
+            </Text>
+          </VStack>
+        </HStack>
+      ) : (
+        <VStack width={"100%"}>
+          <HStack
+            width={"100%"}
+            gap={["40px"]}
             justify={"center"}
-            align={"center"}
-            bg={selected[0] == 1 ? "#4682B4" : "none"}
-            color={selected[0] == 1 ? "white" : "black"}
-            fontWeight={"600"}
-            fontSize={"20px"}
+            margin={width >= 1400 ? "0 auto" : 0}
           >
-            <Text>1</Text>
-          </Stack>
-          <Text ontWeight={"600"} fontSize={"20px"}>
-            Автоматизация
-          </Text>
-        </VStack>
-        <VStack>
-          <Stack
-            borderRadius={"100px"}
-            width={"50px"}
-            height={"50px"}
-            border={selected[1] == 1 ? "1px solid #4682B4" : "1px solid black"}
+            <VStack cursor={"pointer"} justify={"center"}>
+              <Stack
+                borderRadius={"100px"}
+                width={"50px"}
+                height={"50px"}
+                border={
+                  selected[0] == 1 ? "1px solid #4682B4" : "1px solid black"
+                }
+                justify={"center"}
+                align={"center"}
+                bg={selected[0] == 1 ? "#4682B4" : "none"}
+                color={selected[0] == 1 ? "white" : "black"}
+                fontWeight={"600"}
+                fontSize={"20px"}
+              >
+                <Text>1</Text>
+              </Stack>
+              <Text
+                ontWeight={"600"}
+                fontSize={width >= 1400 ? "20px" : "14px"}
+              >
+                Автоматизация
+              </Text>
+            </VStack>
+            <VStack cursor={"pointer"}>
+              <Stack
+                borderRadius={"100px"}
+                width={"50px"}
+                height={"50px"}
+                border={
+                  selected[1] == 1 ? "1px solid #4682B4" : "1px solid black"
+                }
+                justify={"center"}
+                align={"center"}
+                bg={selected[1] == 1 ? "#4682B4" : "none"}
+                color={selected[1] == 1 ? "white" : "black"}
+                fontWeight={"600"}
+                fontSize={"20px"}
+              >
+                <Text>2</Text>
+              </Stack>
+              <Text
+                ontWeight={"600"}
+                fontSize={width >= 1400 ? "20px" : "14px"}
+                width={"max-content"}
+              >
+                Выбор базы
+              </Text>
+            </VStack>
+            <VStack cursor={"pointer"}>
+              <Stack
+                borderRadius={"100px"}
+                width={"50px"}
+                height={"50px"}
+                border={
+                  selected[2] == 1 ? "1px solid #4682B4" : "1px solid black"
+                }
+                justify={"center"}
+                align={"center"}
+                bg={selected[2] == 1 ? "#4682B4" : "none"}
+                color={selected[2] == 1 ? "white" : "black"}
+                fontWeight={"600"}
+                fontSize={"20px"}
+              >
+                <Text>3</Text>
+              </Stack>
+              <Text
+                ontWeight={"600"}
+                fontSize={width >= 1400 ? "20px" : "14px"}
+              >
+                Настройка
+              </Text>
+            </VStack>
+          </HStack>
+          <HStack
+            width={"100%"}
+            gap={"80px"}
             justify={"center"}
-            align={"center"}
-            bg={selected[1] == 1 ? "#4682B4" : "none"}
-            color={selected[1] == 1 ? "white" : "black"}
-            fontWeight={"600"}
-            fontSize={"20px"}
+            marginTop={"20px"}
           >
-            <Text>2</Text>
-          </Stack>
-          <Text ontWeight={"600"} fontSize={"20px"}>
-            Выбор базы
-          </Text>
+            <VStack cursor={"pointer"}>
+              <Stack
+                borderRadius={"100px"}
+                width={"50px"}
+                height={"50px"}
+                border={
+                  selected[3] == 1 ? "1px solid #4682B4" : "1px solid black"
+                }
+                justify={"center"}
+                align={"center"}
+                bg={selected[3] == 1 ? "#4682B4" : "none"}
+                color={selected[3] == 1 ? "white" : "black"}
+                fontWeight={"600"}
+                fontSize={"20px"}
+              >
+                <Text>4</Text>
+              </Stack>
+              <Text
+                ontWeight={"600"}
+                fontSize={width >= 1400 ? "20px" : "14px"}
+              >
+                Запуск
+              </Text>
+            </VStack>
+            <VStack cursor={"pointer"}>
+              <Stack
+                borderRadius={"100px"}
+                width={"50px"}
+                height={"50px"}
+                border={
+                  selected[4] == 1 ? "1px solid #4682B4" : "1px solid black"
+                }
+                justify={"center"}
+                align={"center"}
+                bg={selected[4] == 1 ? "#4682B4" : "none"}
+                color={selected[4] == 1 ? "white" : "black"}
+                fontWeight={"600"}
+                fontSize={"20px"}
+              >
+                <Text>5</Text>
+              </Stack>
+              <Text
+                ontWeight={"600"}
+                fontSize={width >= 1400 ? "20px" : "14px"}
+              >
+                Отчёт
+              </Text>
+            </VStack>
+          </HStack>
         </VStack>
-        <VStack>
-          <Stack
-            borderRadius={"100px"}
-            width={"50px"}
-            height={"50px"}
-            border={selected[2] == 1 ? "1px solid #4682B4" : "1px solid black"}
-            justify={"center"}
-            align={"center"}
-            bg={selected[2] == 1 ? "#4682B4" : "none"}
-            color={selected[2] == 1 ? "white" : "black"}
-            fontWeight={"600"}
-            fontSize={"20px"}
-          >
-            <Text>3</Text>
-          </Stack>
-          <Text ontWeight={"600"} fontSize={"20px"}>
-            Настройка
-          </Text>
-        </VStack>
-        <VStack>
-          <Stack
-            borderRadius={"100px"}
-            width={"50px"}
-            height={"50px"}
-            border={selected[3] == 1 ? "1px solid #4682B4" : "1px solid black"}
-            justify={"center"}
-            align={"center"}
-            bg={selected[3] == 1 ? "#4682B4" : "none"}
-            color={selected[3] == 1 ? "white" : "black"}
-            fontWeight={"600"}
-            fontSize={"20px"}
-          >
-            <Text>4</Text>
-          </Stack>
-          <Text ontWeight={"600"} fontSize={"20px"}>
-            Запуск
-          </Text>
-        </VStack>
-        <VStack>
-          <Stack
-            borderRadius={"100px"}
-            width={"50px"}
-            height={"50px"}
-            border={selected[4] == 1 ? "1px solid #4682B4" : "1px solid black"}
-            justify={"center"}
-            align={"center"}
-            bg={selected[4] == 1 ? "#4682B4" : "none"}
-            color={selected[4] == 1 ? "white" : "black"}
-            fontWeight={"600"}
-            fontSize={"20px"}
-          >
-            <Text>5</Text>
-          </Stack>
-          <Text ontWeight={"600"} fontSize={"20px"}>
-            Отчёт
-          </Text>
-        </VStack>
-      </HStack>
+      )}
     </VStack>
   );
 };

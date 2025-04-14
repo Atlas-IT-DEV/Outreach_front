@@ -5,7 +5,13 @@ const TableTasks = () => {
   return (
     <VStack width={"100%"} align={"flex-start"}>
       {/* <HStack> */}
-      <HStack width={"100%"} justify={"space-between"} align={"flex-start"}>
+      <HStack
+        width={"100%"}
+        justify={"space-between"}
+        align={"flex-start"}
+        overflow={"hidden"}
+        overflowX={"scroll"}
+      >
         <VStack width={"100%"} padding={"10px"} gap={"10px"}>
           <Text
             border={"2px solid #4682B4"}

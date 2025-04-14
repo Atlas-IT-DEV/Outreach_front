@@ -1,5 +1,5 @@
 import { Stack, VStack } from "@chakra-ui/react";
-import TableScripts from "./table_scripts";
+import TableScripts from "../table_scripts";
 import Searcher from "../searcher";
 
 const Scripts = () => {

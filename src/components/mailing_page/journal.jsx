@@ -8,9 +8,8 @@ const Journal = () => {
       <Stack w={"100%"} marginTop={"20px"}>
         <Searcher />
       </Stack>
-      <Stack width={"100%"} marginTop={"20px"}>
-        <TableJournal />
-      </Stack>
+
+      <TableJournal />
     </VStack>
   );
 };

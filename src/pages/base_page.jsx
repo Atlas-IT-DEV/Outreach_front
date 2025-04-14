@@ -1,11 +1,23 @@
 import { Button, HStack, Stack, Text, VStack } from "@chakra-ui/react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Searcher from "../components/searcher";
 import TableBase from "../components/base_page/table_base";
-import ModalBaseFIlter from "../components/base_page/modal_base_filter";
+import { useStores } from "../store/store_context";
+import { FaSearch } from "react-icons/fa";
+import { observer } from "mobx-react-lite";
+import useWindowDimensions from "../windowDimensions";
 
-const BasePage = () => {
-  const [selected, setSelected] = useState([1, 0, 0, 0, 0]);
+const BasePage = observer(() => {
+  const { pageStore } = useStores();
+  const { width } = useWindowDimensions();
+  const options = {
+    keys: ["fullName", "company"], // Поля для поиска
+    threshold: 0, // 0 = точное совпадение, 1 = любые совпадения
+  };
+
+  useEffect(() => {
+    pageStore.getAllBases();
+  }, []);
 
   return (
     <VStack
@@ -14,15 +26,22 @@ const BasePage = () => {
       height={"auto"}
       overflow={"hidden scroll"}
       align={"flex-start"}
-      marginLeft={"280px"}
-      padding={"40px"}
+      marginLeft={width >= 1400 ? "280px" : 0}
+      padding={width >= 1400 ? "40px" : ["10px", "20px"]}
+      marginTop={width >= 1400 ? "10px" : ["40px", "30px"]}
     >
-      <HStack width={"100%"}>
-        <Searcher />
-        <ModalBaseFIlter />
-      </HStack>
+      <Text fontWeight={"600"} color={"black"} w={"100%"}>
+        Поиск по базе
+      </Text>
 
-      <HStack
+      <Searcher
+        array={pageStore.bases}
+        options={options}
+        placeholder="СЕГМЕНТ, ФИО, КОМПАНИЯ, ИНН, АВТОР ЗАГРУЗКИ, НОМЕР ТЕЛЕФОНА"
+      />
+
+      <Stack
+        flexDirection={width >= 600 ? "row" : "column"}
         width={"100%"}
         justify={"flex-end"}
         gap={"10px"}
@@ -50,12 +69,11 @@ const BasePage = () => {
         >
           <Text>Экспортировать базу</Text>
         </Button>
-      </HStack>
-      <Stack width={"100%"} marginTop={"20px"}>
-        <TableBase />
       </Stack>
+
+      <TableBase />
     </VStack>
   );
-};
+});
 
 export default BasePage;

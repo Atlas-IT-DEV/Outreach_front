@@ -1,6 +1,8 @@
 import { Button, Text } from "@chakra-ui/react";
+import useWindowDimensions from "../../windowDimensions";
 
 const ModalNewScript = () => {
+  const { width } = useWindowDimensions();
   return (
     <>
       <Button
@@ -11,7 +13,7 @@ const ModalNewScript = () => {
         color={"black"}
         _hover={{ bg: "#4682B4", color: "white" }}
       >
-        <Text>Новый скрипт</Text>
+        <Text fontSize={width >= 1000 ? "16px" : "14px"}>Новый скрипт</Text>
       </Button>
     </>
   );

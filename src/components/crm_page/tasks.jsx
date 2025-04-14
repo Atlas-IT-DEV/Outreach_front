@@ -1,4 +1,4 @@
-import { HStack, Stack, VStack } from "@chakra-ui/react";
+import { HStack, Stack, Text, VStack } from "@chakra-ui/react";
 
 import Searcher from "../searcher";
 import TableTasks from "./table_tasks";
@@ -6,11 +6,13 @@ import TableTasks from "./table_tasks";
 const Tasks = () => {
   return (
     <VStack width={"100%"}>
-      <HStack width={"100%"} marginTop={"20px"}>
+      <Text marginTop={"20px"} fontWeight={"600"} color={"black"} w={"100%"}>
+        Поиск по задачам
+      </Text>
+      <HStack width={"100%"}>
         <Searcher />
       </HStack>
-
-      <Stack marginTop={"20px"} w={"100%"}>
+      <Stack marginTop={"10px"} w={"100%"}>
         <TableTasks />
       </Stack>
     </VStack>

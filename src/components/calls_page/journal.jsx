@@ -1,17 +1,15 @@
 import { HStack, Stack, VStack } from "@chakra-ui/react";
 import Searcher from "../searcher";
-import ModalJournalFilter from "./modal_journal_filter";
-import CallsJournal from "./calls_journal";
 import TableCalls from "./table_calls";
+import CallsStatistic from "./calls_journal";
 
 const Journal = () => {
   return (
     <VStack width={"100%"}>
+      <CallsStatistic />
       <HStack width={"100%"} marginTop={"20px"}>
         <Searcher />
-        <ModalJournalFilter />
       </HStack>
-      <CallsJournal />
       <Stack width={"100%"} marginTop={"20px"}>
         <TableCalls />
       </Stack>

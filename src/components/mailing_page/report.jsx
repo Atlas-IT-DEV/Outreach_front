@@ -9,9 +9,7 @@ const Report = () => {
       <Stack width={"100%"} marginTop={"20px"}>
         <Searcher />
       </Stack>
-      <Stack width={"100%"} marginTop={"20px"}>
-        <TableReport />
-      </Stack>
+      <TableReport />
     </VStack>
   );
 };

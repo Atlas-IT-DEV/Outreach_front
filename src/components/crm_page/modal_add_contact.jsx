@@ -50,7 +50,9 @@ const ModalAddContact = () => {
         _hover={{ bg: "#4682B4", color: "white" }}
         flexShrink={0}
       >
-        <Text>Добавить контакт</Text>
+        <Text fontSize={width >= 1000 ? "16px" : ["13px", "14px"]}>
+          Добавить контакт
+        </Text>
       </Button>
 
       <Modal isOpen={isOpen} onClose={onClose} onEsc={onClose} size={"3xl"}>

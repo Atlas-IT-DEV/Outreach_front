@@ -50,7 +50,7 @@ const SideMenu = observer(() => {
   };
 
   useEffect(() => {
-    pageStore.setIsOpen(width >= 1450);
+    pageStore.setIsOpen(width >= 1400);
   }, [width]);
 
   return (

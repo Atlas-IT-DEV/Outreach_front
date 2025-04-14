@@ -29,7 +29,6 @@ const ModalCreateLead = () => {
     post: "",
     inn: "",
     ogrn: "",
-    activity: "",
   };
 
   const validationSchema = Yup.object({
@@ -40,7 +39,6 @@ const ModalCreateLead = () => {
     post: Yup.string().required("Обязательное поле"),
     inn: Yup.string().required("Обязательное поле"),
     ogrn: Yup.string().required("Обязательное поле"),
-    activity: Yup.string().required("Обязательное поле"),
   });
 
   const onSubmit = async (values) => {};
@@ -57,7 +55,9 @@ const ModalCreateLead = () => {
         _hover={{ bg: "#4682B4", color: "white" }}
         flexShrink={0}
       >
-        <Text>Создать нового лида</Text>
+        <Text fontSize={width >= 1000 ? "16px" : ["13px", "14px"]}>
+          Создать нового лида
+        </Text>
       </Button>
       <Modal isOpen={isOpen} onClose={onClose} onEsc={onClose} size={"3xl"}>
         <ModalOverlay />
@@ -66,9 +66,7 @@ const ModalCreateLead = () => {
           borderRadius={"0px"}
           border={"2px solid #4682B4"}
           height={"auto"}
-          minH={width >= 1400 ? height - 100 : height}
-          overflow={"hidden"}
-          overflowY={"scroll"}
+          minH={width >= 1400 ? "auto" : height}
         >
           <ModalCloseButton onClick={() => console.log("click")} />
           <Formik
@@ -93,7 +91,7 @@ const ModalCreateLead = () => {
                   marginTop={"20px"}
                 >
                   <Text color={"black"} fontWeight={"600"}>
-                    Контакт
+                    Создание лида
                   </Text>
                   <VStack width={"100%"} gap={"10px"} marginTop={"10px"}>
                     <FormControl
@@ -216,25 +214,6 @@ const ModalCreateLead = () => {
                       />
                       <FormErrorMessage marginTop={"2px"}>
                         {errors.ogrn}
-                      </FormErrorMessage>
-                    </FormControl>
-
-                    <FormControl
-                      isInvalid={errors.activity && touched.activity}
-                    >
-                      <Text fontWeight={"500"}>Направление деятельности</Text>
-                      <Input
-                        placeholder="Направление деятельности"
-                        marginTop={"4px"}
-                        border={"2px solid #4682B4"}
-                        borderRadius={"0"}
-                        _hover={{ border: "2px solid #4682B4" }}
-                        name="activity"
-                        onChange={handleChange}
-                        onBlur={handleBlur}
-                      />
-                      <FormErrorMessage marginTop={"2px"}>
-                        {errors.activity}
                       </FormErrorMessage>
                     </FormControl>
                   </VStack>

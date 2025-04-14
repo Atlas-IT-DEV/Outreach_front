@@ -1,67 +1,68 @@
 import {
   Button,
+  Drawer,
+  DrawerCloseButton,
+  DrawerContent,
   HStack,
   Input,
+  Stack,
   Text,
   Textarea,
+  useDisclosure,
   VStack,
 } from "@chakra-ui/react";
-import { observer } from "mobx-react-lite";
-import { MdOutlineStarBorder, MdOutlineStar } from "react-icons/md";
 import { useStores } from "../../store/store_context";
+import { MdOutlineStar, MdOutlineStarBorder } from "react-icons/md";
+import useWindowDimensions from "../../windowDimensions";
 
-const TableScripts = observer(() => {
+const ModalScript = ({ obj = {} }) => {
   const { pageStore } = useStores();
+  const { width } = useWindowDimensions();
+  const { isOpen, onOpen, onClose } = useDisclosure();
   return (
-    <VStack width={"100%"} align={"flex-start"} marginTop={"20px"}>
-      <HStack width={"100%"} justify={"space-between"} align={"flex-start"}>
-        <VStack width={"40%"} padding={"10px"}>
-          <Text fontWeight={"600"} color={"black"}>
-            Шаблоны
-          </Text>
-          {pageStore.emailTemplates?.length > 0
-            ? pageStore.emailTemplates?.map((item, index) => (
-                <HStack
-                  key={index}
-                  onClick={() => pageStore.updateSelectedScript(item)}
-                  bg={
-                    pageStore.selected_script?.id == item?.id
-                      ? "rgba(200,200,200,0.5)"
-                      : null
-                  }
-                  marginTop={"10px"}
-                  width={"100%"}
-                  justify={"space-between"}
-                  borderBottom={"1px solid black"}
-                  cursor={"pointer"}
-                  _hover={{
-                    bg: "rgba(200,200,200,0.5)",
-                  }}
-                >
-                  <Text color={"black"}>{item?.templateName}</Text>
-                  {item?.is_fav ? (
-                    <MdOutlineStar size={"30px"} color="#4682B4" />
-                  ) : (
-                    <MdOutlineStarBorder size={"30px"} color="#4682B4" />
-                  )}
-                </HStack>
-              ))
-            : null}
-        </VStack>
-        <HStack
-          justify={"space-between"}
-          align={"flex-start"}
-          width={"60%"}
-          padding={"20px"}
-          gap={"10px"}
-          border={"2px solid #4682B4"}
+    <>
+      <HStack
+        onClick={() => {
+          pageStore.updateSelectedScript(obj);
+          onOpen();
+        }}
+        bg={
+          pageStore.selected_script?.id == obj?.id
+            ? "rgba(200,200,200,0.5)"
+            : null
+        }
+        padding={"10px 5px"}
+        width={"100%"}
+        justify={"space-between"}
+        borderBottom={"1px solid black"}
+        cursor={"pointer"}
+        _hover={{
+          bg: "rgba(200,200,200,0.5)",
+        }}
+      >
+        <Text color={"black"}>{obj?.templateName}</Text>
+        {obj?.is_fav ? (
+          <MdOutlineStar size={"30px"} color="#4682B4" />
+        ) : (
+          <MdOutlineStarBorder size={"30px"} color="#4682B4" />
+        )}
+      </HStack>
+      <Drawer isOpen={isOpen} onClose={onClose} size={"full"} placement="right">
+        <DrawerContent
+          width={"100%"}
+          justifyContent={"center"}
+          alignItems={"center"}
         >
+          <DrawerCloseButton
+            onClick={() => pageStore.updateSelectedScript({})}
+          />
           <VStack
-            width={"40%"}
-            align={"flex-start"}
-            gap={"10px"}
-            marginTop={"10px"}
-            color={"black"}
+            width={"100%"}
+            height={"auto"}
+            minH={"100vh"}
+            overflow={"hidden"}
+            overflowY={"scroll"}
+            padding={"20px"}
             fontWeight={"600"}
           >
             <VStack align={"flex-start"} width={"100%"}>
@@ -100,8 +101,7 @@ const TableScripts = observer(() => {
               <Text>Прочее</Text>
               <Textarea placeholder="Прочее" />
             </VStack>
-          </VStack>
-          <VStack width={"60%"} align={"flex-start"} fontWeight={"600"}>
+
             <VStack align={"flex-start"} width={"100%"}>
               <Text>Название</Text>
               <Input
@@ -113,12 +113,17 @@ const TableScripts = observer(() => {
               <Text>Текст рассылки</Text>
               <Textarea
                 placeholder="Текст рассылки"
-                height={"420px"}
+                height={width >= 1400 ? "420px" : "200px"}
                 value={pageStore.selected_script?.message}
               />
             </VStack>
 
-            <HStack width={"100%"} justify={"flex-end"}>
+            <Stack
+              width={"100%"}
+              justify={"flex-end"}
+              flexDirection={width >= 600 ? "row" : "column"}
+              gap={0}
+            >
               <Button
                 marginTop={"10px"}
                 boxShadow={"-2px 2px 0 0 #4682B4"}
@@ -127,9 +132,11 @@ const TableScripts = observer(() => {
                 bg={"white"}
                 color={"black"}
                 _hover={{ bg: "#4682B4", color: "white" }}
-                flexShrink={0}
+                flexShrink={width >= 600 ? 0 : 1}
               >
-                <Text>Сгенерировать текст рассылки</Text>
+                <Text fontSize={width >= 1000 ? "16px" : "14px"}>
+                  Сгенерировать текст рассылки
+                </Text>
               </Button>
               <Button
                 marginTop={"10px"}
@@ -139,16 +146,18 @@ const TableScripts = observer(() => {
                 bg={"white"}
                 color={"black"}
                 _hover={{ bg: "#4682B4", color: "white" }}
-                flexShrink={0}
+                flexShrink={width >= 600 ? 0 : 1}
               >
-                <Text>Сохранить</Text>
+                <Text fontSize={width >= 1000 ? "16px" : "14px"}>
+                  Сохранить
+                </Text>
               </Button>
-            </HStack>
+            </Stack>
           </VStack>
-        </HStack>
-      </HStack>
-    </VStack>
+        </DrawerContent>
+      </Drawer>
+    </>
   );
-});
+};
 
-export default TableScripts;
+export default ModalScript;
