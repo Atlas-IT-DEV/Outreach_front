@@ -22,15 +22,8 @@ const Leads = () => {
         search_by="Поиск по лидам"
       />
 
-      <Stack
-        width={"100%"}
-        justify={"space-between"}
-        marginTop={"10px"}
-        flexDirection={width >= 1400 ? "row" : "column"}
-      >
-        <ModalCreateLead />
-        <HStack width={"100%"} justify={"space-between"}>
-          <Button
+      <HStack width={"100%"} justify={"space-between"} marginTop={"10px"}>
+        {/* <Button
             boxShadow={"-2px 2px 0 0 #4682B4"}
             borderRadius={"0px"}
             border={"1px solid #4682B4"}
@@ -43,23 +36,24 @@ const Leads = () => {
             <Text fontSize={width >= 1000 ? "16px" : ["13px", "14px"]}>
               Загрузить лида
             </Text>
-          </Button>
-          <Button
-            boxShadow={"-2px 2px 0 0 #4682B4"}
-            borderRadius={"0px"}
-            border={"1px solid #4682B4"}
-            bg={"white"}
-            color={"black"}
-            _hover={{ bg: "#4682B4", color: "white" }}
-            flexShrink={width >= 1400 ? 0 : 1}
-            width={width >= 1400 ? "auto" : "100%"}
-          >
-            <Text fontSize={width >= 1000 ? "16px" : ["13px", "14px"]}>
-              Настроить статусы
-            </Text>
-          </Button>
-        </HStack>
-      </Stack>
+          </Button> */}
+        <ModalCreateLead />
+        <Button
+          boxShadow={"-2px 2px 0 0 #4682B4"}
+          borderRadius={"0px"}
+          border={"1px solid #4682B4"}
+          bg={"white"}
+          color={"black"}
+          _hover={{ bg: "#4682B4", color: "white" }}
+          // flexShrink={width >= 1400 ? 0 : 1}
+          flexShrink={0}
+          // width={width >= 1400 ? "auto" : "100%"}
+        >
+          <Text fontSize={width >= 1000 ? "16px" : ["13px", "14px"]}>
+            Настроить статусы
+          </Text>
+        </Button>
+      </HStack>
 
       <TableLeads />
     </VStack>

@@ -11,37 +11,65 @@ import {
   ModalOverlay,
   Text,
   useDisclosure,
+  useToast,
   VStack,
 } from "@chakra-ui/react";
 import { Form, Formik } from "formik";
 import * as Yup from "yup";
 import useWindowDimensions from "../../windowDimensions";
+import { useStores } from "../../store/store_context";
+import { observer } from "mobx-react-lite";
 
-const ModalCreateLead = () => {
+const ModalCreateLead = observer(() => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { width, height } = useWindowDimensions();
+  const { pageStore } = useStores();
+  const toast = useToast();
 
   const leadValues = {
-    initials: "",
-    phoneNumber: "",
-    email: "",
-    company: "",
-    post: "",
-    inn: "",
-    ogrn: "",
+    name: "",
+    description: "",
+    director: {
+      first_name: "",
+      last_name: "",
+      password: "",
+      phone: "",
+      username: "",
+    },
   };
 
   const validationSchema = Yup.object({
-    initials: Yup.string().required("Обязательное поле"),
-    phoneNumber: Yup.string().required("Обязательное поле"),
-    email: Yup.string().required("Обязательное поле"),
-    company: Yup.string().required("Обязательное поле"),
-    post: Yup.string().required("Обязательное поле"),
-    inn: Yup.string().required("Обязательное поле"),
-    ogrn: Yup.string().required("Обязательное поле"),
+    director: Yup.object().shape({
+      first_name: Yup.string().required("Обязательное поле"),
+      last_name: Yup.string().required("Обязательное поле"),
+      password: Yup.string().required("Обязательное поле"),
+      phone: Yup.string()
+        .required("Обязательное поле")
+        .min(11, "Номер слишком короткий")
+        .max(15, "Номер слишком длинный"),
+      username: Yup.string().required("Обязательное поле"),
+    }),
+    name: Yup.string().required("Обязательное поле"),
+    description: Yup.string().required("Обязательное поле"),
   });
 
-  const onSubmit = async (values) => {};
+  const createCompamy = async (values) => {
+    return await pageStore.createCompamy(values);
+  };
+  const onSubmit = async (values) => {
+    const ok = await createCompamy(values);
+    console.log("values", values);
+    if (ok) {
+      await pageStore.getAllCompanies();
+      toast({
+        title: "Успех",
+        description: "Новый лид успешно создан",
+        duration: 3000,
+        status: "success",
+      });
+      onClose();
+    }
+  };
 
   return (
     <>
@@ -83,6 +111,7 @@ const ModalCreateLead = () => {
               setFieldValue,
             }) => (
               <Form>
+                {console.log(values)}
                 <VStack
                   bg={"white"}
                   padding={"20px"}
@@ -95,26 +124,98 @@ const ModalCreateLead = () => {
                   </Text>
                   <VStack width={"100%"} gap={"10px"} marginTop={"10px"}>
                     <FormControl
-                      isInvalid={errors.initials && touched.initials}
+                      isInvalid={
+                        errors?.director?.username &&
+                        touched?.director?.username
+                      }
                     >
-                      <Text fontWeight={"500"}>ФИО</Text>
+                      <Text fontWeight={"500"}>Никнейм</Text>
                       <Input
-                        placeholder="ФИО"
+                        placeholder="Никнейм"
                         marginTop={"4px"}
                         border={"2px solid #4682B4"}
                         borderRadius={"0"}
                         _hover={{ border: "2px solid #4682B4" }}
-                        name="initials"
+                        name="director.username"
                         onChange={handleChange}
                         onBlur={handleBlur}
                       />
                       <FormErrorMessage marginTop={"2px"}>
-                        {errors.initials}
+                        {errors?.director?.username}
                       </FormErrorMessage>
                     </FormControl>
 
                     <FormControl
-                      isInvalid={errors.phoneNumber && touched.phoneNumber}
+                      isInvalid={
+                        errors?.director?.password &&
+                        touched?.director?.password
+                      }
+                    >
+                      <Text fontWeight={"500"}>Пароль</Text>
+                      <Input
+                        placeholder="Пароль"
+                        type="password"
+                        marginTop={"4px"}
+                        border={"2px solid #4682B4"}
+                        borderRadius={"0"}
+                        _hover={{ border: "2px solid #4682B4" }}
+                        name="director.password"
+                        onChange={handleChange}
+                        onBlur={handleBlur}
+                      />
+                      <FormErrorMessage marginTop={"2px"}>
+                        {errors?.director?.password}
+                      </FormErrorMessage>
+                    </FormControl>
+
+                    <FormControl
+                      isInvalid={
+                        errors?.director?.last_name &&
+                        touched?.director?.last_name
+                      }
+                    >
+                      <Text fontWeight={"500"}>Фамилия</Text>
+                      <Input
+                        placeholder="Фамилия"
+                        marginTop={"4px"}
+                        border={"2px solid #4682B4"}
+                        borderRadius={"0"}
+                        _hover={{ border: "2px solid #4682B4" }}
+                        name="director.last_name"
+                        onChange={handleChange}
+                        onBlur={handleBlur}
+                      />
+                      <FormErrorMessage marginTop={"2px"}>
+                        {errors?.director?.last_name}
+                      </FormErrorMessage>
+                    </FormControl>
+
+                    <FormControl
+                      isInvalid={
+                        errors?.director?.first_name &&
+                        touched?.director?.first_name
+                      }
+                    >
+                      <Text fontWeight={"500"}>Имя</Text>
+                      <Input
+                        placeholder="Имя"
+                        marginTop={"4px"}
+                        border={"2px solid #4682B4"}
+                        borderRadius={"0"}
+                        _hover={{ border: "2px solid #4682B4" }}
+                        name="director.first_name"
+                        onChange={handleChange}
+                        onBlur={handleBlur}
+                      />
+                      <FormErrorMessage marginTop={"2px"}>
+                        {errors?.director?.first_name}
+                      </FormErrorMessage>
+                    </FormControl>
+
+                    <FormControl
+                      isInvalid={
+                        errors?.director?.phone && touched?.director?.phone
+                      }
                     >
                       <Text fontWeight={"500"}>Номер телефона</Text>
                       <Input
@@ -123,97 +224,47 @@ const ModalCreateLead = () => {
                         border={"2px solid #4682B4"}
                         borderRadius={"0"}
                         _hover={{ border: "2px solid #4682B4" }}
-                        name="phoneNumber"
+                        name="director.phone"
                         onChange={handleChange}
                         onBlur={handleBlur}
                       />
                       <FormErrorMessage marginTop={"2px"}>
-                        {errors.phoneNumber}
+                        {errors?.director?.phone}
                       </FormErrorMessage>
                     </FormControl>
 
-                    <FormControl isInvalid={errors.email && touched.email}>
-                      <Text fontWeight={"500"}>Email</Text>
+                    <FormControl isInvalid={errors?.name && touched?.name}>
+                      <Text fontWeight={"500"}>Название компаниии</Text>
                       <Input
-                        placeholder="Email"
+                        placeholder="Название компании"
                         marginTop={"4px"}
                         border={"2px solid #4682B4"}
                         borderRadius={"0"}
                         _hover={{ border: "2px solid #4682B4" }}
-                        name="email"
+                        name="name"
                         onChange={handleChange}
                         onBlur={handleBlur}
                       />
                       <FormErrorMessage marginTop={"2px"}>
-                        {errors.email}
+                        {errors?.name}
                       </FormErrorMessage>
                     </FormControl>
-
-                    <FormControl isInvalid={errors.company && touched.company}>
-                      <Text fontWeight={"500"}>Компания</Text>
+                    <FormControl
+                      isInvalid={errors?.description && touched?.description}
+                    >
+                      <Text fontWeight={"500"}>Описание компании</Text>
                       <Input
-                        placeholder="Компания"
+                        placeholder="Описание компании"
                         marginTop={"4px"}
                         border={"2px solid #4682B4"}
                         borderRadius={"0"}
                         _hover={{ border: "2px solid #4682B4" }}
-                        name="company"
+                        name="description"
                         onChange={handleChange}
                         onBlur={handleBlur}
                       />
                       <FormErrorMessage marginTop={"2px"}>
-                        {errors.company}
-                      </FormErrorMessage>
-                    </FormControl>
-
-                    <FormControl isInvalid={errors.post && touched.post}>
-                      <Text fontWeight={"500"}>Должность</Text>
-                      <Input
-                        placeholder="Должность"
-                        marginTop={"4px"}
-                        border={"2px solid #4682B4"}
-                        borderRadius={"0"}
-                        _hover={{ border: "2px solid #4682B4" }}
-                        name="post"
-                        onChange={handleChange}
-                        onBlur={handleBlur}
-                      />
-                      <FormErrorMessage marginTop={"2px"}>
-                        {errors.post}
-                      </FormErrorMessage>
-                    </FormControl>
-
-                    <FormControl isInvalid={errors.inn && touched.inn}>
-                      <Text fontWeight={"500"}>ИНН</Text>
-                      <Input
-                        placeholder="ИНН"
-                        marginTop={"4px"}
-                        border={"2px solid #4682B4"}
-                        borderRadius={"0"}
-                        _hover={{ border: "2px solid #4682B4" }}
-                        name="inn"
-                        onChange={handleChange}
-                        onBlur={handleBlur}
-                      />
-                      <FormErrorMessage marginTop={"2px"}>
-                        {errors.inn}
-                      </FormErrorMessage>
-                    </FormControl>
-
-                    <FormControl isInvalid={errors.ogrn && touched.ogrn}>
-                      <Text fontWeight={"500"}>ОГРН</Text>
-                      <Input
-                        placeholder="ОГРН"
-                        marginTop={"4px"}
-                        border={"2px solid #4682B4"}
-                        borderRadius={"0"}
-                        _hover={{ border: "2px solid #4682B4" }}
-                        name="ogrn"
-                        onChange={handleChange}
-                        onBlur={handleBlur}
-                      />
-                      <FormErrorMessage marginTop={"2px"}>
-                        {errors.ogrn}
+                        {errors?.description}
                       </FormErrorMessage>
                     </FormControl>
                   </VStack>
@@ -235,7 +286,7 @@ const ModalCreateLead = () => {
                       <Text>Отменить</Text>
                     </Button>
                     <Button
-                      onClick={onClose}
+                      type="submit"
                       boxShadow={"-2px 2px 0 0 #4682B4"}
                       borderRadius={"0px"}
                       border={"1px solid #4682B4"}
@@ -255,6 +306,6 @@ const ModalCreateLead = () => {
       </Modal>
     </>
   );
-};
+});
 
 export default ModalCreateLead;

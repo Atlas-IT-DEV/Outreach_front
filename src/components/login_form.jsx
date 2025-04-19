@@ -18,8 +18,8 @@ const LoginForm = observer(() => {
   const { pageStore } = useStores();
 
   const initialValues = {
-    username: "testusername",
-    password: "qwerty",
+    username: "admin",
+    password: "admin",
   };
 
   const validationSchema = Yup.object({

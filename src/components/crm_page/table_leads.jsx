@@ -14,14 +14,19 @@ import {
 import ModalEditLead from "./modal_edit_lead";
 import { observer } from "mobx-react-lite";
 import { useStores } from "../../store/store_context";
+import { useEffect } from "react";
+import ModalDeleteLead from "./modal_delete_lead";
 
 const TableLeads = observer(() => {
   const { pageStore } = useStores();
+  useEffect(() => {
+    pageStore.getAllCompanies();
+  }, []);
 
   return (
     <>
       {pageStore.search_elements?.length != 0 && (
-        <VStack width={"100%"} align={"flex-start"}>
+        <VStack width={"100%"} align={"flex-start"} marginTop={"20px"}>
           <Text color={"black"} fontWeight={"600"}>
             Результаты поиска
           </Text>
@@ -56,7 +61,7 @@ const TableLeads = observer(() => {
                 ? pageStore.search_elements?.map((item, index) => (
                     <Tr color={"black"} key={index}>
                       <Td border={"1px solid rgba(200,200,200,1)"}>
-                        <Text>{item?.number}</Text>
+                        <Text>{item?.director?.phone ?? "-"}</Text>
                       </Td>
                       <Td border={"1px solid rgba(200,200,200,1)"}>
                         <Text>{item?.callType}</Text>
@@ -98,7 +103,7 @@ const TableLeads = observer(() => {
                         </VStack>
                       </Td>
                       <Td border={"1px solid rgba(200,200,200,1)"}>
-                        <Text>{item?.createDate}</Text>
+                        <Text>{item?.CreatedAt}</Text>
                       </Td>
                       <Td border={"1px solid rgba(200,200,200,1)"}>
                         <Text>{item?.responsible}</Text>
@@ -109,6 +114,7 @@ const TableLeads = observer(() => {
                       >
                         <HStack justify={"center"}>
                           <ModalEditLead obj={item} />
+                          <ModalDeleteLead obj={item} />
                         </HStack>
                       </Td>
                     </Tr>
@@ -167,14 +173,15 @@ const TableLeads = observer(() => {
             {pageStore.leads?.length > 0
               ? pageStore.leads?.map((item, index) => (
                   <Tr color={"black"} key={index}>
+                    {console.log("item", item)}
                     <Td border={"1px solid rgba(200,200,200,1)"}>
-                      <Text>{item?.number}</Text>
+                      <Text>{item?.director?.phone}</Text>
                     </Td>
                     <Td border={"1px solid rgba(200,200,200,1)"}>
-                      <Text>{item?.callType}</Text>
+                      <Text>{item?.callType ?? "-"}</Text>
                     </Td>
                     <Td border={"1px solid rgba(200,200,200,1)"}>
-                      <Text>{item?.callStatus}</Text>
+                      <Text>{item?.callStatus ?? "-"}</Text>
                     </Td>
                     <Td border={"1px solid rgba(200,200,200,1)"}>
                       <VStack align={"flex-start"} gap={"2px"}>
@@ -210,10 +217,12 @@ const TableLeads = observer(() => {
                       </VStack>
                     </Td>
                     <Td border={"1px solid rgba(200,200,200,1)"}>
-                      <Text>{item?.createDate}</Text>
+                      <Text>
+                        {new Date(item?.CreatedAt).toLocaleDateString() ?? "-"}
+                      </Text>
                     </Td>
                     <Td border={"1px solid rgba(200,200,200,1)"}>
-                      <Text>{item?.responsible}</Text>
+                      <Text>{item?.responsible ?? "-"}</Text>
                     </Td>
                     <Td
                       width={"min-content"}
@@ -221,6 +230,7 @@ const TableLeads = observer(() => {
                     >
                       <HStack justify={"center"}>
                         <ModalEditLead obj={item} />
+                        <ModalDeleteLead obj={item} />
                       </HStack>
                     </Td>
                   </Tr>

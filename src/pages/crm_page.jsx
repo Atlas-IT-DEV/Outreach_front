@@ -36,7 +36,7 @@ const CrmPage = () => {
           >
             <Text fontSize={width >= 1000 ? "16px" : "14px"}>Лиды</Text>
           </Button>
-          <Button
+          {/* <Button
             width={"100%"}
             border={"1px solid #4682B4"}
             borderRadius={"0px"}
@@ -47,7 +47,7 @@ const CrmPage = () => {
             _hover={{ bg: "#4682B4", color: "white" }}
           >
             <Text fontSize={width >= 1000 ? "16px" : "14px"}>Контакты</Text>
-          </Button>
+          </Button> */}
           <Button
             width={"100%"}
             border={"1px solid #4682B4"}
@@ -94,7 +94,7 @@ const CrmPage = () => {
                 Лиды
               </Text>
             </Button>
-            <Button
+            {/* <Button
               width={"100%"}
               border={"1px solid #4682B4"}
               borderRadius={"0px"}
@@ -107,7 +107,7 @@ const CrmPage = () => {
               <Text fontSize={width >= 1000 ? "16px" : ["13px", "14px"]}>
                 Контакты
               </Text>
-            </Button>
+            </Button> */}
           </HStack>
           <HStack width={"100%"} justify={"space-between"}>
             <Button

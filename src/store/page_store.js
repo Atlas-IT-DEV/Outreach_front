@@ -9,48 +9,7 @@ class PageStore {
 
   bases = [];
 
-  leads = [
-    {
-      number: "+78005553535",
-      callType: "Входящий",
-      callStatus: "Пропущен",
-      stage: "",
-      createDate: "22.02.2022",
-      responsible: "Иван Иванов",
-    },
-    {
-      number: "+79999999999",
-      callType: "Исходящий",
-      callStatus: "Завершен",
-      stage: "",
-      createDate: "11.11.2025",
-      responsible: "Петр Петров",
-    },
-    {
-      number: "+89998887766",
-      callType: "Входящий",
-      callStatus: "Пропущен",
-      stage: "",
-      createDate: "22.02.2022",
-      responsible: "Алексей Алексеев",
-    },
-    {
-      number: "+79990001122",
-      callType: "Исходящий",
-      callStatus: "Завершен",
-      stage: "",
-      createDate: "23.05.2024",
-      responsible: "John Doe",
-    },
-    {
-      number: "+79876543210",
-      callType: "Входящий",
-      callStatus: "Пропущен",
-      stage: "",
-      createDate: "22.02.2022",
-      responsible: "No Name",
-    },
-  ];
+  leads = [];
 
   crm_contacts = [
     {
@@ -214,6 +173,56 @@ class PageStore {
     const result = await response.json();
     this.bases = result.data;
     console.log("getAllBases", response);
+  };
+
+  createCompamy = async (values) => {
+    const response = await fetch(`${base_url}/api/companies`, {
+      method: "POST",
+      headers: {
+        accept: "application/json",
+        "Content-Type": "application/json",
+        Authorization: `${this.token}`,
+      },
+      body: JSON.stringify(values),
+    });
+    console.log("val", values);
+    return response.ok;
+  };
+
+  getAllCompanies = async () => {
+    const response = await fetch(`${base_url}/api/companies`, {
+      method: "GET",
+      headers: {
+        accept: "application/json",
+        Authorization: `${this.token}`,
+      },
+    });
+    const result = await response.json();
+    this.leads = result;
+  };
+  editCompany = async (id, values) => {
+    const response = await fetch(`${base_url}/api/companies/${id}`, {
+      method: "PUT",
+      headers: {
+        accept: "application/json",
+        "Content-Type": "application/json",
+        Authorization: `${this.token}`,
+      },
+      body: JSON.stringify(values),
+    });
+    return response.ok;
+  };
+  editUser = async (id, values) => {
+    const response = await fetch(`${base_url}/api/users/${id}`, {
+      method: "PUT",
+      headers: {
+        accept: "application/json",
+        "Content-Type": "application/json",
+        Authorization: `${this.token}`,
+      },
+      body: JSON.stringify(values),
+    });
+    return response.ok;
   };
 }
 
