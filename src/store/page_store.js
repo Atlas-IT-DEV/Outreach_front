@@ -9,116 +9,23 @@ class PageStore {
 
   bases = [];
 
+  clients = [];
   leads = [];
+  scripts = [];
+  works = [];
 
-  crm_contacts = [
-    {
-      id: 1,
-      fullName: "Иванов Иван Иванович",
-      phoneNumber: "+7 (123) 456-78-90",
-      company: "ООО 'Ромашка'",
-      email: "ivanov@example.com",
-      inn: "123456789012",
-    },
-    {
-      id: 2,
-      fullName: "Петрова Анна Сергеевна",
-      phoneNumber: "+7 (987) 654-32-10",
-      company: "АО 'Технологии'",
-      email: "petrova@example.com",
-      inn: "987654321098",
-    },
-    {
-      id: 3,
-      fullName: "Сидоров Алексей Дмитриевич",
-      phoneNumber: "+7 (555) 123-45-67",
-      company: "ПАО 'Нефтегаз'",
-      email: "sidorov@example.com",
-      inn: "456789012345",
-    },
-    {
-      id: 4,
-      fullName: "Кузнецова Елена Викторовна",
-      phoneNumber: "+7 (777) 888-99-00",
-      company: "ЗАО 'Стройинвест'",
-      email: "kuznetsova@example.com",
-      inn: "789012345678",
-    },
-    {
-      id: 5,
-      fullName: "Смирнов Денис Олегович",
-      phoneNumber: "+7 (999) 111-22-33",
-      company: "ИП Смирнов",
-      email: "smirnov@example.com",
-      inn: "345678901234",
-    },
-  ];
-
-  emailTemplates = [
-    {
-      id: 1,
-      is_fav: false,
-      templateName: "Приветственное письмо новым клиентам",
-      purpose: "Знакомство с компанией",
-      targetAudience: "Новые клиенты, оформившие заказ",
-      targetAction: "Повышение лояльности, повторные покупки",
-      authorImage: "Менеджер по работе с клиентами",
-      message:
-        "Добрый день, {Имя}! Рады приветствовать вас среди наших клиентов. Хотим рассказать о ключевых преимуществах работы с нами...",
-    },
-    {
-      id: 2,
-      is_fav: false,
-      templateName: "Акция для постоянных клиентов",
-      purpose: "Стимулирование повторных покупок",
-      targetAudience: "Клиенты с 2+ заказами",
-      targetAction: "Покупка по акции",
-      authorImage: "Руководитель отдела продаж",
-      message:
-        "Уважаемый {Имя}! Благодарим за доверие. Специально для вас — скидка 15% на следующий заказ до {дата}. Перейдите в каталог...",
-    },
-    {
-      id: 3,
-      is_fav: false,
-      templateName: "Восстановление брошенной корзины",
-      purpose: "Возврат потерянных продаж",
-      targetAudience: "Пользователи, не завершившие заказ",
-      targetAction: "Завершение покупки",
-      authorImage: "Автоматизированная рассылка",
-      message:
-        "Вы забыли кое-что в корзине! Товары ждут вас: {список}. Для удобства сохранили вашу корзину. Оформите заказ за 2 клика!",
-    },
-    {
-      id: 4,
-      is_fav: true,
-      templateName: "Приглашение на вебинар",
-      purpose: "Привлечение потенциальных клиентов",
-      targetAudience: "Подписчики рассылки",
-      targetAction: "Регистрация на мероприятие",
-      authorImage: "Эксперт компании",
-      message:
-        "Как увеличить продажи в 2024 году? Приглашаем на бесплатный вебинар {дата}. Спикер — {имя эксперта}. Зарегистрируйтесь сейчас!",
-    },
-    {
-      id: 5,
-      is_fav: true,
-      templateName: "Обратная связь после покупки",
-      purpose: "Сбор отзывов",
-      targetAudience: "Клиенты, получившие заказ",
-      targetAction: "Оставление отзыва",
-      authorImage: "Служба заботы о клиентах",
-      message:
-        "{Имя}, надеемся, вы довольны покупкой! Поделитесь впечатлениями — это поможет нам стать лучше. Оставить отзыв можно здесь: {ссылка}.",
-    },
-  ];
-
+  emailTemplates = [];
   selected_script = {};
-
   search_elements = [];
 
   constructor() {
     makeAutoObservable(this);
   }
+
+  resetData = () => {
+    this.token = "";
+    this.user_info = {};
+  };
 
   updateSearchElement = (new_search) => {
     this.search_elements = new_search;
@@ -198,7 +105,7 @@ class PageStore {
       },
     });
     const result = await response.json();
-    this.leads = result;
+    this.clients = result;
   };
   editCompany = async (id, values) => {
     const response = await fetch(`${base_url}/api/companies/${id}`, {
@@ -223,6 +130,79 @@ class PageStore {
       body: JSON.stringify(values),
     });
     return response.ok;
+  };
+
+  createClient = async (values) => {
+    const response = await fetch(`${base_url}/api/clients`, {
+      method: "POST",
+      headers: {
+        accept: "application/json",
+        "Content-Type": "application/json",
+        Authorization: `${this.token}`,
+      },
+      body: JSON.stringify(values),
+    });
+    return response.ok;
+  };
+  getAllClients = async () => {
+    const response = await fetch(`${base_url}/api/clients`, {
+      method: "GET",
+      headers: {
+        accept: "application/json",
+        Authorization: `${this.token}`,
+      },
+    });
+    const result = await response.json();
+    this.leads = result;
+  };
+
+  getAllScripts = async () => {
+    const response = await fetch(`${base_url}/api/scripts`, {
+      method: "GET",
+      headers: {
+        accept: "application/json",
+        Authorization: `${this.token}`,
+      },
+    });
+    const result = await response.json();
+    this.scripts = result;
+  };
+
+  createScript = async (values) => {
+    const response = await fetch(`${base_url}/api/scripts`, {
+      method: "POST",
+      headers: {
+        accept: "application/json",
+        "Content-Type": "application/json",
+        Authorization: `${this.token}`,
+      },
+      body: JSON.stringify(values),
+    });
+    return response.ok;
+  };
+
+  getAllWorks = async () => {
+    const response = await fetch(`${base_url}/api/works`, {
+      method: "GET",
+      headers: {
+        accept: "application/json",
+        Authorization: `${this.token}`,
+      },
+    });
+    const result = await response.json();
+    this.works = result;
+  };
+
+  createWork = async (values) => {
+    const response = await fetch(`${base_url}/api/works`, {
+      method: "POST",
+      headers: {
+        accept: "application/json",
+        "Content-Type": "application/json",
+        Authorization: `${this.token}`,
+      },
+      body: JSON.stringify(values),
+    });
   };
 }
 

@@ -19,9 +19,6 @@ import ModalDeleteLead from "./modal_delete_lead";
 
 const TableLeads = observer(() => {
   const { pageStore } = useStores();
-  useEffect(() => {
-    pageStore.getAllCompanies();
-  }, []);
 
   return (
     <>

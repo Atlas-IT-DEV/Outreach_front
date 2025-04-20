@@ -25,6 +25,7 @@ import { FaDatabase } from "react-icons/fa";
 import { MdAnalytics } from "react-icons/md";
 import { MdEmail } from "react-icons/md";
 import { TbAutomation } from "react-icons/tb";
+import { MdOutlineManageAccounts } from "react-icons/md";
 
 const SideMenu = observer(() => {
   const navigate = useNavigate();
@@ -38,6 +39,7 @@ const SideMenu = observer(() => {
     { label: "База", icon: FaDatabase, href: "/base" },
     { label: "Звонки", icon: IoCallSharp, href: "/calls" },
     { label: "Рассылки", icon: MdEmail, href: "/mailing" },
+    { label: "Управление", icon: MdOutlineManageAccounts, href: "/management" },
   ].filter(Boolean); // Убирает `undefined` из массива
 
   const handleExit = () => {
@@ -46,6 +48,7 @@ const SideMenu = observer(() => {
       Cookies.remove("authed");
       localStorage.clear();
       navigate("/");
+      pageStore.resetData();
     }
   };
 

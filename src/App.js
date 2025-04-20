@@ -11,6 +11,7 @@ import CrmPage from "./pages/crm_page";
 import AutomationPage from "./pages/automation_page";
 import BasePage from "./pages/base_page";
 import MailingPage from "./pages/mailing_page";
+import ManagementPage from "./pages/management_page";
 
 const router = createMemoryRouter([
   {
@@ -60,6 +61,14 @@ const router = createMemoryRouter([
     element: (
       <PageContainer>
         <MailingPage />
+      </PageContainer>
+    ),
+  },
+  {
+    path: "/management",
+    element: (
+      <PageContainer>
+        <ManagementPage />
       </PageContainer>
     ),
   },

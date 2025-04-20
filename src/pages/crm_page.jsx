@@ -1,15 +1,22 @@
 import { Button, HStack, Text, VStack } from "@chakra-ui/react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import Leads from "../components/crm_page/leads";
 import Contacts from "../components/crm_page/contacts";
 import Automation from "../components/crm_page/automation";
 import Tasks from "../components/crm_page/tasks";
 import useWindowDimensions from "../windowDimensions";
+import { observer } from "mobx-react-lite";
+import { useStores } from "../store/store_context";
 
-const CrmPage = () => {
+const CrmPage = observer(() => {
   const [selected, setSelected] = useState([1, 0, 0, 0]);
   const { width } = useWindowDimensions();
+  const { pageStore } = useStores();
+
+  useEffect(() => {
+    pageStore.getAllClients();
+  }, []);
 
   return (
     <VStack
@@ -48,7 +55,7 @@ const CrmPage = () => {
           >
             <Text fontSize={width >= 1000 ? "16px" : "14px"}>Контакты</Text>
           </Button> */}
-          <Button
+          {/* <Button
             width={"100%"}
             border={"1px solid #4682B4"}
             borderRadius={"0px"}
@@ -61,8 +68,8 @@ const CrmPage = () => {
             <Text fontSize={width >= 1000 ? "16px" : "14px"}>
               Автоматизация продаж
             </Text>
-          </Button>
-          <Button
+          </Button> */}
+          {/* <Button
             width={"100%"}
             border={"1px solid #4682B4"}
             boxShadow={"-2px 2px 0 0 #4682B4"}
@@ -75,7 +82,7 @@ const CrmPage = () => {
             <Text fontSize={width >= 1000 ? "16px" : "14px"}>
               Задачи и уведомления
             </Text>
-          </Button>
+          </Button> */}
         </HStack>
       ) : (
         <VStack width={"100%"} gap={"10px"}>
@@ -109,7 +116,7 @@ const CrmPage = () => {
               </Text>
             </Button> */}
           </HStack>
-          <HStack width={"100%"} justify={"space-between"}>
+          {/* <HStack width={"100%"} justify={"space-between"}>
             <Button
               width={"100%"}
               border={"1px solid #4682B4"}
@@ -138,7 +145,7 @@ const CrmPage = () => {
                 Задачи и уведомления
               </Text>
             </Button>
-          </HStack>
+          </HStack> */}
         </VStack>
       )}
 
@@ -153,6 +160,6 @@ const CrmPage = () => {
       )}
     </VStack>
   );
-};
+});
 
 export default CrmPage;

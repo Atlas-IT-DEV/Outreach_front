@@ -38,7 +38,7 @@ const Leads = () => {
             </Text>
           </Button> */}
         <ModalCreateLead />
-        <Button
+        {/* <Button
           boxShadow={"-2px 2px 0 0 #4682B4"}
           borderRadius={"0px"}
           border={"1px solid #4682B4"}
@@ -52,7 +52,7 @@ const Leads = () => {
           <Text fontSize={width >= 1000 ? "16px" : ["13px", "14px"]}>
             Настроить статусы
           </Text>
-        </Button>
+        </Button> */}
       </HStack>
 
       <TableLeads />
