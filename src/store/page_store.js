@@ -13,10 +13,14 @@ class PageStore {
   leads = [];
   scripts = [];
   works = [];
+  call_works = [];
+  mail_works = [];
 
   emailTemplates = [];
   selected_script = {};
   search_elements = [];
+
+  selected_department = null;
 
   constructor() {
     makeAutoObservable(this);
@@ -37,6 +41,18 @@ class PageStore {
 
   setIsOpen = (new_is_open) => {
     this.isOpen = new_is_open;
+  };
+
+  updateSelectedDepartament = (new_dep) => {
+    this.selected_department = new_dep;
+  };
+
+  updateCallWorks = (new_works) => {
+    this.call_works = new_works;
+  };
+
+  updateMailWorks = (new_works) => {
+    this.mail_works = new_works;
   };
 
   login = async (values) => {
@@ -119,6 +135,7 @@ class PageStore {
     });
     return response.ok;
   };
+
   editUser = async (id, values) => {
     const response = await fetch(`${base_url}/api/users/${id}`, {
       method: "PUT",
@@ -135,6 +152,18 @@ class PageStore {
   createClient = async (values) => {
     const response = await fetch(`${base_url}/api/clients`, {
       method: "POST",
+      headers: {
+        accept: "application/json",
+        "Content-Type": "application/json",
+        Authorization: `${this.token}`,
+      },
+      body: JSON.stringify(values),
+    });
+    return response.ok;
+  };
+  editClient = async (id, values) => {
+    const response = await fetch(`${base_url}/api/clients/${id}`, {
+      method: "PUT",
       headers: {
         accept: "application/json",
         "Content-Type": "application/json",
@@ -166,11 +195,25 @@ class PageStore {
     });
     const result = await response.json();
     this.scripts = result;
+    console.log("scripts", result);
   };
 
   createScript = async (values) => {
     const response = await fetch(`${base_url}/api/scripts`, {
       method: "POST",
+      headers: {
+        accept: "application/json",
+        "Content-Type": "application/json",
+        Authorization: `${this.token}`,
+      },
+      body: JSON.stringify(values),
+    });
+    return response.ok;
+  };
+
+  editScript = async (id, values) => {
+    const response = await fetch(`${base_url}/api/scripts/${id}`, {
+      method: "PUT",
       headers: {
         accept: "application/json",
         "Content-Type": "application/json",
@@ -191,6 +234,25 @@ class PageStore {
     });
     const result = await response.json();
     this.works = result;
+    this.updateCallWorks(
+      result?.length != 0
+        ? result.filter(
+            (item) =>
+              item?.department_id == this.selected_department &&
+              item?.obzvon == "1"
+          )
+        : null
+    );
+    this.updateMailWorks(
+      result?.length != 0
+        ? result.filter(
+            (item) =>
+              item?.department_id == this.selected_department &&
+              item?.obzvon == "0"
+          )
+        : null
+    );
+    console.log("works", result);
   };
 
   createWork = async (values) => {
@@ -203,6 +265,20 @@ class PageStore {
       },
       body: JSON.stringify(values),
     });
+    return response.ok;
+  };
+
+  editWork = async (id, values) => {
+    const response = await fetch(`${base_url}/api/works/${id}`, {
+      method: "PUT",
+      headers: {
+        accept: "application/json",
+        "Content-Type": "application/json",
+        Authorization: `${this.token}`,
+      },
+      body: JSON.stringify(values),
+    });
+    return response.ok;
   };
 }
 

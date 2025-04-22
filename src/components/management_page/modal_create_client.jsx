@@ -58,7 +58,6 @@ const ModalCreateClient = observer(() => {
   };
   const onSubmit = async (values) => {
     const ok = await createCompamy(values);
-    console.log("values", values);
     if (ok) {
       await pageStore.getAllCompanies();
       toast({
@@ -96,7 +95,7 @@ const ModalCreateClient = observer(() => {
           height={"auto"}
           minH={width >= 1400 ? "auto" : height}
         >
-          <ModalCloseButton onClick={() => console.log("click")} />
+          <ModalCloseButton />
           <Formik
             initialValues={leadValues}
             validationSchema={validationSchema}
@@ -111,7 +110,6 @@ const ModalCreateClient = observer(() => {
               setFieldValue,
             }) => (
               <Form>
-                {console.log(values)}
                 <VStack
                   bg={"white"}
                   padding={"20px"}

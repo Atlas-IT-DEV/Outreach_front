@@ -16,6 +16,7 @@ const CrmPage = observer(() => {
 
   useEffect(() => {
     pageStore.getAllClients();
+    pageStore.getAllCompanies();
   }, []);
 
   return (

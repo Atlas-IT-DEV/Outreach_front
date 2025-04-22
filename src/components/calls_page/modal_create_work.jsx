@@ -15,50 +15,55 @@ import {
   useToast,
   VStack,
 } from "@chakra-ui/react";
+import { observer } from "mobx-react-lite";
 import useWindowDimensions from "../../windowDimensions";
-import { useStores } from "../../store/store_context";
 import { Form, Formik } from "formik";
 import * as Yup from "yup";
-import { observer } from "mobx-react-lite";
+import { useStores } from "../../store/store_context";
 
-const ModalNewScript = observer(() => {
-  const { width } = useWindowDimensions();
+const ModalCreateWork = observer(() => {
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const { width } = useWindowDimensions();
   const { pageStore } = useStores();
   const toast = useToast();
 
   const initialValues = {
+    automated: true,
+    date_start: "",
     department_id: pageStore.selected_department,
-    is_email: false,
-    is_hiden: false,
+    description: "",
     name: "",
-    text: "",
+    obzvon: "1",
+    time_finish: null,
+    time_start: null,
+    type_work: 0,
   };
 
   const validationSchema = Yup.object({
-    department_id: Yup.number().required("Обязательное поле"),
+    date_start: Yup.string().required("Обязательное поле"),
+    description: Yup.string().required("Обязательное поле"),
     name: Yup.string().required("Обязательное поле"),
-    text: Yup.string().required("Обязательное поле"),
+    time_finish: Yup.number().required("Обязательное поле"),
+    time_start: Yup.number().required("Обязательное поле"),
   });
 
-  const createScript = async (values) => {
-    return await pageStore.createScript(values);
+  const createWork = async (values) => {
+    return await pageStore.createWork(values);
   };
 
   const onSubmit = async (values) => {
-    const ok = await createScript(values);
+    const ok = await createWork(values);
     if (ok) {
-      await pageStore.getAllScripts();
+      await pageStore.getAllWorks();
       toast({
         title: "Успех",
-        description: "Скрипт создан успешно",
+        description: "Ворк успешно создан",
         duration: "3000",
         status: "success",
       });
       onClose();
     }
   };
-
   return (
     <>
       <Button
@@ -70,15 +75,14 @@ const ModalNewScript = observer(() => {
         color={"black"}
         _hover={{ bg: "#4682B4", color: "white" }}
       >
-        <Text fontSize={width >= 1000 ? "16px" : "14px"}>Новый скрипт</Text>
+        <Text fontSize={width >= 1000 ? "16px" : "14px"}>Новый ворк</Text>
       </Button>
-
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
         <ModalContent padding={"20px"}>
           <ModalCloseButton />
           <Text width={"100%"} textAlign={"center"} fontWeight={"600"}>
-            Создание скрипта
+            Создание ворка
           </Text>
           <Formik
             initialValues={initialValues}
@@ -117,23 +121,92 @@ const ModalNewScript = observer(() => {
                       {errors?.name}
                     </FormErrorMessage>
                   </FormControl>
-                  <FormControl isInvalid={errors?.text && touched?.text}>
-                    <Text fontWeight={"500"}>Текст</Text>
+                  <FormControl
+                    isInvalid={errors?.description && touched?.description}
+                  >
+                    <Text fontWeight={"500"}>Описание</Text>
                     <Input
-                      placeholder="Текст"
+                      placeholder="Описание"
                       marginTop={"4px"}
                       border={"2px solid #4682B4"}
                       borderRadius={"0"}
                       _hover={{ border: "2px solid #4682B4" }}
-                      name="text"
+                      name="description"
                       onChange={handleChange}
                       onBlur={handleBlur}
                     />
                     <FormErrorMessage marginTop={"2px"}>
-                      {errors?.text}
+                      {errors?.description}
                     </FormErrorMessage>
                   </FormControl>
-
+                  <FormControl
+                    isInvalid={errors?.date_start && touched?.date_start}
+                  >
+                    <Text fontWeight={"500"}>Дата начала</Text>
+                    <Input
+                      placeholder="Название"
+                      type="date"
+                      marginTop={"4px"}
+                      border={"2px solid #4682B4"}
+                      borderRadius={"0"}
+                      _hover={{ border: "2px solid #4682B4" }}
+                      name="date_start"
+                      onChange={(e) =>
+                        setFieldValue(
+                          "date_start",
+                          new Date(e.target.value).toISOString()
+                        )
+                      }
+                    />
+                    <FormErrorMessage marginTop={"2px"}>
+                      {errors?.date_start}
+                    </FormErrorMessage>
+                  </FormControl>
+                  <Text fontWeight={"500"}>Время работы</Text>
+                  <HStack width={"100%"} justify={"space-between"}>
+                    <FormControl
+                      isInvalid={errors?.time_start && touched?.time_start}
+                    >
+                      <Text fontWeight={"500"}>С</Text>
+                      <Input
+                        placeholder="C"
+                        marginTop={"4px"}
+                        border={"2px solid #4682B4"}
+                        borderRadius={"0"}
+                        _hover={{ border: "2px solid #4682B4" }}
+                        name="time_start"
+                        value={values?.time_start}
+                        onChange={(e) =>
+                          setFieldValue("time_start", Number(e.target.value))
+                        }
+                        onBlur={handleBlur}
+                      />
+                      <FormErrorMessage marginTop={"2px"}>
+                        {errors?.time_start}
+                      </FormErrorMessage>
+                    </FormControl>
+                    <FormControl
+                      isInvalid={errors?.time_finish && touched?.time_finish}
+                    >
+                      <Text fontWeight={"500"}>До</Text>
+                      <Input
+                        placeholder="До"
+                        marginTop={"4px"}
+                        border={"2px solid #4682B4"}
+                        borderRadius={"0"}
+                        _hover={{ border: "2px solid #4682B4" }}
+                        name="time_finish"
+                        value={values?.time_finish}
+                        onChange={(e) =>
+                          setFieldValue("time_finish", Number(e.target.value))
+                        }
+                        onBlur={handleBlur}
+                      />
+                      <FormErrorMessage marginTop={"2px"}>
+                        {errors?.time_finish}
+                      </FormErrorMessage>
+                    </FormControl>
+                  </HStack>
                   <HStack
                     marginTop={"20px"}
                     justify={"flex-end"}
@@ -174,4 +247,4 @@ const ModalNewScript = observer(() => {
   );
 });
 
-export default ModalNewScript;
+export default ModalCreateWork;

@@ -1,14 +1,25 @@
 import { Button, HStack, Stack, Text, VStack } from "@chakra-ui/react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import Scripts from "../components/calls_page/scripts";
 import Reports from "../components/calls_page/reports";
 import Journal from "../components/calls_page/journal";
 import useWindowDimensions from "../windowDimensions";
+import { useStores } from "../store/store_context";
+import { observer } from "mobx-react-lite";
 
-const CallsPage = () => {
+const CallsPage = observer(() => {
   const [selected, setSelected] = useState([1, 0, 0, 0]);
   const { width } = useWindowDimensions();
+  const { pageStore } = useStores();
+  useEffect(() => {
+    pageStore.getAllWorks();
+    pageStore.getAllScripts();
+  }, []);
+
+  useEffect(() => {
+    pageStore.updateSelectedScript({});
+  }, [selected]);
 
   return (
     <VStack
@@ -69,6 +80,6 @@ const CallsPage = () => {
       )}
     </VStack>
   );
-};
+});
 
 export default CallsPage;

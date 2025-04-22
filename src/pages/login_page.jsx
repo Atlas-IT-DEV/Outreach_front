@@ -73,19 +73,6 @@ const LoginPage = () => {
         </Text>
         <LoginForm />
 
-        {/* <HStack
-          border="1px solid #4682B4"
-          _hover={{ bg: "#4682B4", color: "white" }}
-          padding={"5px 15px"}
-          borderRadius={"8px"}
-          cursor={"pointer"}
-        >
-          <Text color={"black"} fontWeight={500}>
-            Вход
-          </Text>
-          <FcGoogle />
-        </HStack> */}
-
         <Flex justify="center" mt={4}>
           <Link color="#4682B4" href="#" fontSize="sm" onClick={() => onOpen()}>
             Забыли пароль?

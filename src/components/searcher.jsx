@@ -29,7 +29,7 @@ const Searcher = ({
 
   useEffect(() => {
     searchProduct();
-    console.log(pageStore.search_elements);
+    console.log("searcher", pageStore.search_elements);
   }, [searchValue]);
   return (
     <VStack

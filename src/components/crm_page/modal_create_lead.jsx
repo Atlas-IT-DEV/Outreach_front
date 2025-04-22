@@ -5,7 +5,6 @@ import {
   HStack,
   Input,
   Modal,
-  ModalBody,
   ModalCloseButton,
   ModalContent,
   ModalOverlay,
@@ -26,41 +25,32 @@ const ModalCreateLead = observer(() => {
   const { pageStore } = useStores();
   const toast = useToast();
 
-  const leadValues = {
-    name: "",
-    description: "",
-    director: {
-      first_name: "",
-      last_name: "",
-      password: "",
-      phone: "",
-      username: "",
-    },
+  const clientValues = {
+    additions: "",
+    email: "",
+    first_name: "",
+    last_name: "",
+    phone: "",
   };
 
   const validationSchema = Yup.object({
-    director: Yup.object().shape({
-      first_name: Yup.string().required("Обязательное поле"),
-      last_name: Yup.string().required("Обязательное поле"),
-      password: Yup.string().required("Обязательное поле"),
-      phone: Yup.string()
-        .required("Обязательное поле")
-        .min(11, "Номер слишком короткий")
-        .max(15, "Номер слишком длинный"),
-      username: Yup.string().required("Обязательное поле"),
-    }),
-    name: Yup.string().required("Обязательное поле"),
-    description: Yup.string().required("Обязательное поле"),
+    first_name: Yup.string().required("Обязательное поле"),
+    last_name: Yup.string().required("Обязательное поле"),
+    phone: Yup.string()
+      .required("Обязательное поле")
+      .min(11, "Номер слишком короткий")
+      .max(15, "Номер слишком длинный"),
+    email: Yup.string().required("Обязательное поле"),
+    additions: Yup.string().required("Обязательное поле"),
   });
 
-  const createCompamy = async (values) => {
-    return await pageStore.createCompamy(values);
+  const createClient = async (values) => {
+    return await pageStore.createClient(values);
   };
   const onSubmit = async (values) => {
-    const ok = await createCompamy(values);
-    console.log("values", values);
+    const ok = await createClient(values);
     if (ok) {
-      await pageStore.getAllCompanies();
+      await pageStore.getAllClients();
       toast({
         title: "Успех",
         description: "Новый лид успешно создан",
@@ -96,9 +86,9 @@ const ModalCreateLead = observer(() => {
           height={"auto"}
           minH={width >= 1400 ? "auto" : height}
         >
-          <ModalCloseButton onClick={() => console.log("click")} />
+          <ModalCloseButton />
           <Formik
-            initialValues={leadValues}
+            initialValues={clientValues}
             validationSchema={validationSchema}
             onSubmit={onSubmit}
           >
@@ -111,7 +101,6 @@ const ModalCreateLead = observer(() => {
               setFieldValue,
             }) => (
               <Form>
-                {console.log(values)}
                 <VStack
                   bg={"white"}
                   padding={"20px"}
@@ -124,55 +113,7 @@ const ModalCreateLead = observer(() => {
                   </Text>
                   <VStack width={"100%"} gap={"10px"} marginTop={"10px"}>
                     <FormControl
-                      isInvalid={
-                        errors?.director?.username &&
-                        touched?.director?.username
-                      }
-                    >
-                      <Text fontWeight={"500"}>Никнейм</Text>
-                      <Input
-                        placeholder="Никнейм"
-                        marginTop={"4px"}
-                        border={"2px solid #4682B4"}
-                        borderRadius={"0"}
-                        _hover={{ border: "2px solid #4682B4" }}
-                        name="director.username"
-                        onChange={handleChange}
-                        onBlur={handleBlur}
-                      />
-                      <FormErrorMessage marginTop={"2px"}>
-                        {errors?.director?.username}
-                      </FormErrorMessage>
-                    </FormControl>
-
-                    <FormControl
-                      isInvalid={
-                        errors?.director?.password &&
-                        touched?.director?.password
-                      }
-                    >
-                      <Text fontWeight={"500"}>Пароль</Text>
-                      <Input
-                        placeholder="Пароль"
-                        type="password"
-                        marginTop={"4px"}
-                        border={"2px solid #4682B4"}
-                        borderRadius={"0"}
-                        _hover={{ border: "2px solid #4682B4" }}
-                        name="director.password"
-                        onChange={handleChange}
-                        onBlur={handleBlur}
-                      />
-                      <FormErrorMessage marginTop={"2px"}>
-                        {errors?.director?.password}
-                      </FormErrorMessage>
-                    </FormControl>
-
-                    <FormControl
-                      isInvalid={
-                        errors?.director?.last_name &&
-                        touched?.director?.last_name
-                      }
+                      isInvalid={errors?.last_name && touched?.last_name}
                     >
                       <Text fontWeight={"500"}>Фамилия</Text>
                       <Input
@@ -181,20 +122,17 @@ const ModalCreateLead = observer(() => {
                         border={"2px solid #4682B4"}
                         borderRadius={"0"}
                         _hover={{ border: "2px solid #4682B4" }}
-                        name="director.last_name"
+                        name="last_name"
                         onChange={handleChange}
                         onBlur={handleBlur}
                       />
                       <FormErrorMessage marginTop={"2px"}>
-                        {errors?.director?.last_name}
+                        {errors?.last_name}
                       </FormErrorMessage>
                     </FormControl>
 
                     <FormControl
-                      isInvalid={
-                        errors?.director?.first_name &&
-                        touched?.director?.first_name
-                      }
+                      isInvalid={errors?.first_name && touched?.first_name}
                     >
                       <Text fontWeight={"500"}>Имя</Text>
                       <Input
@@ -203,20 +141,16 @@ const ModalCreateLead = observer(() => {
                         border={"2px solid #4682B4"}
                         borderRadius={"0"}
                         _hover={{ border: "2px solid #4682B4" }}
-                        name="director.first_name"
+                        name="first_name"
                         onChange={handleChange}
                         onBlur={handleBlur}
                       />
                       <FormErrorMessage marginTop={"2px"}>
-                        {errors?.director?.first_name}
+                        {errors?.first_name}
                       </FormErrorMessage>
                     </FormControl>
 
-                    <FormControl
-                      isInvalid={
-                        errors?.director?.phone && touched?.director?.phone
-                      }
-                    >
+                    <FormControl isInvalid={errors?.phone && touched?.phone}>
                       <Text fontWeight={"500"}>Номер телефона</Text>
                       <Input
                         placeholder="Номер телефона"
@@ -224,7 +158,7 @@ const ModalCreateLead = observer(() => {
                         border={"2px solid #4682B4"}
                         borderRadius={"0"}
                         _hover={{ border: "2px solid #4682B4" }}
-                        name="director.phone"
+                        name="phone"
                         onChange={handleChange}
                         onBlur={handleBlur}
                       />
@@ -233,38 +167,38 @@ const ModalCreateLead = observer(() => {
                       </FormErrorMessage>
                     </FormControl>
 
-                    <FormControl isInvalid={errors?.name && touched?.name}>
-                      <Text fontWeight={"500"}>Название компаниии</Text>
+                    <FormControl isInvalid={errors?.email && touched?.email}>
+                      <Text fontWeight={"500"}>email</Text>
                       <Input
-                        placeholder="Название компании"
+                        placeholder="Email"
                         marginTop={"4px"}
                         border={"2px solid #4682B4"}
                         borderRadius={"0"}
                         _hover={{ border: "2px solid #4682B4" }}
-                        name="name"
+                        name="email"
                         onChange={handleChange}
                         onBlur={handleBlur}
                       />
                       <FormErrorMessage marginTop={"2px"}>
-                        {errors?.name}
+                        {errors?.email}
                       </FormErrorMessage>
                     </FormControl>
                     <FormControl
-                      isInvalid={errors?.description && touched?.description}
+                      isInvalid={errors?.additions && touched?.additions}
                     >
-                      <Text fontWeight={"500"}>Описание компании</Text>
+                      <Text fontWeight={"500"}>Доп. информация</Text>
                       <Input
-                        placeholder="Описание компании"
+                        placeholder="Доп. информация"
                         marginTop={"4px"}
                         border={"2px solid #4682B4"}
                         borderRadius={"0"}
                         _hover={{ border: "2px solid #4682B4" }}
-                        name="description"
+                        name="additions"
                         onChange={handleChange}
                         onBlur={handleBlur}
                       />
                       <FormErrorMessage marginTop={"2px"}>
-                        {errors?.description}
+                        {errors?.additions}
                       </FormErrorMessage>
                     </FormControl>
                   </VStack>

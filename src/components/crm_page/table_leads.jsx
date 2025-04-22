@@ -144,22 +144,25 @@ const TableLeads = observer(() => {
           <Thead bg={"#4682B4"} borderBottom={"none"}>
             <Tr borderBottom={"2px solid #4682B4"}>
               <Th color={"white"}>
-                <Text>Лид</Text>
+                <Text>Фамилия</Text>
               </Th>
               <Th color={"white"}>
-                <Text>Тип звонка</Text>
+                <Text>Имя</Text>
               </Th>
               <Th color={"white"}>
-                <Text>Статус звонка</Text>
+                <Text>Email</Text>
               </Th>
               <Th color={"white"}>
-                <Text>Стадия</Text>
+                <Text>Номер телефона</Text>
               </Th>
               <Th color={"white"}>
-                <Text>Дата создания</Text>
+                <Text>Компания</Text>
               </Th>
               <Th color={"white"}>
-                <Text>Ответственный</Text>
+                <Text>Доп. информация</Text>
+              </Th>
+              <Th color={"white"}>
+                <Text>Создатель</Text>
               </Th>
               <Th color={"white"}>
                 <Text></Text>
@@ -170,56 +173,26 @@ const TableLeads = observer(() => {
             {pageStore.leads?.length > 0
               ? pageStore.leads?.map((item, index) => (
                   <Tr color={"black"} key={index}>
-                    {console.log("item", item)}
                     <Td border={"1px solid rgba(200,200,200,1)"}>
-                      <Text>{item?.director?.phone}</Text>
+                      <Text>{item?.last_name || "-"}</Text>
                     </Td>
                     <Td border={"1px solid rgba(200,200,200,1)"}>
-                      <Text>{item?.callType ?? "-"}</Text>
+                      <Text>{item?.first_name || "-"}</Text>
                     </Td>
                     <Td border={"1px solid rgba(200,200,200,1)"}>
-                      <Text>{item?.callStatus ?? "-"}</Text>
+                      <Text>{item?.email || "-"}</Text>
                     </Td>
                     <Td border={"1px solid rgba(200,200,200,1)"}>
-                      <VStack align={"flex-start"} gap={"2px"}>
-                        <HStack width={"100%"} gap={0}>
-                          <Stack
-                            height={"10px"}
-                            width={"100%"}
-                            border={"1px solid #4682B4"}
-                            borderRadius={"4px"}
-                            bg={"#4682B4"}
-                          ></Stack>
-                          <Stack
-                            height={"10px"}
-                            width={"100%"}
-                            border={"1px solid #4682B4"}
-                            borderRadius={"4px"}
-                          ></Stack>
-                          <Stack
-                            height={"10px"}
-                            width={"100%"}
-                            border={"1px solid #4682B4"}
-                            borderRadius={"4px"}
-                          ></Stack>
-                          <Stack
-                            height={"10px"}
-                            width={"100%"}
-                            border={"1px solid #4682B4"}
-                            borderRadius={"4px"}
-                          ></Stack>
-                        </HStack>
-
-                        <Text>Новый лид</Text>
-                      </VStack>
+                      <Text>{item?.phone || "-"}</Text>
                     </Td>
                     <Td border={"1px solid rgba(200,200,200,1)"}>
-                      <Text>
-                        {new Date(item?.CreatedAt).toLocaleDateString() ?? "-"}
-                      </Text>
+                      <Text>{item?.company?.name || "-"}</Text>
                     </Td>
                     <Td border={"1px solid rgba(200,200,200,1)"}>
-                      <Text>{item?.responsible ?? "-"}</Text>
+                      <Text>{item?.additions || "-"}</Text>
+                    </Td>
+                    <Td border={"1px solid rgba(200,200,200,1)"}>
+                      <Text>{item?.creator || "-"}</Text>
                     </Td>
                     <Td
                       width={"min-content"}

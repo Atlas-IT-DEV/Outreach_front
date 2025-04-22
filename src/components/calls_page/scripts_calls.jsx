@@ -14,7 +14,7 @@ const Patterns = () => {
       <HStack width={"100%"} justify={"space-between"} align={"flex-start"}>
         <VStack width={"40%"} padding={"10px"}>
           <Text fontWeight={"600"} color={"black"}>
-            Шаблоны
+            Скрипты
           </Text>
           <HStack
             marginTop={"10px"}

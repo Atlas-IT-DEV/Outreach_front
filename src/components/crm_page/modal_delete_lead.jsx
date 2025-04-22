@@ -18,9 +18,9 @@ const ModalDeleteLead = observer(({ obj = {} }) => {
   const { pageStore } = useStores();
   const toast = useToast();
 
-  const deleteCompany = async () => {
+  const deleteClient = async () => {
     const response = await fetch(
-      `http://158.255.7.7:8081/api/companies/${obj?.ID}`,
+      `http://158.255.7.7:8081/api/clients/${obj?.ID}`,
       {
         method: "DELETE",
         headers: {
@@ -31,10 +31,10 @@ const ModalDeleteLead = observer(({ obj = {} }) => {
     );
     return response.ok;
   };
-  const handleDeleteCompany = async () => {
-    const ok = await deleteCompany();
+  const handleDeleteClient = async () => {
+    const ok = await deleteClient();
     if (ok) {
-      await pageStore.getAllCompanies();
+      await pageStore.getAllClients();
       toast({
         title: "Успех",
         description: "Лид успешно удален",
@@ -68,7 +68,7 @@ const ModalDeleteLead = observer(({ obj = {} }) => {
           height={"auto"}
           padding={"20px"}
         >
-          <ModalCloseButton onClick={() => console.log("click")} />
+          <ModalCloseButton />
           <Text width={"100%"} textAlign={"center"} fontWeight={"600"}>
             Удалить лида?
           </Text>
@@ -86,7 +86,7 @@ const ModalDeleteLead = observer(({ obj = {} }) => {
               <Text>Отменить</Text>
             </Button>
             <Button
-              onClick={async () => await handleDeleteCompany()}
+              onClick={async () => await handleDeleteClient()}
               boxShadow={"-2px 2px 0 0 #4682B4"}
               borderRadius={"0px"}
               border={"1px solid #4682B4"}

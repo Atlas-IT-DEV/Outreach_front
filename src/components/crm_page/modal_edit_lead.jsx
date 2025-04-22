@@ -30,63 +30,34 @@ const ModalEditLead = observer(({ obj = {} }) => {
   const [editCompanies, setEditCompanies] = useState(false);
   const [editUsers, setEditUsers] = useState(false);
 
-  const editUser = async (id, values) => {
-    return await pageStore.editUser(id, values);
+  const editClient = async (id, values) => {
+    return await pageStore.editClient(id, values);
   };
 
-  const editCompany = async (id, values) => {
-    return await pageStore.editCompany(id, values);
+  const clientValues = {
+    additions: obj?.additions,
+    email: obj?.email,
+    first_name: obj?.first_name,
+    last_name: obj?.last_name,
+    phone: obj?.phone,
   };
 
-  const userValues = {
-    first_name: obj?.director?.first_name,
-    last_name: obj?.director?.last_name,
-    phone: obj?.director?.phone,
-    // убрать
-    role: 1,
-    username: obj?.director?.username,
-  };
-
-  const companyValues = {
-    name: obj?.name,
-    description: obj?.description,
-  };
-
-  const userValidationSchema = Yup.object({
+  const clientValidationSchema = Yup.object({
+    additions: Yup.string().required("Обязательное поле"),
+    email: Yup.string().required("Обязательное поле"),
     first_name: Yup.string().required("Обязательное поле"),
     last_name: Yup.string().required("Обязательное поле"),
     phone: Yup.string().required("Обязательное поле"),
-    // убрать
-    username: Yup.string().required("Обязательное поле"),
-  });
-
-  const companyValidationSchema = Yup.object({
-    name: Yup.string().required("Обязательное поле"),
-    description: Yup.string().required("Обязательное поле"),
   });
 
   const onUserSumbit = async (values) => {
-    const ok = await editUser(obj?.director?.ID, values);
+    const ok = await editClient(obj?.ID, values);
     if (ok) {
       setEditUsers(false);
-      await pageStore.getAllCompanies();
+      await pageStore.getAllClients();
       toast({
         title: "Успех",
         description: "Данные об админе обновлены",
-        status: "success",
-        duration: 3000,
-      });
-    }
-  };
-
-  const onCompanySubmit = async (values) => {
-    const ok = await editCompany(obj?.ID, values);
-    if (ok) {
-      setEditCompanies(false);
-      await pageStore.getAllCompanies();
-      toast({
-        title: "Успех",
-        description: "Данные о компании обновлены",
         status: "success",
         duration: 3000,
       });
@@ -141,8 +112,8 @@ const ModalEditLead = observer(({ obj = {} }) => {
           >
             {editUsers ? (
               <Formik
-                initialValues={userValues}
-                validationSchema={userValidationSchema}
+                initialValues={clientValues}
+                validationSchema={clientValidationSchema}
                 onSubmit={onUserSumbit}
               >
                 {({
@@ -165,27 +136,8 @@ const ModalEditLead = observer(({ obj = {} }) => {
                         width={"100%"}
                         textAlign={"center"}
                       >
-                        Редактирование админа
+                        Редактирование клиента
                       </Text>
-                      <FormControl
-                        isInvalid={errors?.username && touched?.username}
-                      >
-                        <Text fontWeight={"500"}>Никнейм</Text>
-                        <Input
-                          value={values?.username}
-                          placeholder="Никнейм"
-                          marginTop={"4px"}
-                          border={"2px solid #4682B4"}
-                          borderRadius={"0"}
-                          _hover={{ border: "2px solid #4682B4" }}
-                          name="username"
-                          onChange={handleChange}
-                          onBlur={handleBlur}
-                        />
-                        <FormErrorMessage marginTop={"2px"}>
-                          {errors?.username}
-                        </FormErrorMessage>
-                      </FormControl>
                       <FormControl
                         isInvalid={errors?.last_name && touched?.last_name}
                       >
@@ -226,6 +178,24 @@ const ModalEditLead = observer(({ obj = {} }) => {
                           {errors?.first_name}
                         </FormErrorMessage>
                       </FormControl>
+                      <FormControl isInvalid={errors?.email && touched?.email}>
+                        <Text fontWeight={"500"}>Email</Text>
+                        <Input
+                          value={values?.email}
+                          placeholder="Email"
+                          width={"100%"}
+                          marginTop={"4px"}
+                          border={"2px solid #4682B4"}
+                          borderRadius={"0"}
+                          _hover={{ border: "2px solid #4682B4" }}
+                          name="email"
+                          onChange={handleChange}
+                          onBlur={handleBlur}
+                        />
+                        <FormErrorMessage marginTop={"2px"}>
+                          {errors?.email}
+                        </FormErrorMessage>
+                      </FormControl>
                       <FormControl isInvalid={errors?.phone && touched?.phone}>
                         <Text fontWeight={"500"}>Номер телефона</Text>
                         <Input
@@ -242,6 +212,26 @@ const ModalEditLead = observer(({ obj = {} }) => {
                         />
                         <FormErrorMessage marginTop={"2px"}>
                           {errors?.phone}
+                        </FormErrorMessage>
+                      </FormControl>
+                      <FormControl
+                        isInvalid={errors?.additions && touched?.additions}
+                      >
+                        <Text fontWeight={"500"}>Доп. информация</Text>
+                        <Input
+                          value={values?.additions}
+                          placeholder="Доп. информация"
+                          width={"100%"}
+                          marginTop={"4px"}
+                          border={"2px solid #4682B4"}
+                          borderRadius={"0"}
+                          _hover={{ border: "2px solid #4682B4" }}
+                          name="additions"
+                          onChange={handleChange}
+                          onBlur={handleBlur}
+                        />
+                        <FormErrorMessage marginTop={"2px"}>
+                          {errors?.additions}
                         </FormErrorMessage>
                       </FormControl>
                       <HStack width={"100%"} justify={"center"}>
@@ -278,16 +268,7 @@ const ModalEditLead = observer(({ obj = {} }) => {
               </Formik>
             ) : (
               <VStack width={"100%"} gap={"5px"}>
-                <Text fontWeight={"600"}>Информация об админе</Text>
-                <VStack
-                  align={"flex-start"}
-                  justify={"flex-start"}
-                  width={"100%"}
-                  gap={0}
-                >
-                  <Text fontWeight={"500"}>Никнейм</Text>
-                  <Text fontSize={"14px"}>{obj?.director?.username}</Text>
-                </VStack>
+                <Text fontWeight={"600"}>Информация о клиенте</Text>
                 <VStack
                   align={"flex-start"}
                   justify={"flex-start"}
@@ -295,7 +276,7 @@ const ModalEditLead = observer(({ obj = {} }) => {
                   gap={0}
                 >
                   <Text fontWeight={"500"}>Фамилия</Text>
-                  <Text fontSize={"14px"}>{obj?.director?.last_name}</Text>
+                  <Text fontSize={"14px"}>{obj?.last_name || "-"}</Text>
                 </VStack>
                 <VStack
                   align={"flex-start"}
@@ -304,7 +285,16 @@ const ModalEditLead = observer(({ obj = {} }) => {
                   gap={0}
                 >
                   <Text fontWeight={"500"}>Имя</Text>
-                  <Text fontSize={"14px"}>{obj?.director?.first_name}</Text>
+                  <Text fontSize={"14px"}>{obj?.first_name || "-"}</Text>
+                </VStack>
+                <VStack
+                  align={"flex-start"}
+                  justify={"flex-start"}
+                  width={"100%"}
+                  gap={0}
+                >
+                  <Text fontWeight={"500"}>Email</Text>
+                  <Text fontSize={"14px"}>{obj?.email || "-"}</Text>
                 </VStack>
                 <VStack
                   align={"flex-start"}
@@ -313,7 +303,16 @@ const ModalEditLead = observer(({ obj = {} }) => {
                   gap={0}
                 >
                   <Text fontWeight={"500"}>Номер телефона</Text>
-                  <Text fontSize={"14px"}>{obj?.director?.phone}</Text>
+                  <Text fontSize={"14px"}>{obj?.phone || "-"}</Text>
+                </VStack>
+                <VStack
+                  align={"flex-start"}
+                  justify={"flex-start"}
+                  width={"100%"}
+                  gap={0}
+                >
+                  <Text fontWeight={"500"}>Доп. информация</Text>
+                  <Text fontSize={"14px"}>{obj?.additions || "-"}</Text>
                 </VStack>
                 <Button
                   onClick={() => setEditUsers(true)}
@@ -326,150 +325,13 @@ const ModalEditLead = observer(({ obj = {} }) => {
                   flexShrink={0}
                   marginTop={"20px"}
                 >
-                  <Text>Редактировать админа</Text>
-                </Button>
-              </VStack>
-            )}
-
-            {editCompanies ? (
-              <Formik
-                initialValues={companyValues}
-                validationSchema={companyValidationSchema}
-                onSubmit={onCompanySubmit}
-              >
-                {({
-                  values,
-                  errors,
-                  touched,
-                  handleChange,
-                  handleBlur,
-                  setFieldValue,
-                }) => (
-                  <Form style={{ width: "100%" }}>
-                    <VStack
-                      width={"100%"}
-                      align={"flex-start"}
-                      justify={"flex-start"}
-                      marginTop={"20px"}
-                    >
-                      <Text
-                        fontWeight={"600"}
-                        width={"100%"}
-                        textAlign={"center"}
-                      >
-                        Редактирование компании
-                      </Text>
-                      <FormControl isInvalid={errors?.name && touched?.name}>
-                        <Text fontWeight={"500"}>Название компаниии</Text>
-                        <Input
-                          value={values?.name}
-                          placeholder="Название компании"
-                          marginTop={"4px"}
-                          border={"2px solid #4682B4"}
-                          borderRadius={"0"}
-                          _hover={{ border: "2px solid #4682B4" }}
-                          name="name"
-                          onChange={handleChange}
-                          onBlur={handleBlur}
-                        />
-                        <FormErrorMessage marginTop={"2px"}>
-                          {errors?.name}
-                        </FormErrorMessage>
-                      </FormControl>
-                      <FormControl
-                        isInvalid={errors?.description && touched?.description}
-                      >
-                        <Text fontWeight={"500"}>Описание компании</Text>
-                        <Input
-                          value={values?.description}
-                          placeholder="Описание компании"
-                          width={"100%"}
-                          marginTop={"4px"}
-                          border={"2px solid #4682B4"}
-                          borderRadius={"0"}
-                          _hover={{ border: "2px solid #4682B4" }}
-                          name="description"
-                          onChange={handleChange}
-                          onBlur={handleBlur}
-                        />
-                        <FormErrorMessage marginTop={"2px"}>
-                          {errors?.description}
-                        </FormErrorMessage>
-                      </FormControl>
-                      <HStack width={"100%"} justify={"center"}>
-                        <Button
-                          onClick={() => setEditCompanies(false)}
-                          boxShadow={"-2px 2px 0 0 #4682B4"}
-                          borderRadius={"0px"}
-                          border={"1px solid #4682B4"}
-                          bg={"white"}
-                          color={"black"}
-                          _hover={{ bg: "#4682B4", color: "white" }}
-                          flexShrink={0}
-                          marginTop={"20px"}
-                        >
-                          <Text>Отменить</Text>
-                        </Button>
-                        <Button
-                          type="submit"
-                          boxShadow={"-2px 2px 0 0 #4682B4"}
-                          borderRadius={"0px"}
-                          border={"1px solid #4682B4"}
-                          bg={"white"}
-                          color={"black"}
-                          _hover={{ bg: "#4682B4", color: "white" }}
-                          flexShrink={0}
-                          marginTop={"20px"}
-                        >
-                          <Text>Сохранить</Text>
-                        </Button>
-                      </HStack>
-                    </VStack>
-                  </Form>
-                )}
-              </Formik>
-            ) : (
-              <VStack width={"100%"} gap={"5px"} marginTop={"20px"}>
-                <Text fontWeight={"600"}>Информация о компании</Text>
-                <VStack
-                  align={"flex-start"}
-                  justify={"flex-start"}
-                  width={"100%"}
-                  gap={0}
-                >
-                  <Text fontWeight={"500"}>Название</Text>
-                  <Text fontSize={"14px"}>{obj?.name}</Text>
-                </VStack>
-                <VStack
-                  align={"flex-start"}
-                  justify={"flex-start"}
-                  width={"100%"}
-                  gap={0}
-                >
-                  <Text fontWeight={"500"}>Описание</Text>
-                  <Text fontSize={"14px"}>{obj?.description}</Text>
-                </VStack>
-                <Button
-                  onClick={() => setEditCompanies(true)}
-                  boxShadow={"-2px 2px 0 0 #4682B4"}
-                  borderRadius={"0px"}
-                  border={"1px solid #4682B4"}
-                  bg={"white"}
-                  color={"black"}
-                  _hover={{ bg: "#4682B4", color: "white" }}
-                  flexShrink={0}
-                  marginTop={"20px"}
-                >
-                  <Text>Редактировать компанию</Text>
+                  <Text>Редактировать клиента</Text>
                 </Button>
               </VStack>
             )}
 
             <VStack width={"100%"} gap={"10px"} marginTop={"10px"}></VStack>
           </VStack>
-          {/* </Form>
-            )}
-          </Formik> */}
           <HStack width={"100%"} justifyContent={"flex-end"}>
             <Button
               onClick={() => {

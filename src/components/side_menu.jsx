@@ -112,7 +112,10 @@ const SideMenu = observer(() => {
                 _hover={{ bg: "rgba(240,240,240,1)" }}
                 py="2"
                 px="4"
-                onClick={() => navigate(item.href)}
+                onClick={() => {
+                  navigate(item.href);
+                  pageStore.updateSelectedScript({});
+                }}
                 display="flex"
                 alignItems="center"
               >

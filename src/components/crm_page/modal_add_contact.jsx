@@ -66,7 +66,7 @@ const ModalAddContact = () => {
           overflow={"hidden"}
           overflowY={"scroll"}
         >
-          <ModalCloseButton onClick={() => console.log("click")} />
+          <ModalCloseButton />
           <Formik
             initialValues={leadValues}
             validationSchema={validationSchema}

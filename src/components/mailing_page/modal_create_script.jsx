@@ -21,7 +21,7 @@ import { Form, Formik } from "formik";
 import * as Yup from "yup";
 import { observer } from "mobx-react-lite";
 
-const ModalNewScript = observer(() => {
+const ModalCreateScript = observer(() => {
   const { width } = useWindowDimensions();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { pageStore } = useStores();
@@ -29,7 +29,7 @@ const ModalNewScript = observer(() => {
 
   const initialValues = {
     department_id: pageStore.selected_department,
-    is_email: false,
+    is_email: true,
     is_hiden: false,
     name: "",
     text: "",
@@ -174,4 +174,4 @@ const ModalNewScript = observer(() => {
   );
 });
 
-export default ModalNewScript;
+export default ModalCreateScript;

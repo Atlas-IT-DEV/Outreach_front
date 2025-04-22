@@ -22,8 +22,6 @@ const TableClients = observer(() => {
     pageStore.getAllCompanies();
   }, []);
 
-  console.log("search", pageStore.search_elements);
-
   return (
     <>
       {pageStore.search_elements?.length != 0 && (
@@ -147,7 +145,6 @@ const TableClients = observer(() => {
             {pageStore.clients?.length > 0
               ? pageStore.clients?.map((item, index) => (
                   <Tr color={"black"} key={index}>
-                    {console.log("item", item)}
                     <Td border={"1px solid rgba(200,200,200,1)"}>
                       <Text>{item?.director?.username}</Text>
                     </Td>

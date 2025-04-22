@@ -1,14 +1,26 @@
 import { Button, HStack, Stack, Text, VStack } from "@chakra-ui/react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import Journal from "../components/mailing_page/journal";
 import Report from "../components/mailing_page/report";
 import useWindowDimensions from "../windowDimensions";
 import TableScripts from "../components/table_scripts";
+import { useStores } from "../store/store_context";
+import Scripts from "../components/mailing_page/scripts";
 
 const MailingPage = () => {
   const [selected, setSelected] = useState([1, 0, 0]);
   const { width } = useWindowDimensions();
+  const { pageStore } = useStores();
+
+  useEffect(() => {
+    pageStore.getAllWorks();
+    pageStore.getAllScripts();
+  }, []);
+
+  useEffect(() => {
+    pageStore.updateSelectedScript({});
+  }, [selected]);
 
   return (
     <VStack
@@ -44,7 +56,7 @@ const MailingPage = () => {
           onClick={() => setSelected([0, 1, 0])}
           _hover={{ bg: "#4682B4", color: "white" }}
         >
-          <Text fontSize={width >= 1000 ? "16px" : "14px"}>Шаблоны</Text>
+          <Text fontSize={width >= 1000 ? "16px" : "14px"}>Скрипты</Text>
         </Button>
         <Button
           width={"100%"}
@@ -62,7 +74,7 @@ const MailingPage = () => {
       {selected[0] == 1 ? (
         <Journal />
       ) : selected[1] == 1 ? (
-        <TableScripts />
+        <Scripts />
       ) : (
         <Report />
       )}
