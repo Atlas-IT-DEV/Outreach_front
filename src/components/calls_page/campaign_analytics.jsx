@@ -103,7 +103,7 @@ const CampaignAnalytics = () => {
   };
 
   return (
-    <Box p={1} marginTop={"20px"}>
+    <Box p={1} marginTop={"10px"}>
       <HStack
         spacing={6}
         align="stretch"

@@ -14,34 +14,30 @@ import {
   DrawerBody,
   useDisclosure,
 } from "@chakra-ui/react";
-import { FaRegQuestionCircle, FaUser, FaFileVideo } from "react-icons/fa";
-import { MdOutlineFactCheck, MdMenu, MdClose } from "react-icons/md";
-import { FaAddressBook } from "react-icons/fa6";
+import { MdMenu } from "react-icons/md";
 import { useNavigate } from "react-router";
 import { useStores } from "../store/store_context";
 import { observer } from "mobx-react-lite";
 import Cookies from "js-cookie";
 import useWindowDimensions from "../windowDimensions";
 import { IoCallSharp } from "react-icons/io5";
-import { MdCallSplit } from "react-icons/md";
 import { FaDatabase } from "react-icons/fa";
 import { MdAnalytics } from "react-icons/md";
 import { MdEmail } from "react-icons/md";
-import { PiStrategyBold } from "react-icons/pi";
+import { TbAutomation } from "react-icons/tb";
 
 const SideMenu = observer(() => {
   const navigate = useNavigate();
-  const { mainStore, pageStore } = useStores();
+  const { pageStore } = useStores();
   const { width } = useWindowDimensions();
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   const menuItems = [
-    { label: "Дэшборд", icon: FaRegQuestionCircle, href: "/main" },
+    { label: "CRM", icon: MdAnalytics, href: "/crm" },
+    { label: "Автоматизация", icon: TbAutomation, href: "/automation" },
+    { label: "База", icon: FaDatabase, href: "/base" },
     { label: "Звонки", icon: IoCallSharp, href: "/calls" },
-    { label: "Базы", icon: FaDatabase, href: "/bases" },
-    { label: "CRM", icon: MdAnalytics, href: "/analytics" },
-    { label: "Рассылки", icon: MdEmail, href: "/sends" },
-    { label: "Кампании", icon: PiStrategyBold, href: "/companies" },
+    { label: "Рассылки", icon: MdEmail, href: "/mailing" },
   ].filter(Boolean); // Убирает `undefined` из массива
 
   const handleExit = () => {
@@ -54,13 +50,13 @@ const SideMenu = observer(() => {
   };
 
   useEffect(() => {
-    mainStore.setIsOpen(width >= 1450);
+    pageStore.setIsOpen(width >= 1400);
   }, [width]);
 
   return (
     <>
       {/* Кнопка для открытия меню, если оно закрыто */}
-      {!mainStore.isOpen && (
+      {!pageStore.isOpen && (
         <Button
           position="fixed"
           top="5px"
@@ -80,19 +76,19 @@ const SideMenu = observer(() => {
         as="nav"
         bg="white"
         boxShadow={
-          mainStore.isOpen ? "0px 0px 15px 4px rgba(0,0,0,0.08)" : null
+          pageStore.isOpen ? "0px 0px 15px 4px rgba(0,0,0,0.08)" : null
         }
-        w={mainStore.isOpen ? "280px" : "0"}
+        w={pageStore.isOpen ? "280px" : "0"}
         h="100vh"
         overflow="hidden"
         transition="width 0.3s ease"
         py="4"
-        px={mainStore.isOpen ? "4" : "0"}
+        px={pageStore.isOpen ? "4" : "0"}
         position="fixed"
         top="0"
         left="0"
         zIndex={2}
-        display={mainStore.isOpen ? "block" : "none"}
+        display={pageStore.isOpen ? "block" : "none"}
       >
         <VStack spacing="6">
           {/* Логотип */}
@@ -110,7 +106,7 @@ const SideMenu = observer(() => {
             {menuItems.map((item, index) => (
               <Link
                 key={index}
-                _hover={{ textDecor: "none", color: "#4682B4" }}
+                _hover={{ bg: "rgba(240,240,240,1)" }}
                 py="2"
                 px="4"
                 onClick={() => navigate(item.href)}
@@ -132,7 +128,7 @@ const SideMenu = observer(() => {
         {/* Выход */}
       </Box>
 
-      {/* Выдвижное меню (если mainStore.isOpen === false) */}
+      {/* Выдвижное меню (если pageStore.isOpen === false) */}
       <Drawer isOpen={isOpen} placement="left" onClose={onClose}>
         <DrawerOverlay />
         <DrawerContent>
@@ -153,7 +149,6 @@ const SideMenu = observer(() => {
                 {menuItems.map((item, index) => (
                   <Link
                     key={index}
-                    _hover={{ textDecor: "none", color: "#4682B4" }}
                     py="2"
                     px="4"
                     onClick={() => {
