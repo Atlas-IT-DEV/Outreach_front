@@ -15,12 +15,15 @@ class PageStore {
   works = [];
   call_works = [];
   mail_works = [];
+  tasks = [];
 
   emailTemplates = [];
   selected_script = {};
   search_elements = [];
 
   selected_department = null;
+
+  selected_base = [];
 
   constructor() {
     makeAutoObservable(this);
@@ -55,6 +58,7 @@ class PageStore {
     this.mail_works = new_works;
   };
 
+  // авторизация
   login = async (values) => {
     const response = await fetch(`${base_url}/auth/login`, {
       method: "POST",
@@ -71,7 +75,6 @@ class PageStore {
     }
     return response.ok;
   };
-
   getMe = async () => {
     const response = await fetch(`${base_url}/api/me`, {
       method: "GET",
@@ -85,19 +88,52 @@ class PageStore {
     console.log("me", result.me);
   };
 
+  // базы
   getAllBases = async () => {
-    const response = await fetch(`${base_url}/api/bases/`, {
-      method: "GET",
-      headers: {
-        accept: "application/json",
-        Authorization: `${this.token}`,
-      },
-    });
+    const response = await fetch(
+      `${base_url}/api/bases/${this.selected_department}`,
+      {
+        method: "GET",
+        headers: {
+          accept: "application/json",
+          Authorization: `${this.token}`,
+        },
+      }
+    );
     const result = await response.json();
-    this.bases = result.data;
-    console.log("getAllBases", response);
+    this.bases = result;
+  };
+  getBaseByName = async (name) => {
+    const response = await fetch(
+      `${base_url}/api/bases/${this.selected_department}/${name}`,
+      {
+        method: "GET",
+        headers: {
+          accept: "application/json",
+          Authorization: `${this.token}`,
+        },
+      }
+    );
+    const result = await response.json();
+    this.selected_base = result;
+    console.log("select base", result);
+  };
+  uploadBase = async (name, formData) => {
+    const response = await fetch(
+      `${base_url}/api/bases/upload/${this.selected_department}/${name}`,
+      {
+        method: "POST",
+        headers: {
+          accept: "application/json",
+          Authorization: `${this.token}`,
+        },
+        body: formData,
+      }
+    );
+    return response.ok;
   };
 
+  // компании
   createCompamy = async (values) => {
     const response = await fetch(`${base_url}/api/companies`, {
       method: "POST",
@@ -111,7 +147,6 @@ class PageStore {
     console.log("val", values);
     return response.ok;
   };
-
   getAllCompanies = async () => {
     const response = await fetch(`${base_url}/api/companies`, {
       method: "GET",
@@ -135,7 +170,6 @@ class PageStore {
     });
     return response.ok;
   };
-
   editUser = async (id, values) => {
     const response = await fetch(`${base_url}/api/users/${id}`, {
       method: "PUT",
@@ -149,6 +183,7 @@ class PageStore {
     return response.ok;
   };
 
+  // клиенты
   createClient = async (values) => {
     const response = await fetch(`${base_url}/api/clients`, {
       method: "POST",
@@ -185,6 +220,7 @@ class PageStore {
     this.leads = result;
   };
 
+  // скрипты
   getAllScripts = async () => {
     const response = await fetch(`${base_url}/api/scripts`, {
       method: "GET",
@@ -197,7 +233,6 @@ class PageStore {
     this.scripts = result;
     console.log("scripts", result);
   };
-
   createScript = async (values) => {
     const response = await fetch(`${base_url}/api/scripts`, {
       method: "POST",
@@ -210,7 +245,6 @@ class PageStore {
     });
     return response.ok;
   };
-
   editScript = async (id, values) => {
     const response = await fetch(`${base_url}/api/scripts/${id}`, {
       method: "PUT",
@@ -224,6 +258,7 @@ class PageStore {
     return response.ok;
   };
 
+  //ворки
   getAllWorks = async () => {
     const response = await fetch(`${base_url}/api/works`, {
       method: "GET",
@@ -254,7 +289,6 @@ class PageStore {
     );
     console.log("works", result);
   };
-
   createWork = async (values) => {
     const response = await fetch(`${base_url}/api/works`, {
       method: "POST",
@@ -267,9 +301,55 @@ class PageStore {
     });
     return response.ok;
   };
-
   editWork = async (id, values) => {
     const response = await fetch(`${base_url}/api/works/${id}`, {
+      method: "PUT",
+      headers: {
+        accept: "application/json",
+        "Content-Type": "application/json",
+        Authorization: `${this.token}`,
+      },
+      body: JSON.stringify(values),
+    });
+    return response.ok;
+  };
+
+  // таски
+  getAllTasks = async () => {
+    const response = await fetch(`${base_url}/api/tasks`, {
+      method: "GET",
+      headers: {
+        accept: "application/json",
+        Authorization: `${this.token}`,
+      },
+    });
+    const result = await response.json();
+    this.tasks = result;
+  };
+  createTask = async (values) => {
+    const response = await fetch(`${base_url}/api/tasks`, {
+      method: "POST",
+      headers: {
+        accept: "application/json",
+        "Content-Type": "application/json",
+        Authorization: `${this.token}`,
+      },
+      body: JSON.stringify(),
+    });
+    return response.ok;
+  };
+  completeTask = async (id) => {
+    const response = await fetch(`${base_url}/api/tasks/complete/${id}`, {
+      method: "POST",
+      headers: {
+        accept: "application/json",
+        Authorization: `${this.token}`,
+      },
+    });
+    return response.ok;
+  };
+  updateTask = async (id, values) => {
+    const response = await fetch(`${base_url}/api/tasks/${id}`, {
       method: "PUT",
       headers: {
         accept: "application/json",

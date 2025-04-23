@@ -17,6 +17,10 @@ const CrmPage = observer(() => {
   useEffect(() => {
     pageStore.getAllClients();
     pageStore.getAllCompanies();
+    pageStore.getAllBases();
+    pageStore.getAllScripts();
+    pageStore.getAllWorks();
+    pageStore.getAllTasks();
   }, []);
 
   return (
@@ -70,7 +74,7 @@ const CrmPage = observer(() => {
               Автоматизация продаж
             </Text>
           </Button> */}
-          {/* <Button
+          <Button
             width={"100%"}
             border={"1px solid #4682B4"}
             boxShadow={"-2px 2px 0 0 #4682B4"}
@@ -83,7 +87,7 @@ const CrmPage = observer(() => {
             <Text fontSize={width >= 1000 ? "16px" : "14px"}>
               Задачи и уведомления
             </Text>
-          </Button> */}
+          </Button>
         </HStack>
       ) : (
         <VStack width={"100%"} gap={"10px"}>

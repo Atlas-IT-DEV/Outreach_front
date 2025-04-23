@@ -1,16 +1,17 @@
-import { HStack, Stack, Text, VStack } from "@chakra-ui/react";
+import { HStack, Stack, VStack } from "@chakra-ui/react";
 
 import Searcher from "../searcher";
 import TableTasks from "./table_tasks";
+import ModalCreateTask from "./modal_create_task";
 
 const Tasks = () => {
   return (
     <VStack width={"100%"}>
-      <Text marginTop={"20px"} fontWeight={"600"} color={"black"} w={"100%"}>
-        Поиск по задачам
-      </Text>
       <HStack width={"100%"}>
-        <Searcher />
+        <Searcher search_by="Поиск по задачам" />
+      </HStack>
+      <HStack width={"100%"} align={"flex-start"} marginTop={"20px"}>
+        <ModalCreateTask />
       </HStack>
       <Stack marginTop={"10px"} w={"100%"}>
         <TableTasks />

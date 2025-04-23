@@ -50,8 +50,12 @@ const LoginForm = observer(() => {
       const filterCompany = pageStore.clients.find(
         (item) => item?.ID == pageStore.user_info?.company_id
       );
-      setFilteredCompany(filterCompany || {});
-      onOpen();
+      if (pageStore.user_info?.role == "0") {
+        navigate("/crm");
+      } else {
+        setFilteredCompany(filterCompany || {});
+        onOpen();
+      }
     }
   };
 

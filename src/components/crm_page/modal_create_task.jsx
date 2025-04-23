@@ -8,81 +8,76 @@ import {
   ModalCloseButton,
   ModalContent,
   ModalOverlay,
-  Radio,
-  RadioGroup,
   Text,
   useDisclosure,
   useToast,
   VStack,
 } from "@chakra-ui/react";
-import { observer } from "mobx-react-lite";
-import useWindowDimensions from "../../windowDimensions";
 import { Form, Formik } from "formik";
+import { observer } from "mobx-react-lite";
 import * as Yup from "yup";
 import { useStores } from "../../store/store_context";
 
-const ModalCreateWork = observer(() => {
+const ModalCreateTask = observer(() => {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const { width } = useWindowDimensions();
   const { pageStore } = useStores();
   const toast = useToast();
 
   const initialValues = {
-    automated: true,
-    date_start: "",
-    department_id: pageStore.selected_department,
+    date_finish: "",
     description: "",
     name: "",
-    obzvon: "0",
-    time_finish: null,
-    time_start: null,
-    type_work: 0,
   };
 
   const validationSchema = Yup.object({
-    date_start: Yup.string().required("Обязательное поле"),
+    date_finish: Yup.string().required("Обязательное поле"),
     description: Yup.string().required("Обязательное поле"),
     name: Yup.string().required("Обязательное поле"),
-    time_finish: Yup.number().required("Обязательное поле"),
-    time_start: Yup.number().required("Обязательное поле"),
   });
 
-  const createWork = async (values) => {
-    return await pageStore.createWork(values);
+  const createTask = async (values) => {
+    return await pageStore.createTask(values);
   };
 
   const onSubmit = async (values) => {
-    const ok = await createWork(values);
+    const ok = await createTask(values);
     if (ok) {
-      await pageStore.getAllWorks();
+      await pageStore.getAllTasks();
       toast({
         title: "Успех",
-        description: "Ворк успешно создан",
-        duration: "3000",
+        description: "Задача успешно создана",
         status: "success",
+        duration: "3000",
       });
       onClose();
     }
   };
+
   return (
     <>
       <Button
         onClick={onOpen}
-        border={"1px solid #4682B4"}
         boxShadow={"-2px 2px 0 0 #4682B4"}
         borderRadius={"0px"}
+        border={"1px solid #4682B4"}
         bg={"white"}
         color={"black"}
         _hover={{ bg: "#4682B4", color: "white" }}
+        flexShrink={0}
       >
-        <Text fontSize={width >= 1000 ? "16px" : "14px"}>Новый ворк</Text>
+        <Text>Создать задачу</Text>
       </Button>
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
         <ModalContent padding={"20px"}>
           <ModalCloseButton />
-          <Text width={"100%"} textAlign={"center"} fontWeight={"600"}>
-            Создание ворка
+          <Text
+            fontWeight={"600"}
+            color={"black"}
+            width={"100%"}
+            textAlign={"center"}
+          >
+            Создание задачи
           </Text>
           <Formik
             initialValues={initialValues}
@@ -97,15 +92,15 @@ const ModalCreateWork = observer(() => {
               handleBlur,
               setFieldValue,
             }) => (
-              <Form style={{ width: "100%" }}>
+              <Form>
                 <VStack
                   width={"100%"}
-                  marginTop={"10px"}
-                  align={"flex-start"}
                   justify={"flex-start"}
+                  align={"flex-start"}
+                  marginTop={"20px"}
                   gap={"10px"}
                 >
-                  <FormControl isInvalid={errors?.name && touched?.name}>
+                  <FormControl isInvalid={errors.name && touched.name}>
                     <Text fontWeight={"500"}>Название</Text>
                     <Input
                       placeholder="Название"
@@ -118,11 +113,11 @@ const ModalCreateWork = observer(() => {
                       onBlur={handleBlur}
                     />
                     <FormErrorMessage marginTop={"2px"}>
-                      {errors?.name}
+                      {errors.name}
                     </FormErrorMessage>
                   </FormControl>
                   <FormControl
-                    isInvalid={errors?.description && touched?.description}
+                    isInvalid={errors.description && touched.description}
                   >
                     <Text fontWeight={"500"}>Описание</Text>
                     <Input
@@ -136,13 +131,13 @@ const ModalCreateWork = observer(() => {
                       onBlur={handleBlur}
                     />
                     <FormErrorMessage marginTop={"2px"}>
-                      {errors?.description}
+                      {errors.description}
                     </FormErrorMessage>
                   </FormControl>
                   <FormControl
-                    isInvalid={errors?.date_start && touched?.date_start}
+                    isInvalid={errors?.date_finish && touched?.date_finish}
                   >
-                    <Text fontWeight={"500"}>Дата начала</Text>
+                    <Text fontWeight={"500"}>Дедлайн</Text>
                     <Input
                       placeholder=""
                       type="date"
@@ -150,63 +145,18 @@ const ModalCreateWork = observer(() => {
                       border={"2px solid #4682B4"}
                       borderRadius={"0"}
                       _hover={{ border: "2px solid #4682B4" }}
-                      name="date_start"
+                      name="date_finish"
                       onChange={(e) =>
                         setFieldValue(
-                          "date_start",
+                          "date_finish",
                           new Date(e.target.value).toISOString()
                         )
                       }
                     />
                     <FormErrorMessage marginTop={"2px"}>
-                      {errors?.name}
+                      {errors?.date_finish}
                     </FormErrorMessage>
                   </FormControl>
-                  <Text fontWeight={"500"}>Время работы</Text>
-                  <HStack width={"100%"} justify={"space-between"}>
-                    <FormControl
-                      isInvalid={errors?.time_start && touched?.time_start}
-                    >
-                      <Text fontWeight={"500"}>С</Text>
-                      <Input
-                        placeholder="C"
-                        marginTop={"4px"}
-                        border={"2px solid #4682B4"}
-                        borderRadius={"0"}
-                        _hover={{ border: "2px solid #4682B4" }}
-                        name="time_start"
-                        value={values?.time_start}
-                        onChange={(e) =>
-                          setFieldValue("time_start", Number(e.target.value))
-                        }
-                        onBlur={handleBlur}
-                      />
-                      <FormErrorMessage marginTop={"2px"}>
-                        {errors?.time_start}
-                      </FormErrorMessage>
-                    </FormControl>
-                    <FormControl
-                      isInvalid={errors?.time_finish && touched?.time_finish}
-                    >
-                      <Text fontWeight={"500"}>До</Text>
-                      <Input
-                        placeholder="До"
-                        marginTop={"4px"}
-                        border={"2px solid #4682B4"}
-                        borderRadius={"0"}
-                        _hover={{ border: "2px solid #4682B4" }}
-                        name="time_finish"
-                        value={values?.time_finish}
-                        onChange={(e) =>
-                          setFieldValue("time_finish", Number(e.target.value))
-                        }
-                        onBlur={handleBlur}
-                      />
-                      <FormErrorMessage marginTop={"2px"}>
-                        {errors?.time_finish}
-                      </FormErrorMessage>
-                    </FormControl>
-                  </HStack>
                   <HStack
                     marginTop={"20px"}
                     justify={"flex-end"}
@@ -247,4 +197,4 @@ const ModalCreateWork = observer(() => {
   );
 });
 
-export default ModalCreateWork;
+export default ModalCreateTask;

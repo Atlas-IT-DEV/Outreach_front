@@ -4,7 +4,6 @@ import TaskCard from "./task_card";
 const TableTasks = () => {
   return (
     <VStack width={"100%"} align={"flex-start"}>
-      {/* <HStack> */}
       <HStack
         width={"100%"}
         justify={"space-between"}
