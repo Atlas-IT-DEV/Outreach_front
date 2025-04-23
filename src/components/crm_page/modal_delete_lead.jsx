@@ -50,7 +50,7 @@ const ModalDeleteLead = observer(({ obj = {} }) => {
         onClick={() => onOpen()}
         boxShadow={"-2px 2px 0 0 #4682B4"}
         borderRadius={"0px"}
-        border={"1px solid #4682B4"}
+        border={"2px solid #4682B4"}
         bg={"white"}
         color={"black"}
         _hover={{ bg: "#4682B4", color: "white" }}
@@ -59,15 +59,9 @@ const ModalDeleteLead = observer(({ obj = {} }) => {
         <Text>Удалить</Text>
       </Button>
 
-      <Modal isOpen={isOpen} onClose={onClose} onEsc={onClose} size={"3xl"}>
+      <Modal isOpen={isOpen} onClose={onClose} onEsc={onClose}>
         <ModalOverlay />
-        <ModalContent
-          margin={"auto"}
-          borderRadius={"0px"}
-          border={"2px solid #4682B4"}
-          height={"auto"}
-          padding={"20px"}
-        >
+        <ModalContent padding={"20px"}>
           <ModalCloseButton />
           <Text width={"100%"} textAlign={"center"} fontWeight={"600"}>
             Удалить лида?
@@ -77,7 +71,7 @@ const ModalDeleteLead = observer(({ obj = {} }) => {
               onClick={onClose}
               boxShadow={"-2px 2px 0 0 #4682B4"}
               borderRadius={"0px"}
-              border={"1px solid #4682B4"}
+              border={"2px solid #4682B4"}
               bg={"white"}
               color={"black"}
               _hover={{ bg: "#4682B4", color: "white" }}
@@ -89,7 +83,7 @@ const ModalDeleteLead = observer(({ obj = {} }) => {
               onClick={async () => await handleDeleteClient()}
               boxShadow={"-2px 2px 0 0 #4682B4"}
               borderRadius={"0px"}
-              border={"1px solid #4682B4"}
+              border={"2px solid #4682B4"}
               bg={"white"}
               color={"black"}
               _hover={{ bg: "#4682B4", color: "white" }}

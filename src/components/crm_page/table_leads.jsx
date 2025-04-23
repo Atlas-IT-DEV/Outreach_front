@@ -72,26 +72,26 @@ const TableLeads = observer(() => {
                             <Stack
                               height={"10px"}
                               width={"100%"}
-                              border={"1px solid #4682B4"}
+                              border={"2px solid #4682B4"}
                               borderRadius={"4px"}
                               bg={"#4682B4"}
                             ></Stack>
                             <Stack
                               height={"10px"}
                               width={"100%"}
-                              border={"1px solid #4682B4"}
+                              border={"2px solid #4682B4"}
                               borderRadius={"4px"}
                             ></Stack>
                             <Stack
                               height={"10px"}
                               width={"100%"}
-                              border={"1px solid #4682B4"}
+                              border={"2px solid #4682B4"}
                               borderRadius={"4px"}
                             ></Stack>
                             <Stack
                               height={"10px"}
                               width={"100%"}
-                              border={"1px solid #4682B4"}
+                              border={"2px solid #4682B4"}
                               borderRadius={"4px"}
                             ></Stack>
                           </HStack>

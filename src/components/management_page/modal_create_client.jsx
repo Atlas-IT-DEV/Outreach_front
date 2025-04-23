@@ -76,7 +76,7 @@ const ModalCreateClient = observer(() => {
         onClick={() => onOpen()}
         boxShadow={"-2px 2px 0 0 #4682B4"}
         borderRadius={"0px"}
-        border={"1px solid #4682B4"}
+        border={"2px solid #4682B4"}
         bg={"white"}
         color={"black"}
         _hover={{ bg: "#4682B4", color: "white" }}
@@ -88,13 +88,7 @@ const ModalCreateClient = observer(() => {
       </Button>
       <Modal isOpen={isOpen} onClose={onClose} onEsc={onClose} size={"3xl"}>
         <ModalOverlay />
-        <ModalContent
-          margin={"auto"}
-          borderRadius={"0px"}
-          border={"2px solid #4682B4"}
-          height={"auto"}
-          minH={width >= 1400 ? "auto" : height}
-        >
+        <ModalContent padding={"20px"}>
           <ModalCloseButton />
           <Formik
             initialValues={leadValues}
@@ -110,14 +104,13 @@ const ModalCreateClient = observer(() => {
               setFieldValue,
             }) => (
               <Form>
-                <VStack
-                  bg={"white"}
-                  padding={"20px"}
-                  width={"100%"}
-                  align={"flex-start"}
-                  marginTop={"20px"}
-                >
-                  <Text color={"black"} fontWeight={"600"}>
+                <VStack bg={"white"} width={"100%"} align={"flex-start"}>
+                  <Text
+                    color={"black"}
+                    fontWeight={"600"}
+                    width={"100%"}
+                    textAlign={"center"}
+                  >
                     Создание клиента
                   </Text>
                   <VStack width={"100%"} gap={"10px"} marginTop={"10px"}>
@@ -275,7 +268,7 @@ const ModalCreateClient = observer(() => {
                       onClick={onClose}
                       boxShadow={"-2px 2px 0 0 #4682B4"}
                       borderRadius={"0px"}
-                      border={"1px solid #4682B4"}
+                      border={"2px solid #4682B4"}
                       bg={"white"}
                       color={"black"}
                       _hover={{ bg: "#4682B4", color: "white" }}
@@ -287,7 +280,7 @@ const ModalCreateClient = observer(() => {
                       type="submit"
                       boxShadow={"-2px 2px 0 0 #4682B4"}
                       borderRadius={"0px"}
-                      border={"1px solid #4682B4"}
+                      border={"2px solid #4682B4"}
                       bg={"white"}
                       color={"black"}
                       _hover={{ bg: "#4682B4", color: "white" }}

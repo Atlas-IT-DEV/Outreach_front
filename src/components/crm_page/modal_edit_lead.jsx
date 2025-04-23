@@ -70,7 +70,7 @@ const ModalEditLead = observer(({ obj = {} }) => {
         onClick={() => onOpen()}
         boxShadow={"-2px 2px 0 0 #4682B4"}
         borderRadius={"0px"}
-        border={"1px solid #4682B4"}
+        border={"2px solid #4682B4"}
         bg={"white"}
         color={"black"}
         _hover={{ bg: "#4682B4", color: "white" }}
@@ -90,26 +90,11 @@ const ModalEditLead = observer(({ obj = {} }) => {
           setEditCompanies(false);
           setEditUsers(false);
         }}
-        size={"3xl"}
       >
         <ModalOverlay />
-        <ModalContent
-          margin={"auto"}
-          borderRadius={"0px"}
-          border={"2px solid #4682B4"}
-          height={"auto"}
-          minH={"max-content"}
-          overflow={"hidden"}
-          overflowY={"scroll"}
-          padding={"20px"}
-        >
+        <ModalContent padding={"20px"}>
           <ModalCloseButton />
-          <VStack
-            bg={"white"}
-            width={"100%"}
-            align={"flex-start"}
-            marginTop={"20px"}
-          >
+          <VStack bg={"white"} width={"100%"} align={"flex-start"}>
             {editUsers ? (
               <Formik
                 initialValues={clientValues}
@@ -129,7 +114,6 @@ const ModalEditLead = observer(({ obj = {} }) => {
                       width={"100%"}
                       align={"flex-start"}
                       justify={"flex-start"}
-                      marginTop={"20px"}
                     >
                       <Text
                         fontWeight={"600"}
@@ -239,7 +223,7 @@ const ModalEditLead = observer(({ obj = {} }) => {
                           onClick={() => setEditUsers(false)}
                           boxShadow={"-2px 2px 0 0 #4682B4"}
                           borderRadius={"0px"}
-                          border={"1px solid #4682B4"}
+                          border={"2px solid #4682B4"}
                           bg={"white"}
                           color={"black"}
                           _hover={{ bg: "#4682B4", color: "white" }}
@@ -252,7 +236,7 @@ const ModalEditLead = observer(({ obj = {} }) => {
                           type="submit"
                           boxShadow={"-2px 2px 0 0 #4682B4"}
                           borderRadius={"0px"}
-                          border={"1px solid #4682B4"}
+                          border={"2px solid #4682B4"}
                           bg={"white"}
                           color={"black"}
                           _hover={{ bg: "#4682B4", color: "white" }}
@@ -318,7 +302,7 @@ const ModalEditLead = observer(({ obj = {} }) => {
                   onClick={() => setEditUsers(true)}
                   boxShadow={"-2px 2px 0 0 #4682B4"}
                   borderRadius={"0px"}
-                  border={"1px solid #4682B4"}
+                  border={"2px solid #4682B4"}
                   bg={"white"}
                   color={"black"}
                   _hover={{ bg: "#4682B4", color: "white" }}
@@ -341,7 +325,7 @@ const ModalEditLead = observer(({ obj = {} }) => {
               }}
               boxShadow={"-2px 2px 0 0 #4682B4"}
               borderRadius={"0px"}
-              border={"1px solid #4682B4"}
+              border={"2px solid #4682B4"}
               bg={"white"}
               color={"black"}
               _hover={{ bg: "#4682B4", color: "white" }}

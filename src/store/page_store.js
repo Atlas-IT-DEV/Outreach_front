@@ -334,7 +334,7 @@ class PageStore {
         "Content-Type": "application/json",
         Authorization: `${this.token}`,
       },
-      body: JSON.stringify(),
+      body: JSON.stringify(values),
     });
     return response.ok;
   };

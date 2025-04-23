@@ -38,7 +38,7 @@ const CrmPage = observer(() => {
         <HStack width={"100%"} gap={"10px"} justify={"space-between"}>
           <Button
             width={"100%"}
-            border={"1px solid #4682B4"}
+            border={"2px solid #4682B4"}
             boxShadow={"-2px 2px 0 0 #4682B4"}
             borderRadius={"0px"}
             bg={selected[0] == 1 ? "#4682B4" : "white"}
@@ -50,7 +50,7 @@ const CrmPage = observer(() => {
           </Button>
           {/* <Button
             width={"100%"}
-            border={"1px solid #4682B4"}
+            border={"2px solid #4682B4"}
             borderRadius={"0px"}
             boxShadow={"-2px 2px 0 0 #4682B4"}
             bg={selected[1] == 1 ? "#4682B4" : "white"}
@@ -62,7 +62,7 @@ const CrmPage = observer(() => {
           </Button> */}
           {/* <Button
             width={"100%"}
-            border={"1px solid #4682B4"}
+            border={"2px solid #4682B4"}
             borderRadius={"0px"}
             boxShadow={"-2px 2px 0 0 #4682B4"}
             bg={selected[2] == 1 ? "#4682B4" : "white"}
@@ -76,7 +76,7 @@ const CrmPage = observer(() => {
           </Button> */}
           <Button
             width={"100%"}
-            border={"1px solid #4682B4"}
+            border={"2px solid #4682B4"}
             boxShadow={"-2px 2px 0 0 #4682B4"}
             borderRadius={"0px"}
             bg={selected[3] == 1 ? "#4682B4" : "white"}
@@ -94,7 +94,7 @@ const CrmPage = observer(() => {
           <HStack width={"100%"} justify={"space-between"}>
             <Button
               width={"100%"}
-              border={"1px solid #4682B4"}
+              border={"2px solid #4682B4"}
               boxShadow={"-2px 2px 0 0 #4682B4"}
               borderRadius={"0px"}
               bg={selected[0] == 1 ? "#4682B4" : "white"}
@@ -108,7 +108,7 @@ const CrmPage = observer(() => {
             </Button>
             {/* <Button
               width={"100%"}
-              border={"1px solid #4682B4"}
+              border={"2px solid #4682B4"}
               borderRadius={"0px"}
               boxShadow={"-2px 2px 0 0 #4682B4"}
               bg={selected[1] == 1 ? "#4682B4" : "white"}
@@ -124,7 +124,7 @@ const CrmPage = observer(() => {
           {/* <HStack width={"100%"} justify={"space-between"}>
             <Button
               width={"100%"}
-              border={"1px solid #4682B4"}
+              border={"2px solid #4682B4"}
               borderRadius={"0px"}
               boxShadow={"-2px 2px 0 0 #4682B4"}
               bg={selected[2] == 1 ? "#4682B4" : "white"}
@@ -138,7 +138,7 @@ const CrmPage = observer(() => {
             </Button>
             <Button
               width={"100%"}
-              border={"1px solid #4682B4"}
+              border={"2px solid #4682B4"}
               boxShadow={"-2px 2px 0 0 #4682B4"}
               borderRadius={"0px"}
               bg={selected[3] == 1 ? "#4682B4" : "white"}

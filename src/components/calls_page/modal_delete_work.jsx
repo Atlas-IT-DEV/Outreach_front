@@ -50,7 +50,7 @@ const ModalDeleteWork = observer(({ obj = {} }) => {
     <>
       <Button
         onClick={onOpen}
-        border={"1px solid #4682B4"}
+        border={"2px solid #4682B4"}
         boxShadow={"-2px 2px 0 0 #4682B4"}
         borderRadius={"0px"}
         bg={"white"}
@@ -71,7 +71,7 @@ const ModalDeleteWork = observer(({ obj = {} }) => {
               onClick={onClose}
               boxShadow={"-2px 2px 0 0 #4682B4"}
               borderRadius={"0px"}
-              border={"1px solid #4682B4"}
+              border={"2px solid #4682B4"}
               bg={"white"}
               color={"black"}
               _hover={{ bg: "#4682B4", color: "white" }}
@@ -83,7 +83,7 @@ const ModalDeleteWork = observer(({ obj = {} }) => {
               onClick={async () => await handleDelete()}
               boxShadow={"-2px 2px 0 0 #4682B4"}
               borderRadius={"0px"}
-              border={"1px solid #4682B4"}
+              border={"2px solid #4682B4"}
               bg={"white"}
               color={"black"}
               _hover={{ bg: "#4682B4", color: "white" }}

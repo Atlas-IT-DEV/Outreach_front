@@ -181,7 +181,7 @@ const LoginForm = observer(() => {
               onClick={onClose}
               boxShadow={"-2px 2px 0 0 #4682B4"}
               borderRadius={"0px"}
-              border={"1px solid #4682B4"}
+              border={"2px solid #4682B4"}
               bg={"white"}
               color={"black"}
               _hover={{ bg: "#4682B4", color: "white" }}
@@ -195,7 +195,7 @@ const LoginForm = observer(() => {
               }
               boxShadow={"-2px 2px 0 0 #4682B4"}
               borderRadius={"0px"}
-              border={"1px solid #4682B4"}
+              border={"2px solid #4682B4"}
               bg={"white"}
               color={"black"}
               _hover={{ bg: "#4682B4", color: "white" }}
