@@ -21,7 +21,7 @@ import { useStores } from "../../store/store_context";
 import { Form, Formik } from "formik";
 import * as Yup from "yup";
 import { observer } from "mobx-react-lite";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const ModalNewScript = observer(() => {
   const { width } = useWindowDimensions();
@@ -35,6 +35,15 @@ const ModalNewScript = observer(() => {
   const [product, setProduct] = useState("");
   const [author, setAuthor] = useState("");
   const [pro, setPro] = useState("");
+
+  useEffect(() => {
+    setTarget("");
+    setAudit("");
+    setProduct("");
+    setAuthor("");
+    setPro("");
+    pageStore.updateGenerateText("");
+  }, [isOpen]);
 
   const initialValues = {
     department_id: pageStore.selected_department,
@@ -140,6 +149,7 @@ const ModalNewScript = observer(() => {
                     <Text fontWeight={"500"}>Текст</Text>
                     <Textarea
                       value={pageStore.generateText?.answer}
+                      height={"auto"}
                       placeholder="Текст"
                       marginTop={"4px"}
                       border={"2px solid #4682B4"}
