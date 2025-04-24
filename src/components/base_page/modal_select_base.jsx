@@ -82,7 +82,7 @@ const ModalSelectBase = observer(() => {
             </Button>
             <Button
               onClick={async () => {
-                await pageStore.getBaseByName(selectedBase);
+                await pageStore.getBaseByName(selectedBase, 0, 10);
                 onClose();
               }}
               boxShadow={"-2px 2px 0 0 #4682B4"}

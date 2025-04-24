@@ -43,6 +43,7 @@ const ModalNewScript = observer(() => {
     setAuthor("");
     setPro("");
     pageStore.updateGenerateText("");
+    setShowInputs(false);
   }, [isOpen]);
 
   const initialValues = {
@@ -81,10 +82,19 @@ const ModalNewScript = observer(() => {
     return await pageStore.generateGPT(values);
   };
 
-  const generate = async () => {
+  const generate = async (setFieldValue) => {
     const ok = await generateText(
-      `сгенерируй мне текст email письма для рассылки клиентам с целью ${target}, целевая аудитория: ${audit}, предложение ${product}, образ автора: ${author}. ${pro}`
+      `Сгенерируй мне текст email письма для рассылки клиентам с целью ${target}, целевая аудитория: ${audit}, предложение ${product}, образ автора: ${author}. ${pro}`
     );
+    if (ok) {
+      setFieldValue("text", pageStore.generateText?.answer || "");
+      toast({
+        title: "Успех",
+        description: "Текст успешно сгенерирован",
+        duration: "3000",
+        status: "success",
+      });
+    }
   };
 
   return (
@@ -122,6 +132,7 @@ const ModalNewScript = observer(() => {
               setFieldValue,
             }) => (
               <Form style={{ width: "100%" }}>
+                {console.log(values)}
                 <VStack
                   width={"100%"}
                   marginTop={"10px"}
@@ -148,7 +159,7 @@ const ModalNewScript = observer(() => {
                   <FormControl isInvalid={errors?.text && touched?.text}>
                     <Text fontWeight={"500"}>Текст</Text>
                     <Textarea
-                      value={pageStore.generateText?.answer}
+                      value={values?.text}
                       height={"auto"}
                       placeholder="Текст"
                       marginTop={"4px"}
@@ -156,9 +167,7 @@ const ModalNewScript = observer(() => {
                       borderRadius={"0"}
                       _hover={{ border: "2px solid #4682B4" }}
                       name="text"
-                      onChange={() =>
-                        setFieldValue("text", pageStore.generateText?.answer)
-                      }
+                      onChange={(e) => setFieldValue("text", e.target.value)}
                       onBlur={handleBlur}
                     />
                     <FormErrorMessage marginTop={"2px"}>
@@ -218,7 +227,9 @@ const ModalNewScript = observer(() => {
                         _hover={{ border: "2px solid #4682B4" }}
                         onChange={(e) => setPro(e.target.value)}
                       />
-                      <Button onClick={async () => await generate()}>
+                      <Button
+                        onClick={async () => await generate(setFieldValue)}
+                      >
                         Сгенерировать
                       </Button>
                     </>

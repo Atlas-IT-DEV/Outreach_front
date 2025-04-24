@@ -17,7 +17,7 @@ const TableBase = observer(() => {
   const { pageStore } = useStores();
 
   const filterRows = pageStore.selected_base
-    ? pageStore.selected_base.slice(1, -1)
+    ? pageStore.selected_base.slice(1, pageStore.selected_base?.length)
     : null;
   console.log("spl", filterRows);
 
@@ -72,6 +72,7 @@ const TableBase = observer(() => {
       >
         Все данные
       </Text>
+
       <HStack
         width={"100%"}
         overflow={"hidden"}
@@ -100,6 +101,7 @@ const TableBase = observer(() => {
             ))}
           </Tbody>
         </Table>
+        <HStack></HStack>
       </HStack>
     </>
   );

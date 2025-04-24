@@ -115,9 +115,9 @@ class PageStore {
     const result = await response.json();
     this.bases = result;
   };
-  getBaseByName = async (name) => {
+  getBaseByName = async (name, page, size) => {
     const response = await fetch(
-      `${base_url}/api/bases/${this.selected_department}/${name}`,
+      `${base_url}/api/bases/${this.selected_department}/${name}?page=${page}&size=${size}`,
       {
         method: "GET",
         headers: {

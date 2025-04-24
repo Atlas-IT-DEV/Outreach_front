@@ -7,6 +7,10 @@ import {
   FormErrorMessage,
   HStack,
   Input,
+  Modal,
+  ModalCloseButton,
+  ModalContent,
+  ModalOverlay,
   Stack,
   Text,
   Textarea,
@@ -21,12 +25,30 @@ import * as Yup from "yup";
 import { observer } from "mobx-react-lite";
 import { Form, Formik } from "formik";
 import ModalDeleteScript from "../modal_delete_script";
+import { useEffect, useState } from "react";
 
 const ModalScript = observer(({ obj = {} }) => {
   const { pageStore } = useStores();
   const { width } = useWindowDimensions();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const toast = useToast();
+  const [showInputs, setShowInputs] = useState(false);
+
+  const [target, setTarget] = useState("");
+  const [audit, setAudit] = useState("");
+  const [product, setProduct] = useState("");
+  const [author, setAuthor] = useState("");
+  const [pro, setPro] = useState("");
+
+  useEffect(() => {
+    setTarget("");
+    setAudit("");
+    setProduct("");
+    setAuthor("");
+    setPro("");
+    pageStore.updateGenerateText("");
+    setShowInputs(false);
+  }, [isOpen]);
 
   const editScript = async (id, values) => {
     return await pageStore.editScript(id, values);
@@ -60,6 +82,25 @@ const ModalScript = observer(({ obj = {} }) => {
     }
   };
 
+  const generateText = async (values) => {
+    return await pageStore.generateGPT(values);
+  };
+
+  const generate = async (setFieldValue) => {
+    const ok = await generateText(
+      `Сгенерируй мне текст email письма для рассылки клиентам с целью ${target}, целевая аудитория: ${audit}, предложение ${product}, образ автора: ${author}. ${pro}`
+    );
+    if (ok) {
+      setFieldValue("text", pageStore.generateText?.answer || "");
+      toast({
+        title: "Успех",
+        description: "Текст успешно сгенерирован",
+        duration: "3000",
+        status: "success",
+      });
+    }
+  };
+
   return (
     <>
       <HStack
@@ -85,65 +126,37 @@ const ModalScript = observer(({ obj = {} }) => {
           <MdOutlineStarBorder size={"30px"} color="#4682B4" />
         )}
       </HStack>
-      <Drawer isOpen={isOpen} onClose={onClose} size={"full"} placement="right">
-        <DrawerContent
+      <Modal isOpen={isOpen} onClose={onClose} size={"2xl"}>
+        <ModalOverlay />
+        <ModalContent
           width={"100%"}
           justifyContent={"center"}
           alignItems={"center"}
+          padding={"20px"}
         >
-          <DrawerCloseButton />
+          <ModalCloseButton />
           <Formik
             initialValues={initialValues}
             validationSchema={validationSchema}
             onSubmit={onSubmit}
           >
-            {({ values, touched, errors, handleBlur, handleChange }) => (
-              <Form
-                style={{
-                  width: "100%",
-                  height: "auto",
-                  minHeight: "100vh",
-                  overflow: "hidden",
-                  overflowY: "scroll",
-                }}
-              >
-                <VStack padding={"20px"} fontWeight={"600"}>
-                  <VStack align={"flex-start"} width={"100%"}>
-                    <Text>Цель рассылки</Text>
-                    <Input
-                      placeholder="Цель рассылки"
-                      value={pageStore.selected_script?.purpose}
-                    />
-                  </VStack>
-                  <VStack align={"flex-start"} width={"100%"}>
-                    <Text>Целевая аудитория</Text>
-                    <Input
-                      placeholder="Целевая аудитория"
-                      value={pageStore.selected_script?.targetAudience}
-                    />
-                  </VStack>
-                  <VStack align={"flex-start"} width={"100%"}>
-                    <Text>Предложение/продукт</Text>
-                    <Input placeholder="Предложение/продукт" />
-                  </VStack>
-                  <VStack align={"flex-start"} width={"100%"}>
-                    <Text>Целевое действие</Text>
-                    <Input
-                      placeholder="Целевое действие"
-                      value={pageStore.selected_script?.targetAction}
-                    />
-                  </VStack>
-                  <VStack align={"flex-start"} width={"100%"}>
-                    <Text>Образ автора</Text>
-                    <Input
-                      placeholder="Образ автора"
-                      value={pageStore.selected_script?.authorImage}
-                    />
-                  </VStack>
-                  <VStack align={"flex-start"} width={"100%"}>
-                    <Text>Прочее</Text>
-                    <Textarea placeholder="Прочее" />
-                  </VStack>
+            {({
+              values,
+              touched,
+              errors,
+              handleBlur,
+              handleChange,
+              setFieldValue,
+            }) => (
+              <Form style={{ width: "100%" }}>
+                {console.log(values)}
+                <VStack
+                  width={"100%"}
+                  marginTop={"10px"}
+                  align={"flex-start"}
+                  justify={"flex-start"}
+                  gap={"10px"}
+                >
                   <FormControl isInvalid={errors?.name && touched?.name}>
                     <Text fontWeight={"500"}>Название</Text>
                     <Input
@@ -161,65 +174,133 @@ const ModalScript = observer(({ obj = {} }) => {
                       {errors?.name}
                     </FormErrorMessage>
                   </FormControl>
-                  <VStack align={"flex-start"} width={"100%"}>
-                    <FormControl isInvalid={errors?.text && touched?.name}>
-                      <Text>Текст рассылки</Text>
-                      <Textarea
-                        placeholder="Текст рассылки"
-                        name="text"
-                        height={"200px"}
-                        value={values?.text}
-                        onChange={handleChange}
-                        onBlur={handleBlur}
-                      />
-                      <FormErrorMessage marginTop={"2px"}>
-                        {errors?.text}
-                      </FormErrorMessage>
-                    </FormControl>
-                  </VStack>
+                  <FormControl isInvalid={errors?.text && touched?.text}>
+                    <Text fontWeight={"500"}>Текст</Text>
+                    <Textarea
+                      value={values?.text}
+                      height={"auto"}
+                      placeholder="Текст"
+                      marginTop={"4px"}
+                      border={"2px solid #4682B4"}
+                      borderRadius={"0"}
+                      _hover={{ border: "2px solid #4682B4" }}
+                      name="text"
+                      onChange={(e) => setFieldValue("text", e.target.value)}
+                      onBlur={handleBlur}
+                    />
+                    <FormErrorMessage marginTop={"2px"}>
+                      {errors?.text}
+                    </FormErrorMessage>
+                  </FormControl>
 
-                  <Stack
-                    width={"100%"}
+                  {showInputs && (
+                    <>
+                      <Text fontWeight={"500"}> Цель рассылки</Text>
+                      <Textarea
+                        value={target}
+                        placeholder="Текст"
+                        marginTop={"4px"}
+                        border={"2px solid #4682B4"}
+                        borderRadius={"0"}
+                        _hover={{ border: "2px solid #4682B4" }}
+                        onChange={(e) => setTarget(e.target.value)}
+                      />
+                      <Text fontWeight={"500"}>Целевая аудитория</Text>
+                      <Textarea
+                        value={audit}
+                        placeholder="Текст"
+                        marginTop={"4px"}
+                        border={"2px solid #4682B4"}
+                        borderRadius={"0"}
+                        _hover={{ border: "2px solid #4682B4" }}
+                        onChange={(e) => setAudit(e.target.value)}
+                      />
+                      <Text fontWeight={"500"}>Предложение/продукт</Text>
+                      <Textarea
+                        value={product}
+                        placeholder="Текст"
+                        marginTop={"4px"}
+                        border={"2px solid #4682B4"}
+                        borderRadius={"0"}
+                        _hover={{ border: "2px solid #4682B4" }}
+                        onChange={(e) => setProduct(e.target.value)}
+                      />
+                      <Text fontWeight={"500"}>Образ автора</Text>
+                      <Textarea
+                        value={author}
+                        placeholder="Текст"
+                        marginTop={"4px"}
+                        border={"2px solid #4682B4"}
+                        borderRadius={"0"}
+                        _hover={{ border: "2px solid #4682B4" }}
+                        onChange={(e) => setAuthor(e.target.value)}
+                      />
+                      <Text fontWeight={"500"}>Прочее</Text>
+                      <Textarea
+                        value={pro}
+                        placeholder="Текст"
+                        marginTop={"4px"}
+                        border={"2px solid #4682B4"}
+                        borderRadius={"0"}
+                        _hover={{ border: "2px solid #4682B4" }}
+                        onChange={(e) => setPro(e.target.value)}
+                      />
+                      <Button
+                        onClick={async () => await generate(setFieldValue)}
+                      >
+                        Сгенерировать
+                      </Button>
+                    </>
+                  )}
+
+                  <HStack
+                    marginTop={"20px"}
                     justify={"flex-end"}
-                    flexDirection={width >= 600 ? "row" : "column"}
+                    width={"100%"}
                   >
-                    <ModalDeleteScript obj={obj} onСloses={() => onClose()} />
                     <Button
-                      marginTop={"10px"}
+                      onClick={() => setShowInputs(!showInputs)}
                       boxShadow={"-2px 2px 0 0 #4682B4"}
                       borderRadius={"0px"}
                       border={"2px solid #4682B4"}
                       bg={"white"}
                       color={"black"}
                       _hover={{ bg: "#4682B4", color: "white" }}
-                      flexShrink={width >= 600 ? 0 : 1}
+                      flexShrink={0}
                     >
-                      <Text fontSize={width >= 1000 ? "16px" : "14px"}>
-                        Сгенерировать текст рассылки
-                      </Text>
+                      <Text>Сгенерировать текст</Text>
+                    </Button>
+                    <Button
+                      onClick={onClose}
+                      boxShadow={"-2px 2px 0 0 #4682B4"}
+                      borderRadius={"0px"}
+                      border={"2px solid #4682B4"}
+                      bg={"white"}
+                      color={"black"}
+                      _hover={{ bg: "#4682B4", color: "white" }}
+                      flexShrink={0}
+                    >
+                      <Text>Отменить</Text>
                     </Button>
                     <Button
                       type="submit"
-                      marginTop={"10px"}
                       boxShadow={"-2px 2px 0 0 #4682B4"}
                       borderRadius={"0px"}
                       border={"2px solid #4682B4"}
                       bg={"white"}
                       color={"black"}
                       _hover={{ bg: "#4682B4", color: "white" }}
-                      flexShrink={width >= 600 ? 0 : 1}
+                      flexShrink={0}
                     >
-                      <Text fontSize={width >= 1000 ? "16px" : "14px"}>
-                        Сохранить
-                      </Text>
+                      <Text>Обновить</Text>
                     </Button>
-                  </Stack>
+                  </HStack>
                 </VStack>
               </Form>
             )}
           </Formik>
-        </DrawerContent>
-      </Drawer>
+        </ModalContent>
+      </Modal>
     </>
   );
 });

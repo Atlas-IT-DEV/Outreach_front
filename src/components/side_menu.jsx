@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Box,
   VStack,
@@ -32,6 +32,8 @@ const SideMenu = observer(() => {
   const { pageStore } = useStores();
   const { width } = useWindowDimensions();
   const { isOpen, onOpen, onClose } = useDisclosure();
+
+  const [selected, setSelected] = useState([1, 0, 0, 0, 0, 0]);
 
   const menuItems = [
     { label: "CRM", icon: MdAnalytics, href: "/crm" },
@@ -108,13 +110,24 @@ const SideMenu = observer(() => {
           <VStack align="stretch" spacing="4">
             {menuItems.map((item, index) => (
               <Link
+                bg={selected[index] == 1 ? "rgba(240,240,240,1)" : "white"}
                 key={index}
                 _hover={{ bg: "rgba(240,240,240,1)" }}
                 py="2"
                 px="4"
                 onClick={() => {
+                  index == 0
+                    ? setSelected([1, 0, 0, 0, 0, 0])
+                    : index == 1
+                    ? setSelected([0, 1, 0, 0, 0, 0])
+                    : index == 2
+                    ? setSelected([0, 0, 1, 0, 0, 0])
+                    : index == 3
+                    ? setSelected([0, 0, 0, 1, 0, 0])
+                    : index == 4
+                    ? setSelected([0, 0, 0, 0, 1, 0])
+                    : setSelected([0, 0, 0, 0, 0, 1]);
                   navigate(item.href);
-                  pageStore.updateSelectedScript({});
                 }}
                 display="flex"
                 alignItems="center"
