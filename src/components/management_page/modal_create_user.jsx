@@ -21,46 +21,37 @@ import useWindowDimensions from "../../windowDimensions";
 import { useStores } from "../../store/store_context";
 import { observer } from "mobx-react-lite";
 
-const ModalCreateClient = observer(() => {
+const ModalCreateUser = observer(() => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { width, height } = useWindowDimensions();
   const { pageStore } = useStores();
   const toast = useToast();
 
-  const leadValues = {
-    name: "",
-    description: "",
-    director: {
-      first_name: "",
-      last_name: "",
-      password: "",
-      phone: "",
-      username: "",
-    },
+  const userValues = {
+    email: "",
+    first_name: "",
+    last_name: "",
+    password: "",
+    phone: "",
+    username: "",
   };
 
   const validationSchema = Yup.object({
-    director: Yup.object().shape({
-      first_name: Yup.string().required("Обязательное поле"),
-      last_name: Yup.string().required("Обязательное поле"),
-      password: Yup.string().required("Обязательное поле"),
-      phone: Yup.string()
-        .required("Обязательное поле")
-        .min(11, "Номер слишком короткий")
-        .max(15, "Номер слишком длинный"),
-      username: Yup.string().required("Обязательное поле"),
-    }),
-    name: Yup.string().required("Обязательное поле"),
-    description: Yup.string().required("Обязательное поле"),
+    email: Yup.string().required("Обязательное поле"),
+    first_name: Yup.string().required("Обязательное поле"),
+    last_name: Yup.string().required("Обязательное поле"),
+    password: Yup.string().required("Обязательное поле"),
+    phone: Yup.string().required("Обязательное поле"),
+    username: Yup.string().required("Обязательное поле"),
   });
 
-  const createCompamy = async (values) => {
-    return await pageStore.createCompamy(values);
+  const createUser = async (values) => {
+    return await pageStore.createUser(values);
   };
   const onSubmit = async (values) => {
-    const ok = await createCompamy(values);
+    const ok = await createUser(values);
     if (ok) {
-      await pageStore.getAllCompanies();
+      await pageStore.getAllUsers();
       toast({
         title: "Успех",
         description: "Новый лид успешно создан",
@@ -74,7 +65,7 @@ const ModalCreateClient = observer(() => {
   return (
     <>
       <Button
-        onClick={() => onOpen()}
+        onClick={onOpen}
         boxShadow={"-2px 2px 0 0 #4682B4"}
         borderRadius={"0px"}
         border={"2px solid #4682B4"}
@@ -84,7 +75,7 @@ const ModalCreateClient = observer(() => {
         flexShrink={0}
       >
         <Text fontSize={width >= 1000 ? "16px" : ["13px", "14px"]}>
-          Создать нового клиента
+          Создать нового сотрудника
         </Text>
       </Button>
       <Modal isOpen={isOpen} onClose={onClose} onEsc={onClose}>
@@ -92,7 +83,7 @@ const ModalCreateClient = observer(() => {
         <ModalContent padding={"20px"}>
           <ModalCloseButton />
           <Formik
-            initialValues={leadValues}
+            initialValues={userValues}
             validationSchema={validationSchema}
             onSubmit={onSubmit}
           >
@@ -112,14 +103,11 @@ const ModalCreateClient = observer(() => {
                     width={"100%"}
                     textAlign={"center"}
                   >
-                    Создание клиента
+                    Создание сотрудника
                   </Text>
                   <VStack width={"100%"} gap={"10px"} marginTop={"10px"}>
                     <FormControl
-                      isInvalid={
-                        errors?.director?.username &&
-                        touched?.director?.username
-                      }
+                      isInvalid={errors?.username && touched?.username}
                     >
                       <Text fontWeight={"500"}>Никнейм</Text>
                       <Input
@@ -128,43 +116,36 @@ const ModalCreateClient = observer(() => {
                         border={"2px solid #4682B4"}
                         borderRadius={"0"}
                         _hover={{ border: "2px solid #4682B4" }}
-                        name="director.username"
+                        name="username"
                         onChange={handleChange}
                         onBlur={handleBlur}
                       />
                       <FormErrorMessage marginTop={"2px"}>
-                        {errors?.director?.username}
+                        {errors?.username}
                       </FormErrorMessage>
                     </FormControl>
-
                     <FormControl
-                      isInvalid={
-                        errors?.director?.password &&
-                        touched?.director?.password
-                      }
+                      isInvalid={errors?.password && touched?.password}
                     >
                       <Text fontWeight={"500"}>Пароль</Text>
                       <Input
-                        placeholder="Пароль"
                         type="password"
+                        placeholder="Пароль"
                         marginTop={"4px"}
                         border={"2px solid #4682B4"}
                         borderRadius={"0"}
                         _hover={{ border: "2px solid #4682B4" }}
-                        name="director.password"
+                        name="password"
                         onChange={handleChange}
                         onBlur={handleBlur}
                       />
                       <FormErrorMessage marginTop={"2px"}>
-                        {errors?.director?.password}
+                        {errors?.password}
                       </FormErrorMessage>
                     </FormControl>
-
                     <FormControl
-                      isInvalid={
-                        errors?.director?.last_name &&
-                        touched?.director?.last_name
-                      }
+                      isInvalid={errors?.last_name && touched?.last_name}
+                      marginTop={"10px"}
                     >
                       <Text fontWeight={"500"}>Фамилия</Text>
                       <Input
@@ -173,20 +154,16 @@ const ModalCreateClient = observer(() => {
                         border={"2px solid #4682B4"}
                         borderRadius={"0"}
                         _hover={{ border: "2px solid #4682B4" }}
-                        name="director.last_name"
+                        name="last_name"
                         onChange={handleChange}
                         onBlur={handleBlur}
                       />
                       <FormErrorMessage marginTop={"2px"}>
-                        {errors?.director?.last_name}
+                        {errors?.last_name}
                       </FormErrorMessage>
                     </FormControl>
-
                     <FormControl
-                      isInvalid={
-                        errors?.director?.first_name &&
-                        touched?.director?.first_name
-                      }
+                      isInvalid={errors?.first_name && touched?.first_name}
                     >
                       <Text fontWeight={"500"}>Имя</Text>
                       <Input
@@ -195,20 +172,31 @@ const ModalCreateClient = observer(() => {
                         border={"2px solid #4682B4"}
                         borderRadius={"0"}
                         _hover={{ border: "2px solid #4682B4" }}
-                        name="director.first_name"
+                        name="first_name"
                         onChange={handleChange}
                         onBlur={handleBlur}
                       />
                       <FormErrorMessage marginTop={"2px"}>
-                        {errors?.director?.first_name}
+                        {errors?.first_name}
                       </FormErrorMessage>
                     </FormControl>
-
-                    <FormControl
-                      isInvalid={
-                        errors?.director?.phone && touched?.director?.phone
-                      }
-                    >
+                    <FormControl isInvalid={errors?.email && touched?.email}>
+                      <Text fontWeight={"500"}>Email</Text>
+                      <Input
+                        placeholder="Email"
+                        marginTop={"4px"}
+                        border={"2px solid #4682B4"}
+                        borderRadius={"0"}
+                        _hover={{ border: "2px solid #4682B4" }}
+                        name="email"
+                        onChange={handleChange}
+                        onBlur={handleBlur}
+                      />
+                      <FormErrorMessage marginTop={"2px"}>
+                        {errors?.email}
+                      </FormErrorMessage>
+                    </FormControl>
+                    <FormControl isInvalid={errors?.phone && touched?.phone}>
                       <Text fontWeight={"500"}>Номер телефона</Text>
                       <Input
                         placeholder="Номер телефона"
@@ -216,47 +204,12 @@ const ModalCreateClient = observer(() => {
                         border={"2px solid #4682B4"}
                         borderRadius={"0"}
                         _hover={{ border: "2px solid #4682B4" }}
-                        name="director.phone"
+                        name="phone"
                         onChange={handleChange}
                         onBlur={handleBlur}
                       />
                       <FormErrorMessage marginTop={"2px"}>
-                        {errors?.director?.phone}
-                      </FormErrorMessage>
-                    </FormControl>
-
-                    <FormControl isInvalid={errors?.name && touched?.name}>
-                      <Text fontWeight={"500"}>Название компаниии</Text>
-                      <Input
-                        placeholder="Название компании"
-                        marginTop={"4px"}
-                        border={"2px solid #4682B4"}
-                        borderRadius={"0"}
-                        _hover={{ border: "2px solid #4682B4" }}
-                        name="name"
-                        onChange={handleChange}
-                        onBlur={handleBlur}
-                      />
-                      <FormErrorMessage marginTop={"2px"}>
-                        {errors?.name}
-                      </FormErrorMessage>
-                    </FormControl>
-                    <FormControl
-                      isInvalid={errors?.description && touched?.description}
-                    >
-                      <Text fontWeight={"500"}>Описание компании</Text>
-                      <Textarea
-                        placeholder="Описание компании"
-                        marginTop={"4px"}
-                        border={"2px solid #4682B4"}
-                        borderRadius={"0"}
-                        _hover={{ border: "2px solid #4682B4" }}
-                        name="description"
-                        onChange={handleChange}
-                        onBlur={handleBlur}
-                      />
-                      <FormErrorMessage marginTop={"2px"}>
-                        {errors?.description}
+                        {errors?.phone}
                       </FormErrorMessage>
                     </FormControl>
                   </VStack>
@@ -300,4 +253,4 @@ const ModalCreateClient = observer(() => {
   );
 });
 
-export default ModalCreateClient;
+export default ModalCreateUser;

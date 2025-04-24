@@ -9,6 +9,7 @@ import {
   ModalContent,
   ModalOverlay,
   Text,
+  Textarea,
   useDisclosure,
   useToast,
   VStack,
@@ -121,7 +122,7 @@ const ModalCreateTask = observer(() => {
                     isInvalid={errors.description && touched.description}
                   >
                     <Text fontWeight={"500"}>Описание</Text>
-                    <Input
+                    <Textarea
                       placeholder="Описание"
                       marginTop={"4px"}
                       border={"2px solid #4682B4"}

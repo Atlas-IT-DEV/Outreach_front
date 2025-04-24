@@ -6,6 +6,7 @@ import {
   Tbody,
   Td,
   Text,
+  Textarea,
   Th,
   Thead,
   Tr,
@@ -66,7 +67,7 @@ const TableCalls = observer(() => {
                       <Text>{item?.name}</Text>
                     </Td>
                     <Td border={"1px solid rgba(200,200,200,1)"}>
-                      <Text>{item?.description}</Text>
+                      <Textarea disabled>{item?.description}</Textarea>
                     </Td>
                     <Td border={"1px solid rgba(200,200,200,1)"}>
                       <Text>
@@ -129,9 +130,14 @@ const TableCalls = observer(() => {
             </Table>
           </HStack>
         </>
+      ) : pageStore.search_elements.length == 0 &&
+        pageStore.searchValue != "" ? (
+        <Text color={"black"} fontWeight={"600"}>
+          По Вашему запросу ничего не найдено
+        </Text>
       ) : null}
       <Text fontWeight={"600"} color={"black"}>
-        Все результаты
+        Все данные
       </Text>
       <HStack
         width={"100%"}
@@ -181,7 +187,9 @@ const TableCalls = observer(() => {
                       <Text>{item?.name}</Text>
                     </Td>
                     <Td border={"1px solid rgba(200,200,200,1)"}>
-                      <Text>{item?.description}</Text>
+                      <Textarea disabled color={"black"}>
+                        {item?.description}
+                      </Textarea>
                     </Td>
                     <Td border={"1px solid rgba(200,200,200,1)"}>
                       <Text>
@@ -230,7 +238,8 @@ const TableCalls = observer(() => {
                     </Td>
                     <Td border={"1px solid rgba(200,200,200,1)"}>
                       <HStack>
-                        <ModalEditWork obj={item} />
+                        {item.approved ? null : <ModalEditWork obj={item} />}
+
                         {/* <ModalDeleteWork obj={item} /> */}
                       </HStack>
                     </Td>

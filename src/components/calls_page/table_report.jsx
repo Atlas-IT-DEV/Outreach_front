@@ -13,7 +13,7 @@ const TableReport = () => {
   return (
     <>
       <Text width={"100%"} color={"black"} fontWeight={"600"}>
-        Все результаты
+        Все данные
       </Text>
       <HStack
         width={"100%"}

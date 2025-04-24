@@ -23,7 +23,7 @@ const TableBase = observer(() => {
 
   return (
     <>
-      {pageStore.search_elements?.length != 0 && (
+      {pageStore.search_elements?.length > 0 ? (
         <VStack width={"100%"} align={"flex-start"}>
           <Text color={"black"} fontWeight={"600"}>
             Результаты поиска
@@ -58,14 +58,19 @@ const TableBase = observer(() => {
             </Table>
           </HStack>
         </VStack>
-      )}
+      ) : pageStore.search_elements.length == 0 &&
+        pageStore.searchValue != "" ? (
+        <Text color={"black"} fontWeight={"600"}>
+          По Вашему запросу ничего не найдено
+        </Text>
+      ) : null}
       <Text
         color={"black"}
         fontWeight={"600"}
         width={"100%"}
         marginTop={"20px"}
       >
-        Все результаты
+        Все данные
       </Text>
       <HStack
         width={"100%"}

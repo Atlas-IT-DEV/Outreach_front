@@ -49,7 +49,7 @@ const BasePage = observer(() => {
       >
         <ModalSelectBase />
         <ModalImportBase />
-        <Button
+        {/* <Button
           boxShadow={"-2px 2px 0 0 #4682B4"}
           borderRadius={"0px"}
           border={"2px solid #4682B4"}
@@ -59,7 +59,7 @@ const BasePage = observer(() => {
           flexShrink={0}
         >
           <Text>Экспортировать базу</Text>
-        </Button>
+        </Button> */}
       </Stack>
       <TableBase />
     </VStack>

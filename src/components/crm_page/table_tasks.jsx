@@ -48,10 +48,9 @@ const TableTasks = observer(() => {
   }
 
   const distributedTasks = distributeTasks(pageStore.tasks);
-  console.log(
-    "dist",
-    pageStore.tasks.filter((item) => item?.is_completed)
-  );
+
+  console.log(distributedTasks);
+
   return (
     <VStack width={"100%"} align={"flex-start"}>
       <HStack
@@ -72,8 +71,12 @@ const TableTasks = observer(() => {
           </Text>
           {distributedTasks?.overdue.length > 0 &&
             distributedTasks?.overdue
-              .filter((item) => !item?.is_completed)
-              .map((item) => <TaskCard obj={item} />)}
+              .filter(
+                (item) =>
+                  !item?.is_completed &&
+                  item?.company_id == pageStore.user_info?.company_id
+              )
+              .map((item, index) => <TaskCard key={index} obj={item} />)}
         </VStack>
         <VStack width={"300px"} padding={"10px"} gap={"20px"}>
           <Text
@@ -85,8 +88,12 @@ const TableTasks = observer(() => {
           </Text>
           {distributedTasks?.today.length > 0 &&
             distributedTasks?.today
-              .filter((item) => !item?.is_completed)
-              .map((item) => <TaskCard obj={item} />)}
+              .filter(
+                (item) =>
+                  !item?.is_completed &&
+                  item?.company_id == pageStore.user_info?.company_id
+              )
+              .map((item, index) => <TaskCard key={index} obj={item} />)}
         </VStack>
         <VStack width={"300px"} padding={"10px"} gap={"20px"}>
           <Text
@@ -98,8 +105,12 @@ const TableTasks = observer(() => {
           </Text>
           {distributedTasks?.tomorrow.length &&
             distributedTasks?.tomorrow
-              .filter((item) => !item?.is_completed)
-              .map((item) => <TaskCard obj={item} />)}
+              .filter(
+                (item) =>
+                  !item?.is_completed &&
+                  item?.company_id == pageStore.user_info?.company_id
+              )
+              .map((item, index) => <TaskCard key={index} obj={item} />)}
         </VStack>
         <VStack width={"300px"} padding={"10px"} gap={"20px"}>
           <Text
@@ -111,8 +122,12 @@ const TableTasks = observer(() => {
           </Text>
           {distributedTasks?.future.length > 0 &&
             distributedTasks?.future
-              .filter((item) => !item?.is_completed)
-              .map((item) => <TaskCard obj={item} />)}
+              .filter(
+                (item) =>
+                  !item?.is_completed &&
+                  item?.company_id == pageStore.user_info?.company_id
+              )
+              .map((item, index) => <TaskCard key={index} obj={item} />)}
         </VStack>
 
         <VStack width={"300px"} padding={"10px"} gap={"20px"}>
@@ -125,8 +140,12 @@ const TableTasks = observer(() => {
           </Text>
           {pageStore.tasks.length > 0 &&
             pageStore.tasks
-              .filter((item) => item?.is_completed)
-              .map((item) => <TaskCard obj={item} />)}
+              .filter(
+                (item) =>
+                  item?.is_completed &&
+                  item?.company_id == pageStore.user_info?.company_id
+              )
+              .map((item, index) => <TaskCard key={index} obj={item} />)}
         </VStack>
       </HStack>
     </VStack>

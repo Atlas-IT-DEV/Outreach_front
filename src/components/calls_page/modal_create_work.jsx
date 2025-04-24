@@ -11,6 +11,7 @@ import {
   Radio,
   RadioGroup,
   Text,
+  Textarea,
   useDisclosure,
   useToast,
   VStack,
@@ -57,7 +58,7 @@ const ModalCreateWork = observer(() => {
       await pageStore.getAllWorks();
       toast({
         title: "Успех",
-        description: "Ворк успешно создан",
+        description: "Рассылка успешно создана",
         duration: "3000",
         status: "success",
       });
@@ -75,14 +76,14 @@ const ModalCreateWork = observer(() => {
         color={"black"}
         _hover={{ bg: "#4682B4", color: "white" }}
       >
-        <Text fontSize={width >= 1000 ? "16px" : "14px"}>Новый ворк</Text>
+        <Text fontSize={width >= 1000 ? "16px" : "14px"}>Новая рассылка</Text>
       </Button>
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
         <ModalContent padding={"20px"}>
           <ModalCloseButton />
           <Text width={"100%"} textAlign={"center"} fontWeight={"600"}>
-            Создание ворка
+            Создание рассылки
           </Text>
           <Formik
             initialValues={initialValues}
@@ -125,7 +126,7 @@ const ModalCreateWork = observer(() => {
                     isInvalid={errors?.description && touched?.description}
                   >
                     <Text fontWeight={"500"}>Описание</Text>
-                    <Input
+                    <Textarea
                       placeholder="Описание"
                       marginTop={"4px"}
                       border={"2px solid #4682B4"}

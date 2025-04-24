@@ -54,69 +54,74 @@ const TableLeads = observer(() => {
               </Tr>
             </Thead>
             <Tbody>
-              {pageStore.search_elements?.length > 0
-                ? pageStore.search_elements?.map((item, index) => (
-                    <Tr color={"black"} key={index}>
-                      <Td border={"1px solid rgba(200,200,200,1)"}>
-                        <Text>{item?.director?.phone ?? "-"}</Text>
-                      </Td>
-                      <Td border={"1px solid rgba(200,200,200,1)"}>
-                        <Text>{item?.callType}</Text>
-                      </Td>
-                      <Td border={"1px solid rgba(200,200,200,1)"}>
-                        <Text>{item?.callStatus}</Text>
-                      </Td>
-                      <Td border={"1px solid rgba(200,200,200,1)"}>
-                        <VStack align={"flex-start"} gap={"2px"}>
-                          <HStack width={"100%"} gap={0}>
-                            <Stack
-                              height={"10px"}
-                              width={"100%"}
-                              border={"2px solid #4682B4"}
-                              borderRadius={"4px"}
-                              bg={"#4682B4"}
-                            ></Stack>
-                            <Stack
-                              height={"10px"}
-                              width={"100%"}
-                              border={"2px solid #4682B4"}
-                              borderRadius={"4px"}
-                            ></Stack>
-                            <Stack
-                              height={"10px"}
-                              width={"100%"}
-                              border={"2px solid #4682B4"}
-                              borderRadius={"4px"}
-                            ></Stack>
-                            <Stack
-                              height={"10px"}
-                              width={"100%"}
-                              border={"2px solid #4682B4"}
-                              borderRadius={"4px"}
-                            ></Stack>
-                          </HStack>
-
-                          <Text>Новый лид</Text>
-                        </VStack>
-                      </Td>
-                      <Td border={"1px solid rgba(200,200,200,1)"}>
-                        <Text>{item?.CreatedAt}</Text>
-                      </Td>
-                      <Td border={"1px solid rgba(200,200,200,1)"}>
-                        <Text>{item?.responsible}</Text>
-                      </Td>
-                      <Td
-                        width={"min-content"}
-                        border={"1px solid rgba(200,200,200,1)"}
-                      >
-                        <HStack justify={"center"}>
-                          <ModalEditLead obj={item} />
-                          <ModalDeleteLead obj={item} />
+              {pageStore.search_elements?.length > 0 ? (
+                pageStore.search_elements?.map((item, index) => (
+                  <Tr color={"black"} key={index}>
+                    <Td border={"1px solid rgba(200,200,200,1)"}>
+                      <Text>{item?.director?.phone ?? "-"}</Text>
+                    </Td>
+                    <Td border={"1px solid rgba(200,200,200,1)"}>
+                      <Text>{item?.callType}</Text>
+                    </Td>
+                    <Td border={"1px solid rgba(200,200,200,1)"}>
+                      <Text>{item?.callStatus}</Text>
+                    </Td>
+                    <Td border={"1px solid rgba(200,200,200,1)"}>
+                      <VStack align={"flex-start"} gap={"2px"}>
+                        <HStack width={"100%"} gap={0}>
+                          <Stack
+                            height={"10px"}
+                            width={"100%"}
+                            border={"2px solid #4682B4"}
+                            borderRadius={"4px"}
+                            bg={"#4682B4"}
+                          ></Stack>
+                          <Stack
+                            height={"10px"}
+                            width={"100%"}
+                            border={"2px solid #4682B4"}
+                            borderRadius={"4px"}
+                          ></Stack>
+                          <Stack
+                            height={"10px"}
+                            width={"100%"}
+                            border={"2px solid #4682B4"}
+                            borderRadius={"4px"}
+                          ></Stack>
+                          <Stack
+                            height={"10px"}
+                            width={"100%"}
+                            border={"2px solid #4682B4"}
+                            borderRadius={"4px"}
+                          ></Stack>
                         </HStack>
-                      </Td>
-                    </Tr>
-                  ))
-                : null}
+
+                        <Text>Новый лид</Text>
+                      </VStack>
+                    </Td>
+                    <Td border={"1px solid rgba(200,200,200,1)"}>
+                      <Text>{item?.CreatedAt}</Text>
+                    </Td>
+                    <Td border={"1px solid rgba(200,200,200,1)"}>
+                      <Text>{item?.responsible}</Text>
+                    </Td>
+                    <Td
+                      width={"min-content"}
+                      border={"1px solid rgba(200,200,200,1)"}
+                    >
+                      <HStack justify={"center"}>
+                        <ModalEditLead obj={item} />
+                        <ModalDeleteLead obj={item} />
+                      </HStack>
+                    </Td>
+                  </Tr>
+                ))
+              ) : pageStore.search_elements.length == 0 &&
+                pageStore.searchValue != "" ? (
+                <Text color={"black"} fontWeight={"600"}>
+                  По Вашему запросу ничего не найдено
+                </Text>
+              ) : null}
             </Tbody>
           </Table>
         </VStack>
@@ -127,7 +132,7 @@ const TableLeads = observer(() => {
         fontWeight={"600"}
         marginTop={"20px"}
       >
-        Все результаты
+        Все данные
       </Text>
       <HStack
         width={"100%"}

@@ -20,7 +20,7 @@ const TableReport = () => {
         width={"100%"}
         fontWeight={"600"}
       >
-        Все результаты
+        Все данные
       </Text>
       <HStack
         width={"100%"}

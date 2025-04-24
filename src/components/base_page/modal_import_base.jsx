@@ -89,10 +89,13 @@ const ModalImportBase = observer(() => {
             />
             <Input
               type="file"
-              accept="text/*"
+              accept=".csv, .json, .xlsx"
               border={"none"}
               onChange={(e) => setSelectedFile(e.target.files[0])}
             />
+            <Text fontWeight={300} fontSize={"14px"}>
+              Подсказка: можно выбрать файлы с форматами .csv, .json или .xlsx
+            </Text>
           </VStack>
 
           <HStack width={"100%"} justify={"flex-end"} marginTop={"20px"}>

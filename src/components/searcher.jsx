@@ -1,4 +1,4 @@
-import { Input, Text, VStack } from "@chakra-ui/react";
+import { Input, Text, Tooltip, VStack } from "@chakra-ui/react";
 import Fuse from "fuse.js";
 import { useEffect, useState } from "react";
 import { useStores } from "../store/store_context";
@@ -8,15 +8,14 @@ const Searcher = observer(
   ({ array, options = {}, placeholder = "Поиск", search_by = "Поиск" }) => {
     const { pageStore } = useStores();
 
-    const [searchValue, setSearchValue] = useState("");
-    console.log("value", searchValue);
+    console.log("value", pageStore.searchValue);
 
     const searchProduct = () => {
       let copyArray;
-      if (searchValue != "") {
+      if (pageStore.searchValue != "") {
         copyArray = Array.from(array);
         const fuse = new Fuse(copyArray, options);
-        const result = fuse.search(searchValue);
+        const result = fuse.search(pageStore.searchValue);
         const similar = result.map((res) => res.item);
 
         pageStore.updateSearchElement(similar);
@@ -27,9 +26,11 @@ const Searcher = observer(
 
     useEffect(() => {
       searchProduct();
-      console.log("searcher", pageStore.search_elements);
-      console.log("options", options);
-    }, [searchValue, options]);
+    }, [pageStore.searchValue, options]);
+
+    useEffect(() => {
+      pageStore.updateSearchValue("");
+    }, []);
     return (
       <VStack
         width={"100%"}
@@ -40,15 +41,23 @@ const Searcher = observer(
         <Text fontWeight={"600"} color={"black"}>
           {search_by}
         </Text>
-        <Input
-          value={searchValue}
-          onChange={(e) => setSearchValue(e.target.value)}
-          width={"100%"}
-          border={"2px solid #4682B4"}
-          borderRadius={"0px"}
-          _hover={{ border: "2px solid #4682B4" }}
-          placeholder={`${placeholder}`}
-        />
+        <Tooltip
+          label={"Подсказка: Вы можете делать поиск по любым полям"}
+          bg={"#4682B4"}
+          color={"white"}
+          borderRadius={"10px"}
+          placement="bottom-start"
+        >
+          <Input
+            value={pageStore.searchValue}
+            onChange={(e) => pageStore.updateSearchValue(e.target.value)}
+            width={"100%"}
+            border={"2px solid #4682B4"}
+            borderRadius={"0px"}
+            _hover={{ border: "2px solid #4682B4" }}
+            placeholder={`${placeholder}`}
+          />
+        </Tooltip>
       </VStack>
     );
   }

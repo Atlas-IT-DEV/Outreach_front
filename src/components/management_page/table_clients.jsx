@@ -56,42 +56,47 @@ const TableClients = observer(() => {
               </Tr>
             </Thead>
             <Tbody>
-              {pageStore.search_elements?.length > 0
-                ? pageStore.search_elements?.map((item, index) => (
-                    <Tr color={"black"} key={index}>
-                      <Td border={"1px solid rgba(200,200,200,1)"}>
-                        <Text>{item?.director?.username}</Text>
-                      </Td>
-                      <Td border={"1px solid rgba(200,200,200,1)"}>
-                        <Text>{item?.director?.last_name ?? "-"}</Text>
-                      </Td>
-                      <Td border={"1px solid rgba(200,200,200,1)"}>
-                        <Text>{item?.director?.first_name ?? "-"}</Text>
-                      </Td>
-                      <Td border={"1px solid rgba(200,200,200,1)"}>
-                        <Text>{item?.director?.phone ?? "-"}</Text>
-                      </Td>
-                      <Td border={"1px solid rgba(200,200,200,1)"}>
-                        <Text>{item?.name ?? "-"}</Text>
-                      </Td>
-                      <Td border={"1px solid rgba(200,200,200,1)"}>
-                        <Textarea
-                          value={item?.description}
-                          contentEditable={"false"}
-                        />
-                      </Td>
-                      <Td
-                        width={"min-content"}
-                        border={"1px solid rgba(200,200,200,1)"}
-                      >
-                        <HStack justify={"center"}>
-                          <ModalEditClient obj={item} />
-                          <ModalDeleteClient obj={item} />
-                        </HStack>
-                      </Td>
-                    </Tr>
-                  ))
-                : null}
+              {pageStore.search_elements?.length > 0 ? (
+                pageStore.search_elements?.map((item, index) => (
+                  <Tr color={"black"} key={index}>
+                    <Td border={"1px solid rgba(200,200,200,1)"}>
+                      <Text>{item?.director?.username}</Text>
+                    </Td>
+                    <Td border={"1px solid rgba(200,200,200,1)"}>
+                      <Text>{item?.director?.last_name ?? "-"}</Text>
+                    </Td>
+                    <Td border={"1px solid rgba(200,200,200,1)"}>
+                      <Text>{item?.director?.first_name ?? "-"}</Text>
+                    </Td>
+                    <Td border={"1px solid rgba(200,200,200,1)"}>
+                      <Text>{item?.director?.phone ?? "-"}</Text>
+                    </Td>
+                    <Td border={"1px solid rgba(200,200,200,1)"}>
+                      <Text>{item?.name ?? "-"}</Text>
+                    </Td>
+                    <Td border={"1px solid rgba(200,200,200,1)"}>
+                      <Textarea
+                        value={item?.description}
+                        contentEditable={"false"}
+                      />
+                    </Td>
+                    <Td
+                      width={"min-content"}
+                      border={"1px solid rgba(200,200,200,1)"}
+                    >
+                      <HStack justify={"center"}>
+                        <ModalEditClient obj={item} />
+                        <ModalDeleteClient obj={item} />
+                      </HStack>
+                    </Td>
+                  </Tr>
+                ))
+              ) : pageStore.search_elements.length == 0 &&
+                pageStore.searchValue != "" ? (
+                <Text color={"black"} fontWeight={"600"}>
+                  По Вашему запросу ничего не найдено
+                </Text>
+              ) : null}
             </Tbody>
           </Table>
         </VStack>
@@ -102,7 +107,7 @@ const TableClients = observer(() => {
         fontWeight={"600"}
         marginTop={"20px"}
       >
-        Все результаты
+        Все данные
       </Text>
       <HStack
         width={"100%"}

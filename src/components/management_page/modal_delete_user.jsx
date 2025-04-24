@@ -8,20 +8,19 @@ import {
   Text,
   useDisclosure,
   useToast,
+  VStack,
 } from "@chakra-ui/react";
 import { observer } from "mobx-react-lite";
-import useWindowDimensions from "../../windowDimensions";
 import { useStores } from "../../store/store_context";
 
-const ModalDeleteWork = observer(({ obj = {} }) => {
+const ModalDeleteUser = observer(({ obj = {} }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const { width } = useWindowDimensions();
   const { pageStore } = useStores();
   const toast = useToast();
 
-  const deleteWork = async () => {
+  const deleteUser = async () => {
     const response = await fetch(
-      `http://158.255.7.7:8081/api/works/${obj?.ID}`,
+      `http://158.255.7.7:8081/api/users/${obj?.ID}`,
       {
         method: "DELETE",
         headers: {
@@ -32,15 +31,14 @@ const ModalDeleteWork = observer(({ obj = {} }) => {
     );
     return response.ok;
   };
-
-  const handleDelete = async () => {
-    const ok = await deleteWork();
+  const handleDeleteCompany = async () => {
+    const ok = await deleteUser();
     if (ok) {
-      await pageStore.getAllWorks();
+      await pageStore.getAllUsers();
       toast({
         title: "Успех",
-        description: "Рассылка успешно удалена",
-        duration: "3000",
+        description: "Лид успешно удален",
+        duration: 3000,
         status: "success",
       });
       onClose();
@@ -49,22 +47,24 @@ const ModalDeleteWork = observer(({ obj = {} }) => {
   return (
     <>
       <Button
-        onClick={onOpen}
-        border={"2px solid #4682B4"}
+        onClick={() => onOpen()}
         boxShadow={"-2px 2px 0 0 #4682B4"}
         borderRadius={"0px"}
+        border={"2px solid #4682B4"}
         bg={"white"}
         color={"black"}
         _hover={{ bg: "#4682B4", color: "white" }}
+        flexShrink={0}
       >
-        <Text fontSize={width >= 1000 ? "16px" : "14px"}>Удалить</Text>
+        <Text>Удалить</Text>
       </Button>
-      <Modal isOpen={isOpen} onClose={onClose}>
+
+      <Modal isOpen={isOpen} onClose={onClose} onEsc={onClose} size={"3xl"}>
         <ModalOverlay />
         <ModalContent padding={"20px"}>
           <ModalCloseButton />
           <Text width={"100%"} textAlign={"center"} fontWeight={"600"}>
-            Удалить рассылку?
+            Удалить клиента?
           </Text>
           <HStack marginTop={"20px"} justify={"center"} width={"100%"}>
             <Button
@@ -80,7 +80,7 @@ const ModalDeleteWork = observer(({ obj = {} }) => {
               <Text>Отменить</Text>
             </Button>
             <Button
-              onClick={async () => await handleDelete()}
+              onClick={async () => await handleDeleteCompany()}
               boxShadow={"-2px 2px 0 0 #4682B4"}
               borderRadius={"0px"}
               border={"2px solid #4682B4"}
@@ -98,4 +98,4 @@ const ModalDeleteWork = observer(({ obj = {} }) => {
   );
 });
 
-export default ModalDeleteWork;
+export default ModalDeleteUser;

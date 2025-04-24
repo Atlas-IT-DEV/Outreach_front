@@ -9,6 +9,7 @@ class PageStore {
 
   bases = [];
 
+  users = [];
   clients = [];
   leads = [];
   scripts = [];
@@ -19,11 +20,14 @@ class PageStore {
 
   emailTemplates = [];
   selected_script = {};
+  searchValue = "";
   search_elements = [];
 
   selected_department = null;
 
   selected_base = [];
+
+  generateText = {};
 
   constructor() {
     makeAutoObservable(this);
@@ -42,6 +46,10 @@ class PageStore {
     this.selected_script = new_scr;
   };
 
+  updateSearchValue = (newValue) => {
+    this.searchValue = newValue;
+  };
+
   setIsOpen = (new_is_open) => {
     this.isOpen = new_is_open;
   };
@@ -56,6 +64,10 @@ class PageStore {
 
   updateMailWorks = (new_works) => {
     this.mail_works = new_works;
+  };
+
+  updateGenerateText = (new_text) => {
+    this.generateText = new_text;
   };
 
   // авторизация
@@ -170,9 +182,34 @@ class PageStore {
     });
     return response.ok;
   };
+
+  // сотрудники
   editUser = async (id, values) => {
     const response = await fetch(`${base_url}/api/users/${id}`, {
       method: "PUT",
+      headers: {
+        accept: "application/json",
+        "Content-Type": "application/json",
+        Authorization: `${this.token}`,
+      },
+      body: JSON.stringify(values),
+    });
+    return response.ok;
+  };
+  getAllUsers = async () => {
+    const response = await fetch(`${base_url}/api/users`, {
+      method: "GET",
+      headers: {
+        accept: "application/json",
+        Authorization: `${this.token}`,
+      },
+    });
+    const result = await response.json();
+    this.users = result;
+  };
+  createUser = async (values) => {
+    const response = await fetch(`${base_url}/api/users`, {
+      method: "POST",
       headers: {
         accept: "application/json",
         "Content-Type": "application/json",
@@ -258,7 +295,7 @@ class PageStore {
     return response.ok;
   };
 
-  //ворки
+  // рассылки
   getAllWorks = async () => {
     const response = await fetch(`${base_url}/api/works`, {
       method: "GET",
@@ -358,6 +395,21 @@ class PageStore {
       },
       body: JSON.stringify(values),
     });
+    return response.ok;
+  };
+
+  generateGPT = async (values) => {
+    const response = await fetch(`https://i-panel.pro:8808/gpt`, {
+      method: "POST",
+      headers: {
+        accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ question: values }),
+    });
+
+    const result = await response.json();
+    this.generateText = result;
     return response.ok;
   };
 }

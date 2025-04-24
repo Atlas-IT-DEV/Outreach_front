@@ -21,6 +21,7 @@ const CrmPage = observer(() => {
     pageStore.getAllScripts();
     pageStore.getAllWorks();
     pageStore.getAllTasks();
+    pageStore.getAllUsers();
   }, []);
 
   return (

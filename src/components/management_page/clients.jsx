@@ -6,6 +6,8 @@ import { useStores } from "../../store/store_context";
 import useWindowDimensions from "../../windowDimensions";
 import ModalCreateClient from "./modal_create_client";
 import TableClients from "./table_clients";
+import ModalCreateUser from "./modal_create_user";
+import TableUsers from "./table_users";
 
 const Clients = () => {
   const { pageStore } = useStores();
@@ -21,20 +23,32 @@ const Clients = () => {
     ], // Поля для поиска
     threshold: 0, // 0 = точное совпадение, 1 = любые совпадения
   };
+  const optionsUser = {
+    keys: ["username", "last_name", "first_name", "phone", "email"],
+    threshold: 0,
+  };
   return (
     <VStack w={"100%"}>
       <Searcher
-        array={pageStore.clients}
-        options={options}
-        search_by="Поиск по клиентам"
-        placeholder="НИКНЕЙМ, ФАМИЛИЯ, ИМЯ, НОМЕР ТЕЛЕФОНА, НАЗВАНИЕ КОМПАНИИ, ОПИСАНИЕ КОМПАНИИ"
+        array={
+          pageStore.user_info?.role == "1" ? pageStore.users : pageStore.clients
+        }
+        options={pageStore.user_info?.role == "1" ? optionsUser : options}
+        search_by={
+          pageStore.user_info?.role == "1"
+            ? "Поиск по сотрудникам"
+            : "Поиск по клиентам"
+        }
       />
 
       <HStack width={"100%"} justify={"space-between"} marginTop={"10px"}>
-        <ModalCreateClient />
+        {pageStore.user_info?.role == "1" ? (
+          <ModalCreateUser />
+        ) : (
+          <ModalCreateClient />
+        )}
       </HStack>
-
-      <TableClients />
+      {pageStore.user_info?.role == "1" ? <TableUsers /> : <TableClients />}
     </VStack>
   );
 };

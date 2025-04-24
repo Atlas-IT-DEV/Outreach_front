@@ -6,6 +6,7 @@ import {
   Tbody,
   Td,
   Text,
+  Textarea,
   Th,
   Thead,
   Tr,
@@ -65,7 +66,7 @@ const TableJournal = observer(() => {
                       <Text>{item?.name}</Text>
                     </Td>
                     <Td border={"1px solid rgba(200,200,200,1)"}>
-                      <Text>{item?.description}</Text>
+                      <Textarea disabled>{item?.description}</Textarea>
                     </Td>
                     <Td border={"1px solid rgba(200,200,200,1)"}>
                       <Text>
@@ -128,6 +129,11 @@ const TableJournal = observer(() => {
             </Table>
           </HStack>
         </>
+      ) : pageStore.search_elements.length == 0 &&
+        pageStore.searchValue != "" ? (
+        <Text color={"black"} fontWeight={"600"}>
+          По Вашему запросу ничего не найдено
+        </Text>
       ) : null}
       <Text
         marginTop={"20px"}
@@ -135,7 +141,7 @@ const TableJournal = observer(() => {
         width={"100%"}
         fontWeight={"600"}
       >
-        Все результаты
+        Все данные
       </Text>
       <HStack
         width={"100%"}
@@ -159,15 +165,6 @@ const TableJournal = observer(() => {
               <Th color={"white"}>
                 <Text>Время работы</Text>
               </Th>
-              <Th color={"white"}>
-                <Text>Транскрибация</Text>
-              </Th>
-              <Th color={"white"}>
-                <Text>% успеха</Text>
-              </Th>
-              <Th color={"white"}>
-                <Text>Добавить в СРМ</Text>
-              </Th>
               <Th color={"white"}></Th>
             </Tr>
           </Thead>
@@ -185,7 +182,7 @@ const TableJournal = observer(() => {
                       <Text>{item?.name}</Text>
                     </Td>
                     <Td border={"1px solid rgba(200,200,200,1)"}>
-                      <Text>{item?.description}</Text>
+                      <Textarea disabled>{item?.description}</Textarea>
                     </Td>
                     <Td border={"1px solid rgba(200,200,200,1)"}>
                       <Text>
@@ -197,46 +194,11 @@ const TableJournal = observer(() => {
                         С {item?.time_start}:00 до {item?.time_finish}:00
                       </Text>
                     </Td>
+
                     <Td border={"1px solid rgba(200,200,200,1)"}>
-                      <Button
-                        bg={"black"}
-                        color={"white"}
-                        _hover={{ bg: "rgba(200,200,200,1)", color: "black" }}
-                      >
-                        <Text>Транскрибировать</Text>
-                      </Button>
-                    </Td>
-                    <Td border={"1px solid rgba(200,200,200,1)"}>
-                      <Text>Диалог состоялся</Text>
-                    </Td>
-                    <Td border={"1px solid rgba(200,200,200,1)"}>
-                      {/* временный VStack */}
-                      <VStack>
-                        <Stack
-                          cursor={"pointer"}
-                          color={"black"}
-                          bg={"rgba(121, 228, 155, 1)"}
-                          borderRadius={"4px"}
-                          padding={"4px 10px"}
-                        >
-                          <Text>Добавлено в СРМ</Text>
-                        </Stack>
-                        <Stack
-                          cursor={"pointer"}
-                          color={"white"}
-                          bg={"rgba(89, 89, 89, 1)"}
-                          borderRadius={"4px"}
-                          padding={"4px 10px"}
-                        >
-                          <Text>Добавить в СРМ</Text>
-                        </Stack>
-                      </VStack>
-                    </Td>
-                    <Td border={"1px solid rgba(200,200,200,1)"}>
-                      <HStack>
-                        <ModalEditWork obj={item} />
-                        {/* <ModalDeleteWork obj={item} /> */}
-                      </HStack>
+                      {item.approved ? null : <ModalEditWork obj={item} />}
+
+                      {/* <ModalDeleteWork obj={item} /> */}
                     </Td>
                   </Tr>
                 ))}

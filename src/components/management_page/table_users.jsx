@@ -4,6 +4,7 @@ import {
   Tbody,
   Td,
   Text,
+  Textarea,
   Th,
   Thead,
   Tr,
@@ -11,13 +12,22 @@ import {
 } from "@chakra-ui/react";
 import { observer } from "mobx-react-lite";
 import { useStores } from "../../store/store_context";
+import { useEffect } from "react";
+import ModalEditClient from "./modal_edit_client";
+import ModalDeleteUser from "./modal_delete_user";
 
-const TableContacts = observer(() => {
+const TableUsers = observer(() => {
   const { pageStore } = useStores();
+  useEffect(() => {
+    pageStore.getAllCompanies();
+  }, []);
+
+  console.log("users", pageStore.users);
+
   return (
     <>
       {pageStore.search_elements?.length != 0 && (
-        <VStack width={"100%"} align={"flex-start"}>
+        <VStack width={"100%"} align={"flex-start"} marginTop={"20px"}>
           <Text color={"black"} fontWeight={"600"}>
             Результаты поиска
           </Text>
@@ -25,51 +35,57 @@ const TableContacts = observer(() => {
             <Thead bg={"#4682B4"} borderBottom={"none"}>
               <Tr borderBottom={"2px solid #4682B4"}>
                 <Th color={"white"}>
-                  <Text>ID</Text>
+                  <Text>Никнейм</Text>
                 </Th>
                 <Th color={"white"}>
-                  <Text>ФИО</Text>
+                  <Text>Фамилия</Text>
                 </Th>
                 <Th color={"white"}>
-                  <Text>Телефон</Text>
+                  <Text>Имя</Text>
                 </Th>
                 <Th color={"white"}>
-                  <Text>Компания</Text>
+                  <Text>Почта</Text>
                 </Th>
                 <Th color={"white"}>
-                  <Text>email</Text>
+                  <Text>Номер телефона</Text>
                 </Th>
                 <Th color={"white"}>
-                  <Text>ИНН</Text>
+                  <Text></Text>
                 </Th>
               </Tr>
             </Thead>
             <Tbody>
-              {pageStore.search_elements.length > 0 ? (
-                pageStore.search_elements?.map((item, index) => {
-                  return (
+              {pageStore.search_elements?.length > 0 ? (
+                pageStore.search_elements
+                  ?.filter((item) => item?.ID != pageStore.user_info?.ID)
+                  .map((item, index) => (
                     <Tr color={"black"} key={index}>
                       <Td border={"1px solid rgba(200,200,200,1)"}>
-                        <Text>{item?.id}</Text>
+                        <Text>{item?.username}</Text>
                       </Td>
                       <Td border={"1px solid rgba(200,200,200,1)"}>
-                        <Text>{item?.fullName}</Text>
+                        <Text>{item?.last_name || "-"}</Text>
                       </Td>
                       <Td border={"1px solid rgba(200,200,200,1)"}>
-                        <Text>{item?.phoneNumber}</Text>
+                        <Text>{item?.first_name || "-"}</Text>
                       </Td>
                       <Td border={"1px solid rgba(200,200,200,1)"}>
-                        <Text>{item?.company}</Text>
+                        <Text>{item?.email || "-"}</Text>
                       </Td>
                       <Td border={"1px solid rgba(200,200,200,1)"}>
-                        <Text>{item?.email}</Text>
+                        <Text>{item?.phone || "-"}</Text>
                       </Td>
-                      <Td border={"1px solid rgba(200,200,200,1)"}>
-                        <Text>{item?.inn}</Text>
+                      <Td
+                        width={"min-content"}
+                        border={"1px solid rgba(200,200,200,1)"}
+                      >
+                        <HStack justify={"center"}>
+                          <ModalEditClient obj={item} />
+                          <ModalDeleteUser obj={item} />
+                        </HStack>
                       </Td>
                     </Tr>
-                  );
-                })
+                  ))
               ) : pageStore.search_elements.length == 0 &&
                 pageStore.searchValue != "" ? (
                 <Text color={"black"} fontWeight={"600"}>
@@ -81,9 +97,9 @@ const TableContacts = observer(() => {
         </VStack>
       )}
       <Text
+        width={"100%"}
         color={"black"}
         fontWeight={"600"}
-        width={"100%"}
         marginTop={"20px"}
       >
         Все данные
@@ -94,55 +110,66 @@ const TableContacts = observer(() => {
         overflowX={"scroll"}
         paddingBottom={"6px"}
       >
-        <Table width={"100%"} padding={"10px"} border={"2px solid #4682B4"}>
+        <Table
+          width={"100%"}
+          padding={"10px"}
+          border={"2px solid #4682B4"}
+          align={"flex-start"}
+        >
           <Thead bg={"#4682B4"} borderBottom={"none"}>
             <Tr borderBottom={"2px solid #4682B4"}>
               <Th color={"white"}>
-                <Text>ID</Text>
+                <Text>Никнейм</Text>
               </Th>
               <Th color={"white"}>
-                <Text>ФИО</Text>
+                <Text>Фамилия</Text>
               </Th>
               <Th color={"white"}>
-                <Text>Телефон</Text>
+                <Text>Имя</Text>
               </Th>
               <Th color={"white"}>
-                <Text>Компания</Text>
+                <Text>Почта</Text>
               </Th>
               <Th color={"white"}>
-                <Text>email</Text>
+                <Text>Номер телефона</Text>
               </Th>
               <Th color={"white"}>
-                <Text>ИНН</Text>
+                <Text></Text>
               </Th>
             </Tr>
           </Thead>
           <Tbody>
-            {pageStore.crm_contacts.length > 0
-              ? pageStore.crm_contacts?.map((item, index) => {
-                  return (
+            {pageStore.users?.length > 0
+              ? pageStore.users
+                  ?.filter((item) => item?.ID != pageStore.user_info?.ID)
+                  .map((item, index) => (
                     <Tr color={"black"} key={index}>
                       <Td border={"1px solid rgba(200,200,200,1)"}>
-                        <Text>{item?.id}</Text>
+                        <Text>{item?.username}</Text>
                       </Td>
                       <Td border={"1px solid rgba(200,200,200,1)"}>
-                        <Text>{item?.fullName}</Text>
+                        <Text>{item?.last_name || "-"}</Text>
                       </Td>
                       <Td border={"1px solid rgba(200,200,200,1)"}>
-                        <Text>{item?.phoneNumber}</Text>
+                        <Text>{item?.first_name || "-"}</Text>
                       </Td>
                       <Td border={"1px solid rgba(200,200,200,1)"}>
-                        <Text>{item?.company}</Text>
+                        <Text>{item?.email || "-"}</Text>
                       </Td>
                       <Td border={"1px solid rgba(200,200,200,1)"}>
-                        <Text>{item?.email}</Text>
+                        <Text>{item?.phone || "-"}</Text>
                       </Td>
-                      <Td border={"1px solid rgba(200,200,200,1)"}>
-                        <Text>{item?.inn}</Text>
+                      <Td
+                        width={"min-content"}
+                        border={"1px solid rgba(200,200,200,1)"}
+                      >
+                        <HStack justify={"center"}>
+                          <ModalEditClient obj={item} />
+                          <ModalDeleteUser obj={item} />
+                        </HStack>
                       </Td>
                     </Tr>
-                  );
-                })
+                  ))
               : null}
           </Tbody>
         </Table>
@@ -151,4 +178,4 @@ const TableContacts = observer(() => {
   );
 });
 
-export default TableContacts;
+export default TableUsers;

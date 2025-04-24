@@ -10,6 +10,7 @@ import {
   ModalContent,
   ModalOverlay,
   Text,
+  Textarea,
   useDisclosure,
   useToast,
   VStack,
@@ -370,7 +371,7 @@ const ModalEditClient = observer(({ obj = {} }) => {
                         isInvalid={errors?.description && touched?.description}
                       >
                         <Text fontWeight={"500"}>Описание компании</Text>
-                        <Input
+                        <Textarea
                           value={values?.description}
                           placeholder="Описание компании"
                           width={"100%"}
@@ -437,7 +438,9 @@ const ModalEditClient = observer(({ obj = {} }) => {
                   gap={0}
                 >
                   <Text fontWeight={"500"}>Описание</Text>
-                  <Text fontSize={"14px"}>{obj?.description}</Text>
+                  <Textarea fontSize={"14px"} disabled>
+                    {obj?.description}
+                  </Textarea>
                 </VStack>
                 <Button
                   onClick={() => setEditCompanies(true)}

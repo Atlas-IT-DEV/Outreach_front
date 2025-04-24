@@ -11,6 +11,7 @@ import {
   Radio,
   RadioGroup,
   Text,
+  Textarea,
   useDisclosure,
   useToast,
   VStack,
@@ -57,7 +58,7 @@ const ModalEditWork = observer(({ obj = {} }) => {
       await pageStore.getAllWorks();
       toast({
         title: "Успех",
-        description: "Ворк успешно обновлён",
+        description: "Рассылка успешно обновлена",
         duration: "3000",
         status: "success",
       });
@@ -82,7 +83,7 @@ const ModalEditWork = observer(({ obj = {} }) => {
         <ModalContent padding={"20px"}>
           <ModalCloseButton />
           <Text width={"100%"} textAlign={"center"} fontWeight={"600"}>
-            Редактирование ворка
+            Редактирование рассылки
           </Text>
           <Formik
             initialValues={initialValues}
@@ -126,7 +127,7 @@ const ModalEditWork = observer(({ obj = {} }) => {
                     isInvalid={errors?.description && touched?.description}
                   >
                     <Text fontWeight={"500"}>Описание</Text>
-                    <Input
+                    <Textarea
                       value={values?.description}
                       placeholder="Описание"
                       marginTop={"4px"}
