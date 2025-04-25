@@ -17,8 +17,6 @@ const BasePage = observer(() => {
     threshold: 0, // 0 = точное совпадение, 1 = любые совпадения
   };
 
-  const dataWithoutHeaders = pageStore.selected_base.slice(1);
-
   useEffect(() => {
     pageStore.getAllBases();
   }, []);
@@ -35,7 +33,7 @@ const BasePage = observer(() => {
       marginTop={width >= 1400 ? "10px" : ["40px", "30px"]}
     >
       <Searcher
-        array={dataWithoutHeaders}
+        array={pageStore.selected_base}
         options={options}
         search_by="Поиск по базе"
       />

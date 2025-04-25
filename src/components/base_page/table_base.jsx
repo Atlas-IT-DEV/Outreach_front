@@ -16,7 +16,13 @@ import { useStores } from "../../store/store_context";
 const TableBase = observer(() => {
   const { pageStore } = useStores();
 
-  console.log(pageStore.has_more_data);
+  const scrollTop = () => {
+    window.scrollTo({
+      top: 0, // пиксели от верха страницы
+      left: 0,
+      behavior: "smooth", // плавная анимация
+    });
+  };
 
   return (
     <>
@@ -108,6 +114,7 @@ const TableBase = observer(() => {
               _hover={{ textDecoration: "underline" }}
               cursor={"pointer"}
               onClick={async () => {
+                scrollTop();
                 pageStore.updateCurrentPage(0);
                 await pageStore.getBaseByName(
                   pageStore.selected_name_base,
@@ -125,6 +132,7 @@ const TableBase = observer(() => {
               _hover={{ textDecoration: "underline" }}
               cursor={"pointer"}
               onClick={async () => {
+                scrollTop();
                 pageStore.updateCurrentPage(pageStore.current_page - 1);
                 await pageStore.getBaseByName(
                   pageStore.selected_name_base,
@@ -142,6 +150,7 @@ const TableBase = observer(() => {
               _hover={{ textDecoration: "underline" }}
               cursor={"pointer"}
               onClick={async () => {
+                scrollTop();
                 pageStore.updateCurrentPage(pageStore.current_page + 1);
                 await pageStore.getBaseByName(
                   pageStore.selected_name_base,
