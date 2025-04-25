@@ -149,7 +149,6 @@ const ModalScript = observer(({ obj = {} }) => {
               setFieldValue,
             }) => (
               <Form style={{ width: "100%" }}>
-                {console.log(values)}
                 <VStack
                   width={"100%"}
                   marginTop={"10px"}

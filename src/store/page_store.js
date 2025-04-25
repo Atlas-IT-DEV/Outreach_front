@@ -32,6 +32,7 @@ class PageStore {
   generateText = {};
 
   current_page = 0;
+  countRows = 20;
   has_more_data = true;
 
   constructor() {
@@ -80,6 +81,10 @@ class PageStore {
   };
   updateCurrentPage = (new_page) => {
     this.current_page = new_page;
+  };
+
+  updateCountRows = (new_rows) => {
+    this.countRows = new_rows;
   };
 
   // авторизация

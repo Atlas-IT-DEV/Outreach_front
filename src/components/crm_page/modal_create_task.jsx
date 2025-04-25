@@ -41,7 +41,6 @@ const ModalCreateTask = observer(() => {
   };
 
   const onSubmit = async (values) => {
-    console.log(values);
     const ok = await createTask(values);
     if (ok) {
       await pageStore.getAllTasks();

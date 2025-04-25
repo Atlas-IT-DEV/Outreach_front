@@ -23,7 +23,6 @@ const ModalImportBase = observer(() => {
   const [selectName, setSelectName] = useState("");
   const [selectedFile, setSelectedFile] = useState({});
   const toast = useToast();
-  console.log(selectName);
 
   const uploadBase = async (name, formData) => {
     return await pageStore.uploadBase(name, formData);

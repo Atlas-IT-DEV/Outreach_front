@@ -24,6 +24,8 @@ const TaskCard = observer(({ obj = {} }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const toast = useToast();
 
+  console.log("obj", obj);
+
   const initialValues = {
     date_finish: new Date(obj?.date_finish).toISOString(),
     description: obj?.description,
@@ -138,7 +140,7 @@ const TaskCard = observer(({ obj = {} }) => {
           >
             Информация о задаче
           </Text>
-          {obj?.creator_id == pageStore.user_info?.ID ? (
+          {obj?.creator_id == pageStore.user_info?.ID && !obj?.is_completed ? (
             <Formik
               initialValues={initialValues}
               validationSchema={validationSchema}
@@ -265,6 +267,7 @@ const TaskCard = observer(({ obj = {} }) => {
                       >
                         <Text>Отменить</Text>
                       </Button>
+
                       <Button
                         type="submit"
                         boxShadow={"-2px 2px 0 0 #4682B4"}
@@ -321,7 +324,10 @@ const TaskCard = observer(({ obj = {} }) => {
                 justify={"flex-start"}
               >
                 <Text fontWeight={"500"}>Дедлайн</Text>
-                <Text>{obj?.date_finish}</Text>
+                <Text>
+                  {new Date(obj?.date_finish).toLocaleDateString()}
+                  {new Date(obj?.date_finish).toUTCString("ru-Ru")}
+                </Text>
               </VStack>
               <HStack width={"100%"} justify={"flex-end"}>
                 <Button

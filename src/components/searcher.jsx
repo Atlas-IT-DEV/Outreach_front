@@ -8,7 +8,7 @@ const Searcher = observer(
   ({ array, options = {}, placeholder = "Поиск", search_by = "Поиск" }) => {
     const { pageStore } = useStores();
 
-    console.log("value", pageStore.searchValue);
+    console.log("search", pageStore.searchValue);
 
     const searchProduct = () => {
       let copyArray;

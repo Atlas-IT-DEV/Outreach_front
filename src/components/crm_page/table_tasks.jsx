@@ -49,7 +49,6 @@ const TableTasks = observer(() => {
 
   const distributedTasks = distributeTasks(pageStore.tasks);
 
-  console.log(distributedTasks);
 
   return (
     <VStack width={"100%"} align={"flex-start"}>

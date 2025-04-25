@@ -19,7 +19,6 @@ const ModalSelectBase = observer(() => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { pageStore } = useStores();
 
-  console.log(pageStore.selected_name_base);
   return (
     <>
       <Button
@@ -89,7 +88,7 @@ const ModalSelectBase = observer(() => {
                   pageStore.selected_name_base,
                   pageStore.selected_department,
                   pageStore.current_page,
-                  20
+                  pageStore.countRows
                 );
                 onClose();
               }}

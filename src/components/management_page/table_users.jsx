@@ -22,8 +22,6 @@ const TableUsers = observer(() => {
     pageStore.getAllCompanies();
   }, []);
 
-  console.log("users", pageStore.users);
-
   return (
     <>
       {pageStore.search_elements?.length != 0 && (
