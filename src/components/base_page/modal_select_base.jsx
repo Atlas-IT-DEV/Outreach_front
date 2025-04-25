@@ -18,9 +18,8 @@ import { useState } from "react";
 const ModalSelectBase = observer(() => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { pageStore } = useStores();
-  const [selectedBase, setSelectedBase] = useState("");
 
-  console.log(selectedBase);
+  console.log(pageStore.selected_name_base);
   return (
     <>
       <Button
@@ -48,7 +47,10 @@ const ModalSelectBase = observer(() => {
             Выберите базу
           </Text>
 
-          <RadioGroup value={selectedBase} onChange={(e) => setSelectedBase(e)}>
+          <RadioGroup
+            value={pageStore.selected_name_base}
+            onChange={(e) => pageStore.updateSelectedNameBase(e)}
+          >
             <VStack
               width={"100%"}
               align={"flex-start"}
@@ -82,7 +84,13 @@ const ModalSelectBase = observer(() => {
             </Button>
             <Button
               onClick={async () => {
-                await pageStore.getBaseByName(selectedBase, 0, 10);
+                pageStore.updateCurrentPage(0);
+                await pageStore.getBaseByName(
+                  pageStore.selected_name_base,
+                  pageStore.selected_department,
+                  pageStore.current_page,
+                  20
+                );
                 onClose();
               }}
               boxShadow={"-2px 2px 0 0 #4682B4"}

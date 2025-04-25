@@ -16,10 +16,7 @@ import { useStores } from "../../store/store_context";
 const TableBase = observer(() => {
   const { pageStore } = useStores();
 
-  const filterRows = pageStore.selected_base
-    ? pageStore.selected_base.slice(1, pageStore.selected_base?.length)
-    : null;
-  console.log("spl", filterRows);
+  console.log(pageStore.has_more_data);
 
   return (
     <>
@@ -37,7 +34,7 @@ const TableBase = observer(() => {
             <Table width={"100%"} padding={"10px"} border={"2px solid #4682B4"}>
               <Thead bg={"#4682B4"} borderBottom={"none"}>
                 <Tr borderBottom={"2px solid #4682B4"}>
-                  {pageStore.selected_base[0]?.map((item, index) => (
+                  {pageStore.headers_base?.map((item, index) => (
                     <Th color={"white"} key={index}>
                       <Text>{item}</Text>
                     </Th>
@@ -82,7 +79,7 @@ const TableBase = observer(() => {
         <Table width={"100%"} padding={"10px"} border={"2px solid #4682B4"}>
           <Thead bg={"#4682B4"} borderBottom={"none"}>
             <Tr borderBottom={"2px solid #4682B4"}>
-              {pageStore.selected_base[0]?.map((item, index) => (
+              {pageStore.headers_base?.map((item, index) => (
                 <Th color={"white"} key={index}>
                   <Text>{item}</Text>
                 </Th>
@@ -90,19 +87,75 @@ const TableBase = observer(() => {
             </Tr>
           </Thead>
           <Tbody>
-            {filterRows.map((item, index) => (
-              <Tr color={"black"} key={index}>
-                {item.map((item2, index2) => (
-                  <Td key={index2} border={"1px solid rgba(200,200,200,1)"}>
-                    {item2}
-                  </Td>
-                ))}
-              </Tr>
-            ))}
+            {pageStore.selected_base?.length > 0
+              ? pageStore.selected_base?.map((item, index) => (
+                  <Tr color={"black"} key={index}>
+                    {item?.map((item2, index2) => (
+                      <Td key={index2} border={"1px solid rgba(200,200,200,1)"}>
+                        {item2}
+                      </Td>
+                    ))}
+                  </Tr>
+                ))
+              : null}
           </Tbody>
         </Table>
-        <HStack></HStack>
       </HStack>
+      {pageStore.selected_base?.length > 0 ? (
+        <HStack width={"100%"} justify={"center"} gap={"20px"}>
+          {pageStore.current_page >= 2 ? (
+            <Text
+              _hover={{ textDecoration: "underline" }}
+              cursor={"pointer"}
+              onClick={async () => {
+                pageStore.updateCurrentPage(0);
+                await pageStore.getBaseByName(
+                  pageStore.selected_name_base,
+                  pageStore.selected_department,
+                  pageStore.current_page,
+                  20
+                );
+              }}
+            >
+              В начало
+            </Text>
+          ) : null}
+          {pageStore.current_page == 0 ? null : (
+            <Text
+              _hover={{ textDecoration: "underline" }}
+              cursor={"pointer"}
+              onClick={async () => {
+                pageStore.updateCurrentPage(pageStore.current_page - 1);
+                await pageStore.getBaseByName(
+                  pageStore.selected_name_base,
+                  pageStore.selected_department,
+                  pageStore.current_page,
+                  20
+                );
+              }}
+            >
+              Предыдущая страница
+            </Text>
+          )}
+          {pageStore.has_more_data ? (
+            <Text
+              _hover={{ textDecoration: "underline" }}
+              cursor={"pointer"}
+              onClick={async () => {
+                pageStore.updateCurrentPage(pageStore.current_page + 1);
+                await pageStore.getBaseByName(
+                  pageStore.selected_name_base,
+                  pageStore.selected_department,
+                  pageStore.current_page,
+                  20
+                );
+              }}
+            >
+              Следующая страница
+            </Text>
+          ) : null}
+        </HStack>
+      ) : null}
     </>
   );
 });

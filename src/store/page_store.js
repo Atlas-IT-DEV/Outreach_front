@@ -25,9 +25,14 @@ class PageStore {
 
   selected_department = null;
 
+  selected_name_base = "";
+  headers_base = [];
   selected_base = [];
 
   generateText = {};
+
+  current_page = 0;
+  has_more_data = true;
 
   constructor() {
     makeAutoObservable(this);
@@ -68,6 +73,13 @@ class PageStore {
 
   updateGenerateText = (new_text) => {
     this.generateText = new_text;
+  };
+
+  updateSelectedNameBase = (new_base) => {
+    this.selected_name_base = new_base;
+  };
+  updateCurrentPage = (new_page) => {
+    this.current_page = new_page;
   };
 
   // авторизация
@@ -115,9 +127,9 @@ class PageStore {
     const result = await response.json();
     this.bases = result;
   };
-  getBaseByName = async (name, page, size) => {
+  getBaseByName = async (name, selected_department, page, size) => {
     const response = await fetch(
-      `${base_url}/api/bases/${this.selected_department}/${name}?page=${page}&size=${size}`,
+      `${base_url}/api/bases/${selected_department}/${name}?page=${page}&size=${size}`,
       {
         method: "GET",
         headers: {
@@ -127,9 +139,29 @@ class PageStore {
       }
     );
     const result = await response.json();
-    this.selected_base = result;
+    this.has_more_data = true;
     console.log("select base", result);
+    if (result == null || (result.length == 1 && result[0] == null)) {
+      this.has_more_data = false;
+      this.selected_base = [];
+      return [];
+    }
+
+    if (result[result.length - 1] == null) {
+      this.has_more_data = false;
+      // Удаляем null из массива
+      result.pop();
+    }
+    if (this.current_page == 0) {
+      this.headers_base = result[0];
+      this.selected_base = result.slice(1);
+      return result.slice(1);
+    } else {
+      this.selected_base = result;
+      return result;
+    }
   };
+
   uploadBase = async (name, formData) => {
     const response = await fetch(
       `${base_url}/api/bases/upload/${this.selected_department}/${name}`,
