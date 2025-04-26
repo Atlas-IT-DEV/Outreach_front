@@ -19,6 +19,8 @@ const ModalSelectBase = observer(() => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { pageStore } = useStores();
 
+  const [selected, setSelected] = useState("");
+
   return (
     <>
       <Button
@@ -47,8 +49,8 @@ const ModalSelectBase = observer(() => {
           </Text>
 
           <RadioGroup
-            value={pageStore.selected_name_base}
-            onChange={(e) => pageStore.updateSelectedNameBase(e)}
+            value={selected == "" ? pageStore.selected_name_base : selected}
+            onChange={(e) => setSelected(e)}
           >
             <VStack
               width={"100%"}
@@ -70,7 +72,10 @@ const ModalSelectBase = observer(() => {
           </RadioGroup>
           <HStack justify={"flex-end"} width={"100%"} marginTop={"20px"}>
             <Button
-              onClick={onClose}
+              onClick={() => {
+                onClose();
+                pageStore.updateSelectedNameBase("");
+              }}
               boxShadow={"-2px 2px 0 0 #4682B4"}
               borderRadius={"0px"}
               border={"2px solid #4682B4"}
@@ -83,6 +88,7 @@ const ModalSelectBase = observer(() => {
             </Button>
             <Button
               onClick={async () => {
+                pageStore.updateSelectedNameBase(selected);
                 pageStore.updateCurrentPage(0);
                 await pageStore.getBaseByName(
                   pageStore.selected_name_base,

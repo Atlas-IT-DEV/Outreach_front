@@ -7,6 +7,7 @@ import { observer } from "mobx-react-lite";
 import useWindowDimensions from "../windowDimensions";
 import ModalSelectBase from "../components/base_page/modal_select_base";
 import ModalImportBase from "../components/base_page/modal_import_base";
+import BaseSearcher from "../components/base_page/base_searcher";
 
 const BasePage = observer(() => {
   const { pageStore } = useStores();
@@ -32,11 +33,13 @@ const BasePage = observer(() => {
       padding={width >= 1400 ? "40px" : ["10px", "20px"]}
       marginTop={width >= 1400 ? "10px" : ["40px", "30px"]}
     >
-      <Searcher
+      {/* <Searcher
         array={pageStore.selected_base}
         options={options}
         search_by="Поиск по базе"
-      />
+      /> */}
+
+      <BaseSearcher />
 
       <Stack
         flexDirection={width >= 600 ? "row" : "column"}

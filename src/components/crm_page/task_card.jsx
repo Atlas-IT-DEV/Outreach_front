@@ -121,7 +121,7 @@ const TaskCard = observer(({ obj = {} }) => {
           {obj?.description}
         </Text>
         <Text marginTop={"20px"} width={"100%"}>
-          До {new Date(obj?.date_finish).toLocaleDateString()}
+          До {new Date(obj?.date_finish).toLocaleDateString("ru-RU")}
         </Text>
         <Text marginTop={"10px"} width={"100%"}>
           {obj?.creator?.username || "-"}

@@ -35,6 +35,9 @@ class PageStore {
   countRows = 20;
   has_more_data = true;
 
+  countValues = 0;
+  searchBaseValue = "";
+
   constructor() {
     makeAutoObservable(this);
   }
@@ -85,6 +88,9 @@ class PageStore {
 
   updateCountRows = (new_rows) => {
     this.countRows = new_rows;
+  };
+  updateSearchBaseValue = (new_value) => {
+    this.searchBaseValue = new_value;
   };
 
   // авторизация
@@ -146,25 +152,47 @@ class PageStore {
     const result = await response.json();
     this.has_more_data = true;
     console.log("select base", result);
-    if (result == null || (result.length == 1 && result[0] == null)) {
+    if (
+      result.data == null ||
+      (result.data.length == 1 && result.data[0] == null)
+    ) {
       this.has_more_data = false;
       this.selected_base = [];
-      return [];
+      return {};
     }
 
-    if (result[result.length - 1] == null) {
+    if (result.data[result.data.length - 1] == null) {
       this.has_more_data = false;
       // Удаляем null из массива
-      result.pop();
+      result.data.pop();
     }
     if (this.current_page == 0) {
-      this.headers_base = result[0];
-      this.selected_base = result.slice(1);
-      return result.slice(1);
+      this.headers_base = result.data[0];
+      this.selected_base = result.data.slice(1);
+      this.countValues = result.count;
     } else {
-      this.selected_base = result;
-      return result;
+      this.selected_base = result.data;
+      this.countValues = result.count;
     }
+  };
+  searchInBase = async (value) => {
+    const response = await fetch(
+      `${base_url}/api/bases/find/${this.selected_department}/${this.selected_name_base}?value=${value}`,
+      {
+        method: "GET",
+        headers: {
+          accept: "application/json",
+          Authorization: `${this.token}`,
+        },
+      }
+    );
+    const result = await response.json();
+    if (result == null) {
+      this.search_elements = [];
+    } else {
+      this.search_elements = result;
+    }
+    console.log("search", result);
   };
 
   uploadBase = async (name, formData) => {
