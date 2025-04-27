@@ -101,6 +101,7 @@ const ModalCreateTask = observer(() => {
                   marginTop={"20px"}
                   gap={"10px"}
                 >
+                  {console.log("date", values?.date_finish)}
                   <FormControl isInvalid={errors.name && touched.name}>
                     <Text fontWeight={"500"}>Название</Text>
                     <Input
@@ -147,12 +148,12 @@ const ModalCreateTask = observer(() => {
                       borderRadius={"0"}
                       _hover={{ border: "2px solid #4682B4" }}
                       name="date_finish"
-                      onChange={(e) =>
+                      onChange={(e) => {
                         setFieldValue(
                           "date_finish",
                           new Date(e.target.value).toISOString()
-                        )
-                      }
+                        );
+                      }}
                     />
                     <FormErrorMessage marginTop={"2px"}>
                       {errors?.date_finish}

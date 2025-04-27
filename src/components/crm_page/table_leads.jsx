@@ -55,35 +55,72 @@ const TableLeads = observer(() => {
               </Tr>
             </Thead>
             <Tbody>
-              {pageStore.search_elements?.map((item, index) => (
-                <Tr color={"black"} key={index}>
-                  <Td border={"1px solid rgba(200,200,200,1)"}>
-                    <Text>{item?.last_name || "-"}</Text>
-                  </Td>
-                  <Td border={"1px solid rgba(200,200,200,1)"}>
-                    <Text>{item?.first_name || "-"}</Text>
-                  </Td>
-                  <Td border={"1px solid rgba(200,200,200,1)"}>
-                    <Text>{item?.email || "-"}</Text>
-                  </Td>
-                  <Td border={"1px solid rgba(200,200,200,1)"}>
-                    <Text>{item?.phone || "-"}</Text>
-                  </Td>
-                  <Td border={"1px solid rgba(200,200,200,1)"}></Td>
-                  <Td border={"1px solid rgba(200,200,200,1)"}>
-                    <Text>{item?.creator || "-"}</Text>
-                  </Td>
-                  <Td
-                    width={"min-content"}
-                    border={"1px solid rgba(200,200,200,1)"}
-                  >
-                    <HStack justify={"center"}>
-                      <ModalEditLead obj={item} />
-                      <ModalDeleteLead obj={item} />
-                    </HStack>
-                  </Td>
-                </Tr>
-              ))}
+              {pageStore.search_elements?.map((item, index) => {
+                let parse = JSON?.parse(item.additions);
+                console.log("pasr", parse);
+                return (
+                  <Tr color={"black"} key={index}>
+                    <Td border={"1px solid rgba(200,200,200,1)"}>
+                      <Text>{item?.last_name || "-"}</Text>
+                    </Td>
+                    <Td border={"1px solid rgba(200,200,200,1)"}>
+                      <Text>{item?.first_name || "-"}</Text>
+                    </Td>
+                    <Td border={"1px solid rgba(200,200,200,1)"}>
+                      <Text>{item?.email || "-"}</Text>
+                    </Td>
+                    <Td border={"1px solid rgba(200,200,200,1)"}>
+                      <Text>{item?.phone || "-"}</Text>
+                    </Td>
+                    <Tooltip
+                      label={parse.map((item2, index) => (
+                        <Text width={"max-content"}>
+                          {index + 1}. {item2?.key}: {item2?.value}
+                        </Text>
+                      ))}
+                      bg={"#4682B4"}
+                      color={"white"}
+                      borderRadius={"10px"}
+                      placement="right"
+                    >
+                      <Td border={"1px solid rgba(200,200,200,1)"}>
+                        {parse.length > 1 ? (
+                          <>
+                            <Text width={"max-content"}>
+                              1. {parse[0].key}: {parse[0].value}
+                            </Text>
+                            <Text width={"max-content"}>
+                              2. {parse[1].key}: {parse[1].value}
+                            </Text>
+                          </>
+                        ) : (
+                          <Text width={"max-content"}>
+                            1. {parse[0].key}: {parse[0].value}
+                          </Text>
+                        )}
+                        {parse.length > 2 ? (
+                          <Text fontWeight={"300"} fontSize={"14px"}>
+                            Подсказка: наведитесь для отображения полного списка
+                          </Text>
+                        ) : null}
+                      </Td>
+                    </Tooltip>
+
+                    <Td border={"1px solid rgba(200,200,200,1)"}>
+                      <Text>{item?.creator || "-"}</Text>
+                    </Td>
+                    <Td
+                      width={"min-content"}
+                      border={"1px solid rgba(200,200,200,1)"}
+                    >
+                      <HStack justify={"center"}>
+                        <ModalEditLead obj={item} />
+                        <ModalDeleteLead obj={item} />
+                      </HStack>
+                    </Td>
+                  </Tr>
+                );
+              })}
             </Tbody>
           </Table>
         </VStack>

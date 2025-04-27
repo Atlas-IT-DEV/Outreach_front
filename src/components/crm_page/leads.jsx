@@ -6,13 +6,14 @@ import TableLeads from "./table_leads";
 import ModalCreateLead from "./modal_create_lead";
 import { useStores } from "../../store/store_context";
 import useWindowDimensions from "../../windowDimensions";
+import { observer } from "mobx-react-lite";
 
-const Leads = () => {
+const Leads = observer(() => {
   const { pageStore } = useStores();
   const { width } = useWindowDimensions();
   const options = {
-    keys: ["creator", "first_name", "last_name", "phone", "email"], // Поля для поиска
-    threshold: 0, // 0 = точное совпадение, 1 = любые совпадения
+    keys: ["creator", "first_name", "last_name", "phone", "email", "additions"], // Поля для поиска
+    threshold: 0.5, // 0 = точное совпадение, 1 = любые совпадения
   };
   return (
     <VStack w={"100%"}>
@@ -44,6 +45,6 @@ const Leads = () => {
       <TableLeads />
     </VStack>
   );
-};
+});
 
 export default Leads;

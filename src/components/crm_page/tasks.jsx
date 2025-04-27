@@ -10,7 +10,7 @@ const Tasks = observer(() => {
   const { pageStore } = useStores();
   const options = {
     keys: ["name", "description"],
-    threshold: 0, // 0 = точное совпадение, 1 = любые совпадения
+    threshold: 0.5, // 0 = точное совпадение, 1 = любые совпадения
   };
   return (
     <VStack width={"100%"}>

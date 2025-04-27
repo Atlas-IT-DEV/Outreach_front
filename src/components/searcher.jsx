@@ -51,7 +51,9 @@ const Searcher = observer(
         >
           <Input
             value={pageStore.searchValue}
-            onChange={(e) => pageStore.updateSearchValue(e.target.value)}
+            onChange={(e) =>
+              pageStore.updateSearchValue(e.target.value.replace(/\s/g, ""))
+            }
             width={"100%"}
             border={"2px solid #4682B4"}
             borderRadius={"0px"}

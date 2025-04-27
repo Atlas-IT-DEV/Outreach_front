@@ -21,11 +21,11 @@ const Clients = () => {
       "director.first_name",
       "director.phone",
     ], // Поля для поиска
-    threshold: 0, // 0 = точное совпадение, 1 = любые совпадения
+    threshold: 0.5, // 0 = точное совпадение, 1 = любые совпадения
   };
   const optionsUser = {
     keys: ["username", "last_name", "first_name", "phone", "email"],
-    threshold: 0,
+    threshold: 0.5,
   };
   return (
     <VStack w={"100%"}>

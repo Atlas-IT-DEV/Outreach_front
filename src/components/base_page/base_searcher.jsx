@@ -32,9 +32,9 @@ const BaseSearcher = observer(() => {
           <Input
             value={pageStore.searchBaseValue}
             onChange={async (e) => {
-              pageStore.updateSearchBaseValue(e.target.value);
+              pageStore.updateSearchBaseValue(e.target.value.replace(/\s/g, ""));
               if (pageStore.searchBaseValue != "") {
-                debouncedSearch(e.target.value);
+                debouncedSearch(e.target.value.replace(/\s/g, ""));
               } else {
                 pageStore.updateSearchElement([]);
               }

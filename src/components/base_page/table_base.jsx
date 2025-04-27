@@ -43,7 +43,9 @@ const TableBase = observer(() => {
               borderRadius={"0px"}
               border={"2px solid #4682B4"}
               value={pageStore.countRows}
-              onChange={(e) => pageStore.updateCountRows(e.target.value)}
+              onChange={(e) =>
+                pageStore.updateCountRows(e.target.value.replace(/\D/g, ""))
+              }
             />
             <Button
               width={"100%"}
@@ -167,7 +169,9 @@ const TableBase = observer(() => {
                   placeholder="Перейти на страницу"
                   border={"2px solid #4682B4"}
                   value={selectedPage}
-                  onChange={(e) => setSelectedPage(e.target.value)}
+                  onChange={(e) =>
+                    setSelectedPage(e.target.value.replace(/\D/g, ""))
+                  }
                 />
               </Tooltip>
 

@@ -58,8 +58,11 @@ const TableTasks = observer(() => {
           </Text>
           <HStack
             width={"100%"}
+
             overflow={"scroll"}
-            overflowY={"hidden"}
+            // overflowY={"hidden"}
+            paddingBottom={"8px"}
+            paddingLeft={"2px"}
             gap={"20px"}
           >
             {pageStore.search_elements?.map((item, index) => (
