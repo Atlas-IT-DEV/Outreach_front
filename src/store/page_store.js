@@ -166,14 +166,13 @@ class PageStore {
       // Удаляем null из массива
       result.data.pop();
     }
-    if (this.current_page == 0) {
-      this.headers_base = result.data[0];
-      this.selected_base = result.data.slice(1);
-      this.countValues = result.count;
-    } else {
-      this.selected_base = result.data;
-      this.countValues = result.count;
-    }
+
+    this.headers_base = result.columns;
+    this.selected_base = result.data;
+    this.countValues = result.count;
+
+    this.selected_base = result.data;
+    this.countValues = result.count;
   };
   searchInBase = async (value) => {
     const response = await fetch(
@@ -320,6 +319,7 @@ class PageStore {
     });
     const result = await response.json();
     this.leads = result;
+    console.log("leads", result);
   };
 
   // скрипты
@@ -426,7 +426,9 @@ class PageStore {
       },
     });
     const result = await response.json();
-    this.tasks = result;
+    this.tasks = result.filter(
+      (item) => item?.company_id == this.user_info?.company_id
+    );
   };
   createTask = async (values) => {
     const response = await fetch(`${base_url}/api/tasks`, {

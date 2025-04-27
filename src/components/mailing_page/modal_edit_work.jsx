@@ -38,6 +38,7 @@ const ModalEditWork = observer(({ obj = {} }) => {
     time_finish: obj?.time_finish,
     time_start: obj?.time_start,
     type_work: 0,
+    base_name: obj?.base_name,
   };
 
   const validationSchema = Yup.object({
@@ -46,6 +47,7 @@ const ModalEditWork = observer(({ obj = {} }) => {
     name: Yup.string().required("Обязательное поле"),
     time_finish: Yup.number().required("Обязательное поле"),
     time_start: Yup.number().required("Обязательное поле"),
+    base_name: Yup.string().required("Обязательное поле"),
   });
 
   const editWork = async (id, values) => {
@@ -214,6 +216,26 @@ const ModalEditWork = observer(({ obj = {} }) => {
                       </FormErrorMessage>
                     </FormControl>
                   </HStack>
+                  <FormControl>
+                    <Text fontWeight={"500"}>База</Text>
+
+                    <RadioGroup
+                      value={values?.base_name}
+                      onChange={(e) => setFieldValue("base_name", e)}
+                    >
+                      <VStack
+                        width={"100%"}
+                        align={"flex-start"}
+                        justify={"flex-start"}
+                      >
+                        {pageStore.bases?.map((item, index) => (
+                          <Radio key={index} value={item}>
+                            {item}
+                          </Radio>
+                        ))}
+                      </VStack>
+                    </RadioGroup>
+                  </FormControl>
                   <HStack
                     marginTop={"20px"}
                     justify={"flex-end"}

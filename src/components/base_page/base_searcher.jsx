@@ -33,7 +33,11 @@ const BaseSearcher = observer(() => {
             value={pageStore.searchBaseValue}
             onChange={async (e) => {
               pageStore.updateSearchBaseValue(e.target.value);
-              debouncedSearch(e.target.value);
+              if (pageStore.searchBaseValue != "") {
+                debouncedSearch(e.target.value);
+              } else {
+                pageStore.updateSearchElement([]);
+              }
             }}
             width={"100%"}
             border={"2px solid #4682B4"}

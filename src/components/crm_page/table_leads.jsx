@@ -8,21 +8,22 @@ import {
   Text,
   Th,
   Thead,
+  Tooltip,
   Tr,
   VStack,
 } from "@chakra-ui/react";
 import ModalEditLead from "./modal_edit_lead";
 import { observer } from "mobx-react-lite";
 import { useStores } from "../../store/store_context";
-import { useEffect } from "react";
 import ModalDeleteLead from "./modal_delete_lead";
 
 const TableLeads = observer(() => {
   const { pageStore } = useStores();
+  console.log(pageStore.search_elements);
 
   return (
     <>
-      {pageStore.search_elements?.length != 0 && (
+      {pageStore.search_elements?.length > 0 ? (
         <VStack width={"100%"} align={"flex-start"} marginTop={"20px"}>
           <Text color={"black"} fontWeight={"600"}>
             Результаты поиска
@@ -31,22 +32,22 @@ const TableLeads = observer(() => {
             <Thead bg={"#4682B4"} borderBottom={"none"}>
               <Tr borderBottom={"2px solid #4682B4"}>
                 <Th color={"white"}>
-                  <Text>Лид</Text>
+                  <Text>Фамилия</Text>
                 </Th>
                 <Th color={"white"}>
-                  <Text>Тип звонка</Text>
+                  <Text>Имя</Text>
                 </Th>
                 <Th color={"white"}>
-                  <Text>Статус звонка</Text>
+                  <Text>Email</Text>
                 </Th>
                 <Th color={"white"}>
-                  <Text>Стадия</Text>
+                  <Text>Номер телефона</Text>
                 </Th>
                 <Th color={"white"}>
-                  <Text>Дата создания</Text>
+                  <Text>Доп. информация</Text>
                 </Th>
                 <Th color={"white"}>
-                  <Text>Ответственный</Text>
+                  <Text>Создатель</Text>
                 </Th>
                 <Th color={"white"}>
                   <Text></Text>
@@ -54,78 +55,49 @@ const TableLeads = observer(() => {
               </Tr>
             </Thead>
             <Tbody>
-              {pageStore.search_elements?.length > 0 ? (
-                pageStore.search_elements?.map((item, index) => (
-                  <Tr color={"black"} key={index}>
-                    <Td border={"1px solid rgba(200,200,200,1)"}>
-                      <Text>{item?.director?.phone ?? "-"}</Text>
-                    </Td>
-                    <Td border={"1px solid rgba(200,200,200,1)"}>
-                      <Text>{item?.callType}</Text>
-                    </Td>
-                    <Td border={"1px solid rgba(200,200,200,1)"}>
-                      <Text>{item?.callStatus}</Text>
-                    </Td>
-                    <Td border={"1px solid rgba(200,200,200,1)"}>
-                      <VStack align={"flex-start"} gap={"2px"}>
-                        <HStack width={"100%"} gap={0}>
-                          <Stack
-                            height={"10px"}
-                            width={"100%"}
-                            border={"2px solid #4682B4"}
-                            borderRadius={"4px"}
-                            bg={"#4682B4"}
-                          ></Stack>
-                          <Stack
-                            height={"10px"}
-                            width={"100%"}
-                            border={"2px solid #4682B4"}
-                            borderRadius={"4px"}
-                          ></Stack>
-                          <Stack
-                            height={"10px"}
-                            width={"100%"}
-                            border={"2px solid #4682B4"}
-                            borderRadius={"4px"}
-                          ></Stack>
-                          <Stack
-                            height={"10px"}
-                            width={"100%"}
-                            border={"2px solid #4682B4"}
-                            borderRadius={"4px"}
-                          ></Stack>
-                        </HStack>
-
-                        <Text>Новый лид</Text>
-                      </VStack>
-                    </Td>
-                    <Td border={"1px solid rgba(200,200,200,1)"}>
-                      <Text>{item?.CreatedAt}</Text>
-                    </Td>
-                    <Td border={"1px solid rgba(200,200,200,1)"}>
-                      <Text>{item?.responsible}</Text>
-                    </Td>
-                    <Td
-                      width={"min-content"}
-                      border={"1px solid rgba(200,200,200,1)"}
-                    >
-                      <HStack justify={"center"}>
-                        <ModalEditLead obj={item} />
-                        <ModalDeleteLead obj={item} />
-                      </HStack>
-                    </Td>
-                  </Tr>
-                ))
-              ) : pageStore.search_elements.length == 0 &&
-                pageStore.searchValue != "" ? (
-                <Text color={"black"} fontWeight={"600"}>
-                  По Вашему запросу ничего не найдено
-                </Text>
-              ) : null}
+              {pageStore.search_elements?.map((item, index) => (
+                <Tr color={"black"} key={index}>
+                  <Td border={"1px solid rgba(200,200,200,1)"}>
+                    <Text>{item?.last_name || "-"}</Text>
+                  </Td>
+                  <Td border={"1px solid rgba(200,200,200,1)"}>
+                    <Text>{item?.first_name || "-"}</Text>
+                  </Td>
+                  <Td border={"1px solid rgba(200,200,200,1)"}>
+                    <Text>{item?.email || "-"}</Text>
+                  </Td>
+                  <Td border={"1px solid rgba(200,200,200,1)"}>
+                    <Text>{item?.phone || "-"}</Text>
+                  </Td>
+                  <Td border={"1px solid rgba(200,200,200,1)"}></Td>
+                  <Td border={"1px solid rgba(200,200,200,1)"}>
+                    <Text>{item?.creator || "-"}</Text>
+                  </Td>
+                  <Td
+                    width={"min-content"}
+                    border={"1px solid rgba(200,200,200,1)"}
+                  >
+                    <HStack justify={"center"}>
+                      <ModalEditLead obj={item} />
+                      <ModalDeleteLead obj={item} />
+                    </HStack>
+                  </Td>
+                </Tr>
+              ))}
             </Tbody>
           </Table>
         </VStack>
-      )}
+      ) : pageStore.search_elements.length == 0 &&
+        pageStore.searchValue != "" ? (
+        <Text
+          color={"black"}
+          fontWeight={"600"}
+          width={"100%"}
+          marginTop={"20px"}
+        >
+          По Вашему запросу ничего не найдено
+        </Text>
+      ) : null}
       <Text
         width={"100%"}
         color={"black"}
@@ -161,9 +133,6 @@ const TableLeads = observer(() => {
                 <Text>Номер телефона</Text>
               </Th>
               <Th color={"white"}>
-                <Text>Компания</Text>
-              </Th>
-              <Th color={"white"}>
                 <Text>Доп. информация</Text>
               </Th>
               <Th color={"white"}>
@@ -176,40 +145,73 @@ const TableLeads = observer(() => {
           </Thead>
           <Tbody>
             {pageStore.leads?.length > 0
-              ? pageStore.leads?.map((item, index) => (
-                  <Tr color={"black"} key={index}>
-                    <Td border={"1px solid rgba(200,200,200,1)"}>
-                      <Text>{item?.last_name || "-"}</Text>
-                    </Td>
-                    <Td border={"1px solid rgba(200,200,200,1)"}>
-                      <Text>{item?.first_name || "-"}</Text>
-                    </Td>
-                    <Td border={"1px solid rgba(200,200,200,1)"}>
-                      <Text>{item?.email || "-"}</Text>
-                    </Td>
-                    <Td border={"1px solid rgba(200,200,200,1)"}>
-                      <Text>{item?.phone || "-"}</Text>
-                    </Td>
-                    <Td border={"1px solid rgba(200,200,200,1)"}>
-                      <Text>{item?.company?.name || "-"}</Text>
-                    </Td>
-                    <Td border={"1px solid rgba(200,200,200,1)"}>
-                      <Text>{item?.additions || "-"}</Text>
-                    </Td>
-                    <Td border={"1px solid rgba(200,200,200,1)"}>
-                      <Text>{item?.creator || "-"}</Text>
-                    </Td>
-                    <Td
-                      width={"min-content"}
-                      border={"1px solid rgba(200,200,200,1)"}
-                    >
-                      <HStack justify={"center"}>
-                        <ModalEditLead obj={item} />
-                        <ModalDeleteLead obj={item} />
-                      </HStack>
-                    </Td>
-                  </Tr>
-                ))
+              ? pageStore.leads?.map((item, index) => {
+                  let parse = JSON?.parse(item.additions);
+                  console.log("pasr", parse);
+                  return (
+                    <Tr color={"black"} key={index}>
+                      <Td border={"1px solid rgba(200,200,200,1)"}>
+                        <Text>{item?.last_name || "-"}</Text>
+                      </Td>
+                      <Td border={"1px solid rgba(200,200,200,1)"}>
+                        <Text>{item?.first_name || "-"}</Text>
+                      </Td>
+                      <Td border={"1px solid rgba(200,200,200,1)"}>
+                        <Text>{item?.email || "-"}</Text>
+                      </Td>
+                      <Td border={"1px solid rgba(200,200,200,1)"}>
+                        <Text>{item?.phone || "-"}</Text>
+                      </Td>
+                      <Tooltip
+                        label={parse.map((item2, index) => (
+                          <Text width={"max-content"}>
+                            {index + 1}. {item2?.key}: {item2?.value}
+                          </Text>
+                        ))}
+                        bg={"#4682B4"}
+                        color={"white"}
+                        borderRadius={"10px"}
+                        placement="right"
+                      >
+                        <Td border={"1px solid rgba(200,200,200,1)"}>
+                          {parse.length > 1 ? (
+                            <>
+                              <Text width={"max-content"}>
+                                1. {parse[0].key}: {parse[0].value}
+                              </Text>
+                              <Text width={"max-content"}>
+                                2. {parse[1].key}: {parse[1].value}
+                              </Text>
+                            </>
+                          ) : (
+                            <Text width={"max-content"}>
+                              1. {parse[0].key}: {parse[0].value}
+                            </Text>
+                          )}
+                          {parse.length > 2 ? (
+                            <Text fontWeight={"300"} fontSize={"14px"}>
+                              Подсказка: наведитесь для отображения полного
+                              списка
+                            </Text>
+                          ) : null}
+                        </Td>
+                      </Tooltip>
+
+                      <Td border={"1px solid rgba(200,200,200,1)"}>
+                        <Text>{item?.creator || "-"}</Text>
+                      </Td>
+                      <Td
+                        width={"min-content"}
+                        border={"1px solid rgba(200,200,200,1)"}
+                      >
+                        <HStack justify={"center"}>
+                          <ModalEditLead obj={item} />
+                          <ModalDeleteLead obj={item} />
+                        </HStack>
+                      </Td>
+                    </Tr>
+                  );
+                })
               : null}
           </Tbody>
         </Table>

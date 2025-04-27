@@ -3,6 +3,7 @@ import {
   FormControl,
   FormErrorMessage,
   HStack,
+  IconButton,
   Input,
   Modal,
   ModalCloseButton,
@@ -18,12 +19,36 @@ import * as Yup from "yup";
 import useWindowDimensions from "../../windowDimensions";
 import { useStores } from "../../store/store_context";
 import { observer } from "mobx-react-lite";
+import { useState } from "react";
+import { AddIcon, DeleteIcon } from "@chakra-ui/icons";
 
 const ModalCreateLead = observer(() => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { width, height } = useWindowDimensions();
   const { pageStore } = useStores();
   const toast = useToast();
+
+  const [pairs, setPairs] = useState([
+    { id: 1, key: "", value: "" },
+    { id: 2, key: "", value: "" },
+  ]);
+
+  console.log("JSON", typeof JSON.stringify(pairs));
+
+  const addPair = () => {
+    setPairs([...pairs, { id: Date.now(), key: "", value: "" }]);
+  };
+
+  const removePair = (id) => {
+    if (pairs.length <= 1) return; // Оставляем хотя бы одну пару
+    setPairs(pairs.filter((pair) => pair.id !== id));
+  };
+
+  const hdChange = (id, field, value) => {
+    setPairs(
+      pairs.map((pair) => (pair.id === id ? { ...pair, [field]: value } : pair))
+    );
+  };
 
   const clientValues = {
     additions: "",
@@ -96,6 +121,7 @@ const ModalCreateLead = observer(() => {
             }) => (
               <Form>
                 <VStack bg={"white"} width={"100%"} align={"flex-start"}>
+                  {console.log(values)}
                   <Text
                     color={"black"}
                     fontWeight={"600"}
@@ -180,16 +206,49 @@ const ModalCreateLead = observer(() => {
                       isInvalid={errors?.additions && touched?.additions}
                     >
                       <Text fontWeight={"500"}>Доп. информация</Text>
-                      <Input
-                        placeholder="Доп. информация"
-                        marginTop={"4px"}
-                        border={"2px solid #4682B4"}
-                        borderRadius={"0"}
-                        _hover={{ border: "2px solid #4682B4" }}
-                        name="additions"
-                        onChange={handleChange}
-                        onBlur={handleBlur}
+                      <VStack width={"100%"} marginTop={"10px"}>
+                        {pairs.map((pair) => (
+                          <HStack key={pair.id} spacing={3}>
+                            <Input
+                              borderRadius={"0px"}
+                              border={"2px solid #4682B4"}
+                              placeholder="Key"
+                              value={pair.key}
+                              onChange={(e) => {
+                                hdChange(pair.id, "key", e.target.value);
+                              }}
+                            />
+                            <Input
+                              borderRadius={"0px"}
+                              border={"2px solid #4682B4"}
+                              placeholder="Value"
+                              value={pair.value}
+                              onChange={(e) => {
+                                hdChange(pair.id, "value", e.target.value);
+                              }}
+                            />
+                            <IconButton
+                              borderRadius={"0px"}
+                              aria-label="Remove pair"
+                              icon={<DeleteIcon />}
+                              colorScheme="red"
+                              onClick={() => removePair(pair.id)}
+                              isDisabled={pairs.length <= 1}
+                            />
+                          </HStack>
+                        ))}
+                      </VStack>
+
+                      <IconButton
+                        width={"100%"}
+                        icon={<AddIcon />}
+                        bgColor="#4682B4"
+                        color={"white"}
+                        onClick={addPair}
+                        mt={4}
+                        borderRadius={0}
                       />
+
                       <FormErrorMessage marginTop={"2px"}>
                         {errors?.additions}
                       </FormErrorMessage>
@@ -213,6 +272,9 @@ const ModalCreateLead = observer(() => {
                       <Text>Отменить</Text>
                     </Button>
                     <Button
+                      onClick={() =>
+                        setFieldValue("additions", JSON.stringify(pairs))
+                      }
                       type="submit"
                       boxShadow={"-2px 2px 0 0 #4682B4"}
                       borderRadius={"0px"}

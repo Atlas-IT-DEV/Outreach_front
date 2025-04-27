@@ -11,7 +11,7 @@ const Leads = () => {
   const { pageStore } = useStores();
   const { width } = useWindowDimensions();
   const options = {
-    keys: ["number", "responsible"], // Поля для поиска
+    keys: ["creator", "first_name", "last_name", "phone", "email"], // Поля для поиска
     threshold: 0, // 0 = точное совпадение, 1 = любые совпадения
   };
   return (
@@ -23,20 +23,6 @@ const Leads = () => {
       />
 
       <HStack width={"100%"} justify={"space-between"} marginTop={"10px"}>
-        {/* <Button
-            boxShadow={"-2px 2px 0 0 #4682B4"}
-            borderRadius={"0px"}
-            border={"2px solid #4682B4"}
-            bg={"white"}
-            color={"black"}
-            _hover={{ bg: "#4682B4", color: "white" }}
-            flexShrink={width >= 1400 ? 0 : 1}
-            width={width >= 1400 ? "auto" : "100%"}
-          >
-            <Text fontSize={width >= 1000 ? "16px" : ["13px", "14px"]}>
-              Загрузить лида
-            </Text>
-          </Button> */}
         <ModalCreateLead />
         {/* <Button
           boxShadow={"-2px 2px 0 0 #4682B4"}

@@ -15,6 +15,8 @@ const CallsPage = observer(() => {
   useEffect(() => {
     pageStore.getAllWorks();
     pageStore.getAllScripts();
+    pageStore.updateSearchElement([]);
+    pageStore.updateSearchValue("");
   }, []);
 
   useEffect(() => {

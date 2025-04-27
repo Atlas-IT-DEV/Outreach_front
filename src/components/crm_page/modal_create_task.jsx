@@ -141,7 +141,7 @@ const ModalCreateTask = observer(() => {
                     <Text fontWeight={"500"}>Дедлайн</Text>
                     <Input
                       placeholder=""
-                      type="date"
+                      type="datetime-local"
                       marginTop={"4px"}
                       border={"2px solid #4682B4"}
                       borderRadius={"0"}

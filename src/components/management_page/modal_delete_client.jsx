@@ -59,7 +59,7 @@ const ModalDeleteClient = observer(({ obj = {} }) => {
         <Text>Удалить</Text>
       </Button>
 
-      <Modal isOpen={isOpen} onClose={onClose} onEsc={onClose} size={"3xl"}>
+      <Modal isOpen={isOpen} onClose={onClose} onEsc={onClose}>
         <ModalOverlay />
         <ModalContent padding={"20px"}>
           <ModalCloseButton />

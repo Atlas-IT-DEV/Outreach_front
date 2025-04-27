@@ -49,9 +49,33 @@ const TableTasks = observer(() => {
 
   const distributedTasks = distributeTasks(pageStore.tasks);
 
-
   return (
     <VStack width={"100%"} align={"flex-start"}>
+      {pageStore.search_elements?.length > 0 ? (
+        <VStack width={"100%"} align={"flex-start"} justify={"flex-start"}>
+          <Text fontWeight={"600"} color={"black"}>
+            Найденные результаты
+          </Text>
+          <HStack
+            width={"100%"}
+            overflow={"scroll"}
+            overflowY={"hidden"}
+            gap={"20px"}
+          >
+            {pageStore.search_elements?.map((item, index) => (
+              <TaskCard key={index} obj={item} />
+            ))}
+          </HStack>
+        </VStack>
+      ) : pageStore.search_elements?.length == 0 &&
+        pageStore.searchValue != "" ? (
+        <Text fontWeight={"600"} color={"black"}>
+          По вашему запросу ничего не найдено
+        </Text>
+      ) : null}
+      <Text fontWeight={"600"} color={"black"}>
+        Все задачи
+      </Text>
       <HStack
         width={"100%"}
         justify={"flex-start"}
@@ -62,6 +86,7 @@ const TableTasks = observer(() => {
       >
         <VStack width={"300px"} padding={"10px"} gap={"20px"}>
           <Text
+            width={"max-content"}
             border={"2px solid #4682B4"}
             padding={"4px 10px"}
             boxShadow={"-2px 2px 0 0 #4682B4"}
@@ -70,15 +95,12 @@ const TableTasks = observer(() => {
           </Text>
           {distributedTasks?.overdue.length > 0 &&
             distributedTasks?.overdue
-              .filter(
-                (item) =>
-                  !item?.is_completed &&
-                  item?.company_id == pageStore.user_info?.company_id
-              )
+              .filter((item) => !item?.is_completed)
               .map((item, index) => <TaskCard key={index} obj={item} />)}
         </VStack>
         <VStack width={"300px"} padding={"10px"} gap={"20px"}>
           <Text
+            width={"max-content"}
             border={"2px solid #4682B4"}
             padding={"4px 10px"}
             boxShadow={"-2px 2px 0 0 #4682B4"}
@@ -87,32 +109,26 @@ const TableTasks = observer(() => {
           </Text>
           {distributedTasks?.today.length > 0 &&
             distributedTasks?.today
-              .filter(
-                (item) =>
-                  !item?.is_completed &&
-                  item?.company_id == pageStore.user_info?.company_id
-              )
+              .filter((item) => !item?.is_completed)
               .map((item, index) => <TaskCard key={index} obj={item} />)}
         </VStack>
         <VStack width={"300px"} padding={"10px"} gap={"20px"}>
           <Text
+            width={"max-content"}
             border={"2px solid #4682B4"}
             padding={"4px 10px"}
             boxShadow={"-2px 2px 0 0 #4682B4"}
           >
             На завтра
           </Text>
-          {distributedTasks?.tomorrow.length &&
+          {distributedTasks?.tomorrow.length > 0 &&
             distributedTasks?.tomorrow
-              .filter(
-                (item) =>
-                  !item?.is_completed &&
-                  item?.company_id == pageStore.user_info?.company_id
-              )
+              .filter((item) => !item?.is_completed)
               .map((item, index) => <TaskCard key={index} obj={item} />)}
         </VStack>
         <VStack width={"300px"} padding={"10px"} gap={"20px"}>
           <Text
+            width={"max-content"}
             border={"2px solid #4682B4"}
             padding={"4px 10px"}
             boxShadow={"-2px 2px 0 0 #4682B4"}
@@ -121,11 +137,7 @@ const TableTasks = observer(() => {
           </Text>
           {distributedTasks?.future.length > 0 &&
             distributedTasks?.future
-              .filter(
-                (item) =>
-                  !item?.is_completed &&
-                  item?.company_id == pageStore.user_info?.company_id
-              )
+              .filter((item) => !item?.is_completed)
               .map((item, index) => <TaskCard key={index} obj={item} />)}
         </VStack>
 
@@ -139,11 +151,7 @@ const TableTasks = observer(() => {
           </Text>
           {pageStore.tasks.length > 0 &&
             pageStore.tasks
-              .filter(
-                (item) =>
-                  item?.is_completed &&
-                  item?.company_id == pageStore.user_info?.company_id
-              )
+              .filter((item) => item?.is_completed)
               .map((item, index) => <TaskCard key={index} obj={item} />)}
         </VStack>
       </HStack>

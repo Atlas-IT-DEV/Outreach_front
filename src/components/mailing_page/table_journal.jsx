@@ -131,7 +131,7 @@ const TableJournal = observer(() => {
         </>
       ) : pageStore.search_elements.length == 0 &&
         pageStore.searchValue != "" ? (
-        <Text color={"black"} fontWeight={"600"}>
+        <Text color={"black"} fontWeight={"600"} width={"100%"}>
           По Вашему запросу ничего не найдено
         </Text>
       ) : null}

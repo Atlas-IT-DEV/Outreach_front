@@ -1,6 +1,5 @@
 import { Button, Stack, Text, VStack } from "@chakra-ui/react";
 import { useEffect } from "react";
-import Searcher from "../components/searcher";
 import TableBase from "../components/base_page/table_base";
 import { useStores } from "../store/store_context";
 import { observer } from "mobx-react-lite";
@@ -12,14 +11,11 @@ import BaseSearcher from "../components/base_page/base_searcher";
 const BasePage = observer(() => {
   const { pageStore } = useStores();
   const { width } = useWindowDimensions();
-  const indexesAsStrings = [...pageStore.selected_base.keys()].map(String);
-  const options = {
-    keys: indexesAsStrings,
-    threshold: 0, // 0 = точное совпадение, 1 = любые совпадения
-  };
 
   useEffect(() => {
     pageStore.getAllBases();
+    pageStore.updateSearchElement([]);
+    pageStore.updateSearchValue("");
   }, []);
 
   return (
@@ -33,13 +29,7 @@ const BasePage = observer(() => {
       padding={width >= 1400 ? "40px" : ["10px", "20px"]}
       marginTop={width >= 1400 ? "10px" : ["40px", "30px"]}
     >
-      {/* <Searcher
-        array={pageStore.selected_base}
-        options={options}
-        search_by="Поиск по базе"
-      /> */}
-
-      <BaseSearcher />
+      {pageStore.selected_base != "" ? <BaseSearcher /> : null}
 
       <Stack
         flexDirection={width >= 600 ? "row" : "column"}

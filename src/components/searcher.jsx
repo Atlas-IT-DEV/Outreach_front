@@ -22,6 +22,7 @@ const Searcher = observer(
       } else {
         pageStore.updateSearchElement([]);
       }
+      console.log(pageStore.search_elements);
     };
 
     useEffect(() => {

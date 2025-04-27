@@ -12,6 +12,8 @@ const ManagementPage = observer(() => {
   useEffect(() => {
     pageStore.getAllClients();
     pageStore.getAllUsers();
+    pageStore.updateSearchElement([]);
+    pageStore.updateSearchValue("");
   }, []);
   return (
     <VStack

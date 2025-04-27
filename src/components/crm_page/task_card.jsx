@@ -27,7 +27,7 @@ const TaskCard = observer(({ obj = {} }) => {
   console.log("obj", obj);
 
   const initialValues = {
-    date_finish: new Date(obj?.date_finish).toISOString(),
+    date_finish: obj?.date_finish,
     description: obj?.description,
     name: obj?.name,
   };
@@ -101,6 +101,24 @@ const TaskCard = observer(({ obj = {} }) => {
       onClose();
     }
   };
+
+  function formatDateForInput(dateString) {
+    if (!dateString) return "";
+
+    const date = new Date(dateString);
+
+    // Проверка на валидность даты
+    if (isNaN(date.getTime())) return "";
+
+    // Преобразуем дату в формат, понятный datetime-local
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, "0");
+    const day = String(date.getDate()).padStart(2, "0");
+    const hours = String(date.getHours()).padStart(2, "0");
+    const minutes = String(date.getMinutes()).padStart(2, "0");
+
+    return `${year}-${month}-${day}T${hours}:${minutes}`;
+  }
   return (
     <>
       <VStack
@@ -121,7 +139,7 @@ const TaskCard = observer(({ obj = {} }) => {
           {obj?.description}
         </Text>
         <Text marginTop={"20px"} width={"100%"}>
-          До {new Date(obj?.date_finish).toLocaleDateString("ru-RU")}
+          До {new Date(obj?.date_finish).toLocaleString("ru-RU")}
         </Text>
         <Text marginTop={"10px"} width={"100%"}>
           {obj?.creator?.username || "-"}
@@ -155,6 +173,7 @@ const TaskCard = observer(({ obj = {} }) => {
                 setFieldValue,
               }) => (
                 <Form>
+                  {console.log("val", values)}
                   <VStack
                     width={"100%"}
                     justify={"flex-start"}
@@ -203,11 +222,9 @@ const TaskCard = observer(({ obj = {} }) => {
                     >
                       <Text fontWeight={"500"}>Дедлайн</Text>
                       <Input
-                        value={new Date(values?.date_finish).toLocaleDateString(
-                          "en-CA"
-                        )}
+                        value={formatDateForInput(values?.date_finish)}
                         placeholder=""
-                        type="date"
+                        type="datetime-local"
                         marginTop={"4px"}
                         border={"2px solid #4682B4"}
                         borderRadius={"0"}
@@ -325,11 +342,22 @@ const TaskCard = observer(({ obj = {} }) => {
               >
                 <Text fontWeight={"500"}>Дедлайн</Text>
                 <Text>
-                  {new Date(obj?.date_finish).toLocaleDateString()}
-                  {new Date(obj?.date_finish).toUTCString("ru-Ru")}
+                  {new Date(obj?.date_finish).toLocaleString("ru-RU")}
                 </Text>
               </VStack>
               <HStack width={"100%"} justify={"flex-end"}>
+                <Button
+                  onClick={async () => await handleDeleteTask()}
+                  boxShadow={"-2px 2px 0 0 #4682B4"}
+                  borderRadius={"0px"}
+                  border={"2px solid #4682B4"}
+                  bg={"white"}
+                  color={"black"}
+                  _hover={{ bg: "#4682B4", color: "white" }}
+                  flexShrink={0}
+                >
+                  <Text>Удалить</Text>
+                </Button>
                 <Button
                   onClick={onClose}
                   boxShadow={"-2px 2px 0 0 #4682B4"}

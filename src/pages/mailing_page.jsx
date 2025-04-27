@@ -16,6 +16,8 @@ const MailingPage = () => {
   useEffect(() => {
     pageStore.getAllWorks();
     pageStore.getAllScripts();
+    pageStore.updateSearchElement([]);
+    pageStore.updateSearchValue("");
   }, []);
 
   useEffect(() => {

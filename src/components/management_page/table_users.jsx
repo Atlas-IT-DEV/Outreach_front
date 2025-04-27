@@ -15,6 +15,7 @@ import { useStores } from "../../store/store_context";
 import { useEffect } from "react";
 import ModalEditClient from "./modal_edit_client";
 import ModalDeleteUser from "./modal_delete_user";
+import ModalEditUser from "./modal_edit_user";
 
 const TableUsers = observer(() => {
   const { pageStore } = useStores();
@@ -24,7 +25,7 @@ const TableUsers = observer(() => {
 
   return (
     <>
-      {pageStore.search_elements?.length != 0 && (
+      {pageStore.search_elements?.length > 0 ? (
         <VStack width={"100%"} align={"flex-start"} marginTop={"20px"}>
           <Text color={"black"} fontWeight={"600"}>
             Результаты поиска
@@ -53,47 +54,51 @@ const TableUsers = observer(() => {
               </Tr>
             </Thead>
             <Tbody>
-              {pageStore.search_elements?.length > 0 ? (
-                pageStore.search_elements
-                  ?.filter((item) => item?.ID != pageStore.user_info?.ID)
-                  .map((item, index) => (
-                    <Tr color={"black"} key={index}>
-                      <Td border={"1px solid rgba(200,200,200,1)"}>
-                        <Text>{item?.username}</Text>
-                      </Td>
-                      <Td border={"1px solid rgba(200,200,200,1)"}>
-                        <Text>{item?.last_name || "-"}</Text>
-                      </Td>
-                      <Td border={"1px solid rgba(200,200,200,1)"}>
-                        <Text>{item?.first_name || "-"}</Text>
-                      </Td>
-                      <Td border={"1px solid rgba(200,200,200,1)"}>
-                        <Text>{item?.email || "-"}</Text>
-                      </Td>
-                      <Td border={"1px solid rgba(200,200,200,1)"}>
-                        <Text>{item?.phone || "-"}</Text>
-                      </Td>
-                      <Td
-                        width={"min-content"}
-                        border={"1px solid rgba(200,200,200,1)"}
-                      >
-                        <HStack justify={"center"}>
-                          <ModalEditClient obj={item} />
-                          <ModalDeleteUser obj={item} />
-                        </HStack>
-                      </Td>
-                    </Tr>
-                  ))
-              ) : pageStore.search_elements.length == 0 &&
-                pageStore.searchValue != "" ? (
-                <Text color={"black"} fontWeight={"600"}>
-                  По Вашему запросу ничего не найдено
-                </Text>
-              ) : null}
+              {pageStore.search_elements
+                ?.filter((item) => item?.ID != pageStore.user_info?.ID)
+                .map((item, index) => (
+                  <Tr color={"black"} key={index}>
+                    <Td border={"1px solid rgba(200,200,200,1)"}>
+                      <Text>{item?.username}</Text>
+                    </Td>
+                    <Td border={"1px solid rgba(200,200,200,1)"}>
+                      <Text>{item?.last_name || "-"}</Text>
+                    </Td>
+                    <Td border={"1px solid rgba(200,200,200,1)"}>
+                      <Text>{item?.first_name || "-"}</Text>
+                    </Td>
+                    <Td border={"1px solid rgba(200,200,200,1)"}>
+                      <Text>{item?.email || "-"}</Text>
+                    </Td>
+                    <Td border={"1px solid rgba(200,200,200,1)"}>
+                      <Text>{item?.phone || "-"}</Text>
+                    </Td>
+                    <Td
+                      width={"min-content"}
+                      border={"1px solid rgba(200,200,200,1)"}
+                    >
+                      <HStack justify={"center"}>
+                        <ModalEditUser obj={item} />
+                        <ModalDeleteUser obj={item} />
+                      </HStack>
+                    </Td>
+                  </Tr>
+                ))}
             </Tbody>
           </Table>
         </VStack>
-      )}
+      ) : pageStore.search_elements?.length == 0 &&
+        pageStore.searchValue != "" ? (
+        <Text
+          color={"black"}
+          fontWeight={"600"}
+          width={"100%"}
+          marginTop={"20px"}
+        >
+          По Вашему запросу ничего не найдено
+        </Text>
+      ) : null}
+
       <Text
         width={"100%"}
         color={"black"}
@@ -162,7 +167,7 @@ const TableUsers = observer(() => {
                         border={"1px solid rgba(200,200,200,1)"}
                       >
                         <HStack justify={"center"}>
-                          <ModalEditClient obj={item} />
+                          <ModalEditUser obj={item} />
                           <ModalDeleteUser obj={item} />
                         </HStack>
                       </Td>

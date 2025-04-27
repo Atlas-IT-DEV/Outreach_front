@@ -38,6 +38,7 @@ const ModalCreateWork = observer(() => {
     time_finish: null,
     time_start: null,
     type_work: 0,
+    base_name: "",
   };
 
   const validationSchema = Yup.object({
@@ -46,6 +47,7 @@ const ModalCreateWork = observer(() => {
     name: Yup.string().required("Обязательное поле"),
     time_finish: Yup.number().required("Обязательное поле"),
     time_start: Yup.number().required("Обязательное поле"),
+    base_name: Yup.string().required("Обязательное поле"),
   });
 
   const createWork = async (values) => {
@@ -76,14 +78,14 @@ const ModalCreateWork = observer(() => {
         color={"black"}
         _hover={{ bg: "#4682B4", color: "white" }}
       >
-        <Text fontSize={width >= 1000 ? "16px" : "14px"}>Новая рассылка</Text>
+        <Text fontSize={width >= 1000 ? "16px" : "14px"}>Новый обзвон</Text>
       </Button>
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
         <ModalContent padding={"20px"}>
           <ModalCloseButton />
           <Text width={"100%"} textAlign={"center"} fontWeight={"600"}>
-            Создание рассылки
+            Создание обзвона
           </Text>
           <Formik
             initialValues={initialValues}
@@ -208,6 +210,26 @@ const ModalCreateWork = observer(() => {
                       </FormErrorMessage>
                     </FormControl>
                   </HStack>
+                  <FormControl>
+                    <Text fontWeight={"500"}>База</Text>
+
+                    <RadioGroup
+                      value={values?.base_name}
+                      onChange={(e) => setFieldValue("base_name", e)}
+                    >
+                      <VStack
+                        width={"100%"}
+                        align={"flex-start"}
+                        justify={"flex-start"}
+                      >
+                        {pageStore.bases?.map((item, index) => (
+                          <Radio key={index} value={item}>
+                            {item}
+                          </Radio>
+                        ))}
+                      </VStack>
+                    </RadioGroup>
+                  </FormControl>
                   <HStack
                     marginTop={"20px"}
                     justify={"flex-end"}
