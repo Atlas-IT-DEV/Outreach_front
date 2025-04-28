@@ -149,10 +149,18 @@ const ModalCreateTask = observer(() => {
                       _hover={{ border: "2px solid #4682B4" }}
                       name="date_finish"
                       onChange={(e) => {
-                        setFieldValue(
-                          "date_finish",
-                          new Date(e.target.value).toISOString()
-                        );
+                        const selectedDate = new Date(e.target.value);
+                        const currentDate = new Date();
+
+                        console.log("Выбранная дата:", e.target.value);
+                        console.log("Дата в формате Date:", selectedDate);
+                        console.log("Текущая дата:", currentDate);
+
+                        if (currentDate > selectedDate) {
+                          console.warn("Выбрана прошедшая дата!");
+                        }
+
+                        setFieldValue("date_finish", e.target.value);
                       }}
                     />
                     <FormErrorMessage marginTop={"2px"}>
