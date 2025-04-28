@@ -62,7 +62,7 @@ const ModalSelectBase = observer(() => {
                 Все базы
               </Text>
               {pageStore.bases.length > 0
-                ? pageStore.bases.map((item, index) => (
+                ? pageStore.bases?.map((item, index) => (
                     <Radio key={index} value={item}>
                       {index + 1}. {item}
                     </Radio>

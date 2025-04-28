@@ -46,7 +46,7 @@ const ModalCreateLead = observer(() => {
 
   const hdChange = (id, field, value) => {
     setPairs(
-      pairs.map((pair) => (pair.id === id ? { ...pair, [field]: value } : pair))
+      pairs?.map((pair) => (pair.id === id ? { ...pair, [field]: value } : pair))
     );
   };
 
@@ -207,7 +207,7 @@ const ModalCreateLead = observer(() => {
                     >
                       <Text fontWeight={"500"}>Доп. информация</Text>
                       <VStack width={"100%"} marginTop={"10px"}>
-                        {pairs.map((pair) => (
+                        {pairs?.map((pair) => (
                           <HStack key={pair.id} spacing={3}>
                             <Input
                               borderRadius={"0px"}

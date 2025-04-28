@@ -56,7 +56,7 @@ const TableUsers = observer(() => {
             <Tbody>
               {pageStore.search_elements
                 ?.filter((item) => item?.ID != pageStore.user_info?.ID)
-                .map((item, index) => (
+                ?.map((item, index) => (
                   <Tr color={"black"} key={index}>
                     <Td border={"1px solid rgba(200,200,200,1)"}>
                       <Text>{item?.username}</Text>
@@ -145,7 +145,7 @@ const TableUsers = observer(() => {
             {pageStore.users?.length > 0
               ? pageStore.users
                   ?.filter((item) => item?.ID != pageStore.user_info?.ID)
-                  .map((item, index) => (
+                  ?.map((item, index) => (
                     <Tr color={"black"} key={index}>
                       <Td border={"1px solid rgba(200,200,200,1)"}>
                         <Text>{item?.username}</Text>

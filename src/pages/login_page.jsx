@@ -30,8 +30,9 @@ import { FcGoogle } from "react-icons/fc";
 
 import Cookies from "js-cookie";
 import LoginForm from "../components/login_form";
+import { observer } from "mobx-react-lite";
 
-const LoginPage = () => {
+const LoginPage = observer(() => {
   const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
   const { pageStore } = useStores();
@@ -97,6 +98,6 @@ const LoginPage = () => {
       </VStack>
     </Flex>
   );
-};
+});
 
 export default LoginPage;

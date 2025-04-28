@@ -1,8 +1,9 @@
 import { Button, HStack, Stack, Text, VStack } from "@chakra-ui/react";
 import { useState } from "react";
 import useWindowDimensions from "../windowDimensions";
+import { observer } from "mobx-react-lite";
 
-const AutomationPage = () => {
+const AutomationPage = observer(() => {
   const [selected, setSelected] = useState([1, 0, 0, 0, 0]);
   const { width } = useWindowDimensions();
 
@@ -275,6 +276,6 @@ const AutomationPage = () => {
       )}
     </VStack>
   );
-};
+});
 
 export default AutomationPage;

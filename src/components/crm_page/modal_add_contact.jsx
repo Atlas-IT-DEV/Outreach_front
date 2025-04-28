@@ -15,8 +15,9 @@ import {
 import { Form, Formik } from "formik";
 import * as Yup from "yup";
 import useWindowDimensions from "../../windowDimensions";
+import { observer } from "mobx-react-lite";
 
-const ModalAddContact = () => {
+const ModalAddContact = observer(() => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { width, height } = useWindowDimensions();
 
@@ -216,6 +217,6 @@ const ModalAddContact = () => {
       </Modal>
     </>
   );
-};
+});
 
 export default ModalAddContact;

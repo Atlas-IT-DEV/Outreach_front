@@ -10,8 +10,9 @@ import {
   Tr,
   VStack,
 } from "@chakra-ui/react";
+import { observer } from "mobx-react-lite";
 
-const TableReport = () => {
+const TableReport = observer(() => {
   return (
     <>
       <Text
@@ -77,6 +78,6 @@ const TableReport = () => {
       </HStack>
     </>
   );
-};
+});
 
 export default TableReport;

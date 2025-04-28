@@ -19,7 +19,7 @@ const TableScripts = observer(({ type = "" }) => {
                   item?.department_id == pageStore.selected_department &&
                   !item?.is_email
               )
-              .map((item, index) => <ModalScript obj={item} key={index} />)
+              ?.map((item, index) => <ModalScript obj={item} key={index} />)
           : type == "mail"
           ? pageStore.scripts
               ?.filter(
@@ -27,7 +27,7 @@ const TableScripts = observer(({ type = "" }) => {
                   item?.department_id == pageStore.selected_department &&
                   item?.is_email
               )
-              .map((item, index) => <ModalScript obj={item} key={index} />)
+              ?.map((item, index) => <ModalScript obj={item} key={index} />)
           : null}
       </VStack>
     </>

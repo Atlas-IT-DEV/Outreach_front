@@ -99,7 +99,7 @@ const TableTasks = observer(() => {
           {distributedTasks?.overdue.length > 0 &&
             distributedTasks?.overdue
               .filter((item) => !item?.is_completed)
-              .map((item, index) => <TaskCard key={index} obj={item} />)}
+              ?.map((item, index) => <TaskCard key={index} obj={item} />)}
         </VStack>
         <VStack width={"300px"} padding={"10px"} gap={"20px"}>
           <Text
@@ -113,7 +113,7 @@ const TableTasks = observer(() => {
           {distributedTasks?.today.length > 0 &&
             distributedTasks?.today
               .filter((item) => !item?.is_completed)
-              .map((item, index) => <TaskCard key={index} obj={item} />)}
+              ?.map((item, index) => <TaskCard key={index} obj={item} />)}
         </VStack>
         <VStack width={"300px"} padding={"10px"} gap={"20px"}>
           <Text
@@ -127,7 +127,7 @@ const TableTasks = observer(() => {
           {distributedTasks?.tomorrow.length > 0 &&
             distributedTasks?.tomorrow
               .filter((item) => !item?.is_completed)
-              .map((item, index) => <TaskCard key={index} obj={item} />)}
+              ?.map((item, index) => <TaskCard key={index} obj={item} />)}
         </VStack>
         <VStack width={"300px"} padding={"10px"} gap={"20px"}>
           <Text
@@ -141,7 +141,7 @@ const TableTasks = observer(() => {
           {distributedTasks?.future.length > 0 &&
             distributedTasks?.future
               .filter((item) => !item?.is_completed)
-              .map((item, index) => <TaskCard key={index} obj={item} />)}
+              ?.map((item, index) => <TaskCard key={index} obj={item} />)}
         </VStack>
 
         <VStack width={"300px"} padding={"10px"} gap={"20px"}>
@@ -155,7 +155,7 @@ const TableTasks = observer(() => {
           {pageStore.tasks.length > 0 &&
             pageStore.tasks
               .filter((item) => item?.is_completed)
-              .map((item, index) => <TaskCard key={index} obj={item} />)}
+              ?.map((item, index) => <TaskCard key={index} obj={item} />)}
         </VStack>
       </HStack>
     </VStack>

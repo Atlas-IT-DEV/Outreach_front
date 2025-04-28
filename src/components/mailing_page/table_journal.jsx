@@ -60,7 +60,7 @@ const TableJournal = observer(() => {
                 </Tr>
               </Thead>
               <Tbody>
-                {pageStore.search_elements.map((item, index) => (
+                {pageStore.search_elements?.map((item, index) => (
                   <Tr color={"black"} key={index}>
                     <Td border={"1px solid rgba(200,200,200,1)"}>
                       <Text>{item?.name}</Text>

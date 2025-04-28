@@ -8,8 +8,9 @@ import ModalCreateClient from "./modal_create_client";
 import TableClients from "./table_clients";
 import ModalCreateUser from "./modal_create_user";
 import TableUsers from "./table_users";
+import { observer } from "mobx-react-lite";
 
-const Clients = () => {
+const Clients = observer(() => {
   const { pageStore } = useStores();
   const { width } = useWindowDimensions();
   const options = {
@@ -51,6 +52,6 @@ const Clients = () => {
       {pageStore.user_info?.role == "1" ? <TableUsers /> : <TableClients />}
     </VStack>
   );
-};
+});
 
 export default Clients;

@@ -15,8 +15,8 @@ const Searcher = observer(
       if (pageStore.searchValue != "") {
         copyArray = Array.from(array);
         const fuse = new Fuse(copyArray, options);
-        const result = fuse.search(pageStore.searchValue);
-        const similar = result.map((res) => res.item);
+        const result = fuse?.search(pageStore.searchValue);
+        const similar = result?.map((res) => res.item);
 
         pageStore.updateSearchElement(similar);
       } else {

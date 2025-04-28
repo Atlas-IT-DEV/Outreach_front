@@ -159,7 +159,7 @@ const LoginForm = observer(() => {
               marginTop={"10px"}
             >
               {filteredCompany.departaments
-                ? filteredCompany.departaments.map((item, index) => {
+                ? filteredCompany.departaments?.map((item, index) => {
                     return (
                       <Radio
                         key={index}

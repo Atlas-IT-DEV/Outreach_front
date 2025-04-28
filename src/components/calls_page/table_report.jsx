@@ -8,8 +8,9 @@ import {
   Thead,
   Tr,
 } from "@chakra-ui/react";
+import { observer } from "mobx-react-lite";
 
-const TableReport = () => {
+const TableReport = observer(() => {
   return (
     <>
       <Text width={"100%"} color={"black"} fontWeight={"600"}>
@@ -64,6 +65,6 @@ const TableReport = () => {
       </HStack>
     </>
   );
-};
+});
 
 export default TableReport;

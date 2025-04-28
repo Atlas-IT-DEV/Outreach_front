@@ -6,9 +6,10 @@ import {
   Textarea,
   VStack,
 } from "@chakra-ui/react";
+import { observer } from "mobx-react-lite";
 import { MdOutlineStarBorder, MdOutlineStar } from "react-icons/md";
 
-const Patterns = () => {
+const Patterns = observer(() => {
   return (
     <VStack width={"100%"} align={"flex-start"} marginTop={"20px"}>
       <HStack width={"100%"} justify={"space-between"} align={"flex-start"}>
@@ -119,6 +120,6 @@ const Patterns = () => {
       </HStack>
     </VStack>
   );
-};
+});
 
 export default Patterns;

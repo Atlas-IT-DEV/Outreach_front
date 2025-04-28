@@ -7,8 +7,9 @@ import useWindowDimensions from "../windowDimensions";
 import TableScripts from "../components/table_scripts";
 import { useStores } from "../store/store_context";
 import Scripts from "../components/mailing_page/scripts";
+import { observer } from "mobx-react-lite";
 
-const MailingPage = () => {
+const MailingPage = observer(() => {
   const [selected, setSelected] = useState([1, 0, 0]);
   const { width } = useWindowDimensions();
   const { pageStore } = useStores();
@@ -82,6 +83,6 @@ const MailingPage = () => {
       )}
     </VStack>
   );
-};
+});
 
 export default MailingPage;

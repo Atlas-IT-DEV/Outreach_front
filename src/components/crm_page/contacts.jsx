@@ -4,8 +4,9 @@ import Searcher from "../searcher";
 import TableContacts from "./table_contacts";
 import ModalAddContact from "./modal_add_contact";
 import { useStores } from "../../store/store_context";
+import { observer } from "mobx-react-lite";
 
-const Contacts = () => {
+const Contacts = observer(() => {
   const { pageStore } = useStores();
   const options = {
     keys: ["fullName", "company"], // Поля для поиска
@@ -25,6 +26,6 @@ const Contacts = () => {
       <TableContacts />
     </VStack>
   );
-};
+});
 
 export default Contacts;
