@@ -74,7 +74,7 @@ const TableLeads = observer(() => {
                     </Td>
                     <Tooltip
                       label={parse?.map((item2, index) => (
-                        <Text width={"max-content"}>
+                        <Text width={"max-content"} key={index}>
                           {index + 1}. {item2?.key}: {item2?.value}
                         </Text>
                       ))}

@@ -50,7 +50,6 @@ const ModalDeleteScript = observer(({ obj = {}, onСloses }) => {
     <>
       <Button
         onClick={onOpen}
-        marginTop={"10px"}
         boxShadow={"-2px 2px 0 0 #4682B4"}
         borderRadius={"0px"}
         border={"2px solid #4682B4"}

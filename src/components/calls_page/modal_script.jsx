@@ -82,6 +82,12 @@ const ModalScript = observer(({ obj = {} }) => {
     }
   };
 
+  console.log("Favorite scripts:", pageStore.user_info?.favorite_scripts);
+  console.log("Current obj:", obj);
+  console.log(
+    "Comparison result:",
+    pageStore.user_info?.favorite_scripts?.some((item) => item?.ID === obj?.ID)
+  );
   const generateText = async (values) => {
     return await pageStore.generateGPT(values);
   };
@@ -95,6 +101,23 @@ const ModalScript = observer(({ obj = {} }) => {
       toast({
         title: "Успех",
         description: "Текст успешно сгенерирован",
+        duration: "3000",
+        status: "success",
+      });
+    }
+  };
+
+  const addToFav = async (id) => {
+    return await pageStore.addToFavouriveScript(id);
+  };
+
+  const handleAddToFav = async () => {
+    const ok = await addToFav(obj?.ID);
+    if (ok) {
+      await pageStore.getMe();
+      toast({
+        title: "Успех",
+        description: "Скрипт добавлен в избранное",
         duration: "3000",
         status: "success",
       });
@@ -120,10 +143,26 @@ const ModalScript = observer(({ obj = {} }) => {
         }}
       >
         <Text color={"black"}>{obj?.name}</Text>
-        {obj?.is_fav ? (
-          <MdOutlineStar size={"30px"} color="#4682B4" />
+        {pageStore.user_info?.favorite_scripts?.some(
+          (item) => item?.ID == obj?.ID
+        ) ? (
+          <MdOutlineStar
+            size={"30px"}
+            color="#4682B4"
+            onClick={async (e) => {
+              e.stopPropagation();
+              await handleAddToFav();
+            }}
+          />
         ) : (
-          <MdOutlineStarBorder size={"30px"} color="#4682B4" />
+          <MdOutlineStarBorder
+            size={"30px"}
+            color="#4682B4"
+            onClick={async (e) => {
+              e.stopPropagation();
+              await handleAddToFav();
+            }}
+          />
         )}
       </HStack>
       <Modal isOpen={isOpen} onClose={onClose} size={"2xl"}>
@@ -257,6 +296,7 @@ const ModalScript = observer(({ obj = {} }) => {
                     justify={"flex-end"}
                     width={"100%"}
                   >
+                    <ModalDeleteScript obj={obj} />
                     <Button
                       onClick={() => setShowInputs(!showInputs)}
                       boxShadow={"-2px 2px 0 0 #4682B4"}
@@ -269,6 +309,7 @@ const ModalScript = observer(({ obj = {} }) => {
                     >
                       <Text>Сгенерировать текст</Text>
                     </Button>
+
                     <Button
                       onClick={onClose}
                       boxShadow={"-2px 2px 0 0 #4682B4"}

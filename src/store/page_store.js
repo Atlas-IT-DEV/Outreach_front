@@ -359,6 +359,16 @@ class PageStore {
     });
     return response.ok;
   };
+  addToFavouriveScript = async (id) => {
+    const response = await fetch(`${base_url}/api/scripts/favorite/${id}`, {
+      method: "POST",
+      headers: {
+        accept: "application/json",
+        Authorization: `${this.token}`,
+      },
+    });
+    return response.ok;
+  };
 
   // рассылки
   getAllWorks = async () => {
