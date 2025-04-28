@@ -1,8 +1,8 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import App from "./App";
-import { ChakraProvider, extendTheme } from "@chakra-ui/react";
-import { RootStoreContext } from "./store/store_context";
+import { ChakraProvider, extendTheme, useToast } from "@chakra-ui/react";
+import { RootStoreContext, useStores } from "./store/store_context";
 import RootStore from "./store/root_store";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 
@@ -30,6 +30,7 @@ const theme = extendTheme({
 });
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
+
 root.render(
   <RootStoreContext.Provider value={new RootStore()}>
     <ChakraProvider theme={theme}>

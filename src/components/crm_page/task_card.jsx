@@ -230,12 +230,28 @@ const TaskCard = observer(({ obj = {} }) => {
                         borderRadius={"0"}
                         _hover={{ border: "2px solid #4682B4" }}
                         name="date_finish"
-                        onChange={(e) =>
-                          setFieldValue(
-                            "date_finish",
-                            new Date(e.target.value).toISOString()
-                          )
-                        }
+                        onChange={(e) => {
+                          const selectedDate = new Date(e.target.value);
+                          const currentDate = new Date();
+
+                          console.log("Выбранная дата:", e.target.value);
+                          console.log("Дата в формате Date:", selectedDate);
+                          console.log("Текущая дата:", currentDate);
+
+                          if (currentDate > selectedDate) {
+                            toast({
+                              title: "Ошибка",
+                              description: "Задачу нельзя создать в прошлое",
+                              status: "warning",
+                              duration: "3000",
+                            });
+                          } else {
+                            setFieldValue(
+                              "date_finish",
+                              selectedDate.toISOString()
+                            );
+                          }
+                        }}
                       />
                       <FormErrorMessage marginTop={"2px"}>
                         {errors?.date_finish}

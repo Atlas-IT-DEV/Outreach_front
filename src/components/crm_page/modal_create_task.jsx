@@ -157,10 +157,18 @@ const ModalCreateTask = observer(() => {
                         console.log("Текущая дата:", currentDate);
 
                         if (currentDate > selectedDate) {
-                          console.warn("Выбрана прошедшая дата!");
+                          toast({
+                            title: "Ошибка",
+                            description: "Задачу нельзя создать в прошлое",
+                            status: "warning",
+                            duration: "3000",
+                          });
+                        } else {
+                          setFieldValue(
+                            "date_finish",
+                            selectedDate.toISOString()
+                          );
                         }
-
-                        setFieldValue("date_finish", e.target.value);
                       }}
                     />
                     <FormErrorMessage marginTop={"2px"}>

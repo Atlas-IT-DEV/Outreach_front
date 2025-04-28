@@ -429,6 +429,7 @@ class PageStore {
     this.tasks = result.filter(
       (item) => item?.company_id == this.user_info?.company_id
     );
+    console.log("tasks", this.tasks);
   };
   createTask = async (values) => {
     const response = await fetch(`${base_url}/api/tasks`, {
