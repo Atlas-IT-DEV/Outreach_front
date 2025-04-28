@@ -5,39 +5,40 @@ import { useStores } from "../../store/store_context";
 
 const TableTasks = observer(() => {
   const { pageStore } = useStores();
-
   function distributeTasks(tasks) {
     const now = new Date();
-    const today = new Date(now);
-    today.setHours(0, 0, 0, 0); // Начало текущего дня
+    const todayStart = new Date(now);
+    todayStart.setHours(0, 0, 0, 0); // Начало текущего дня
 
-    const tomorrow = new Date(today);
-    tomorrow.setDate(tomorrow.getDate() + 1); // Начало завтрашнего дня
+    const todayEnd = new Date(todayStart);
+    todayEnd.setDate(todayEnd.getDate() + 1); // Конец текущего дня (начало завтра)
 
-    const dayAfterTomorrow = new Date(tomorrow);
-    dayAfterTomorrow.setDate(dayAfterTomorrow.getDate() + 1); // Начало послезавтра
+    const tomorrowEnd = new Date(todayEnd);
+    tomorrowEnd.setDate(tomorrowEnd.getDate() + 1); // Конец завтрашнего дня
+
+    const dayAfterTomorrowEnd = new Date(tomorrowEnd);
+    dayAfterTomorrowEnd.setDate(dayAfterTomorrowEnd.getDate() + 1); // Конец послезавтра
 
     const result = {
       overdue: [], // Просроченные
       today: [], // Сегодня
       tomorrow: [], // Завтра
-      future: [], // Будущее (более 2 дней)
+      future: [], // Задачи без даты
     };
 
     tasks.forEach((task) => {
       if (!task.date_finish) {
-        // Если даты нет, можно обработать отдельно
+        result.noDate.push(task);
         return;
       }
 
-      const date_finish = new Date(task.date_finish);
-      date_finish.setHours(0, 0, 0, 0); // Убираем время для сравнения дат
+      const taskDate = new Date(task.date_finish);
 
-      if (date_finish < today) {
+      if (taskDate < now) {
         result.overdue.push(task);
-      } else if (date_finish.getTime() === today.getTime()) {
+      } else if (taskDate >= todayStart && taskDate < todayEnd) {
         result.today.push(task);
-      } else if (date_finish.getTime() === tomorrow.getTime()) {
+      } else if (taskDate >= todayEnd && taskDate < tomorrowEnd) {
         result.tomorrow.push(task);
       } else {
         result.future.push(task);
@@ -58,7 +59,6 @@ const TableTasks = observer(() => {
           </Text>
           <HStack
             width={"100%"}
-
             overflow={"scroll"}
             // overflowY={"hidden"}
             paddingBottom={"8px"}
