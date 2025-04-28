@@ -115,12 +115,6 @@ const ModalScript = observer(({ obj = {} }) => {
     const ok = await addToFav(obj?.ID);
     if (ok) {
       await pageStore.getMe();
-      toast({
-        title: "Успех",
-        description: "Скрипт добавлен в избранное",
-        duration: "3000",
-        status: "success",
-      });
     }
   };
 

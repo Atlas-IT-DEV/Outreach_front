@@ -36,14 +36,13 @@ const ModalDeleteScript = observer(({ obj = {}, onСloses }) => {
     if (ok) {
       pageStore.updateSelectedScript({});
       pageStore.getAllScripts();
+      onClose();
       toast({
         title: "Успех",
         description: "Скрипт успешно удалён",
         duration: "3000",
         status: "success",
       });
-      onClose();
-      onСloses();
     }
   };
   return (
