@@ -233,49 +233,95 @@ const ModalNewScript = observer(() => {
                       </Button>
                     </>
                   )}
-
-                  <HStack
-                    marginTop={"20px"}
-                    justify={"flex-end"}
-                    width={"100%"}
-                  >
-                    <Button
-                      onClick={() => setShowInputs(!showInputs)}
-                      boxShadow={"-2px 2px 0 0 #4682B4"}
-                      borderRadius={"0px"}
-                      border={"2px solid #4682B4"}
-                      bg={"white"}
-                      color={"black"}
-                      _hover={{ bg: "#4682B4", color: "white" }}
-                      flexShrink={0}
+                  {width >= 600 ? (
+                    <HStack
+                      marginTop={"20px"}
+                      justify={"flex-end"}
+                      width={"100%"}
                     >
-                      <Text>Сгенерировать текст</Text>
-                    </Button>
-                    <Button
-                      onClick={onClose}
-                      boxShadow={"-2px 2px 0 0 #4682B4"}
-                      borderRadius={"0px"}
-                      border={"2px solid #4682B4"}
-                      bg={"white"}
-                      color={"black"}
-                      _hover={{ bg: "#4682B4", color: "white" }}
-                      flexShrink={0}
+                      <Button
+                        onClick={() => setShowInputs(!showInputs)}
+                        boxShadow={"-2px 2px 0 0 #4682B4"}
+                        borderRadius={"0px"}
+                        border={"2px solid #4682B4"}
+                        bg={"white"}
+                        color={"black"}
+                        _hover={{ bg: "#4682B4", color: "white" }}
+                        flexShrink={0}
+                      >
+                        <Text>Сгенерировать текст</Text>
+                      </Button>
+                      <Button
+                        onClick={onClose}
+                        boxShadow={"-2px 2px 0 0 #4682B4"}
+                        borderRadius={"0px"}
+                        border={"2px solid #4682B4"}
+                        bg={"white"}
+                        color={"black"}
+                        _hover={{ bg: "#4682B4", color: "white" }}
+                        flexShrink={0}
+                      >
+                        <Text>Отменить</Text>
+                      </Button>
+                      <Button
+                        type="submit"
+                        boxShadow={"-2px 2px 0 0 #4682B4"}
+                        borderRadius={"0px"}
+                        border={"2px solid #4682B4"}
+                        bg={"white"}
+                        color={"black"}
+                        _hover={{ bg: "#4682B4", color: "white" }}
+                        flexShrink={0}
+                      >
+                        <Text>Создать</Text>
+                      </Button>
+                    </HStack>
+                  ) : (
+                    <VStack
+                      marginTop={"20px"}
+                      align={"flex-end"}
+                      width={"100%"}
                     >
-                      <Text>Отменить</Text>
-                    </Button>
-                    <Button
-                      type="submit"
-                      boxShadow={"-2px 2px 0 0 #4682B4"}
-                      borderRadius={"0px"}
-                      border={"2px solid #4682B4"}
-                      bg={"white"}
-                      color={"black"}
-                      _hover={{ bg: "#4682B4", color: "white" }}
-                      flexShrink={0}
-                    >
-                      <Text>Создать</Text>
-                    </Button>
-                  </HStack>
+                      <Button
+                        onClick={() => setShowInputs(!showInputs)}
+                        boxShadow={"-2px 2px 0 0 #4682B4"}
+                        borderRadius={"0px"}
+                        border={"2px solid #4682B4"}
+                        bg={"white"}
+                        color={"black"}
+                        _hover={{ bg: "#4682B4", color: "white" }}
+                        flexShrink={0}
+                      >
+                        <Text>Сгенерировать текст</Text>
+                      </Button>
+                      <HStack width={"100%"} justify={"flex-end"}>
+                        <Button
+                          onClick={onClose}
+                          boxShadow={"-2px 2px 0 0 #4682B4"}
+                          borderRadius={"0px"}
+                          border={"2px solid #4682B4"}
+                          bg={"white"}
+                          color={"black"}
+                          _hover={{ bg: "#4682B4", color: "white" }}
+                          flexShrink={0}
+                        >
+                          <Text>Отменить</Text>
+                        </Button>
+                        <Button
+                          type="submit"
+                          boxShadow={"-2px 2px 0 0 #4682B4"}
+                          borderRadius={"0px"}
+                          border={"2px solid #4682B4"}
+                          bg={"white"}
+                          color={"black"}
+                          _hover={{ bg: "#4682B4", color: "white" }}
+                          flexShrink={0}
+                        >
+                          <Text>Создать</Text>
+                        </Button>
+                      </HStack>
+                    </VStack>
+                  )}
                 </VStack>
               </Form>
             )}

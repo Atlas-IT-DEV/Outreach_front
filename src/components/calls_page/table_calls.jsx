@@ -67,7 +67,9 @@ const TableCalls = observer(() => {
                       <Text>{item?.name}</Text>
                     </Td>
                     <Td border={"1px solid rgba(200,200,200,1)"}>
-                      <Textarea disabled>{item?.description}</Textarea>
+                      <Textarea disabled minW={"200px"}>
+                        {item?.description}
+                      </Textarea>
                     </Td>
                     <Td border={"1px solid rgba(200,200,200,1)"}>
                       <Text>
@@ -187,7 +189,7 @@ const TableCalls = observer(() => {
                       <Text>{item?.name}</Text>
                     </Td>
                     <Td border={"1px solid rgba(200,200,200,1)"}>
-                      <Textarea disabled color={"black"}>
+                      <Textarea disabled color={"black"} minW={"200px"}>
                         {item?.description}
                       </Textarea>
                     </Td>

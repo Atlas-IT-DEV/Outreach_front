@@ -153,123 +153,244 @@ const TableBase = observer(() => {
         </Table>
       </HStack>
       {pageStore.selected_name_base != "" ? (
-        <HStack width={"100%"} justify={"space-between"}>
-          <VStack align={"flex-start"}>
-            <Text>Перейти на страницу:</Text>
-            <HStack>
-              <Tooltip
-                label={"Подсказка: отсчёт страниц начинается с нуля"}
-                bg={"#4682B4"}
-                color={"white"}
-                borderRadius={"10px"}
-                placement="bottom-start"
-              >
-                <Input
-                  borderRadius={"0px"}
-                  placeholder="Перейти на страницу"
+        width >= 1200 ? (
+          <HStack width={"100%"} justify={"space-between"}>
+            <VStack align={"flex-start"}>
+              <Text>Перейти на страницу:</Text>
+              <HStack>
+                <Tooltip
+                  label={"Подсказка: отсчёт страниц начинается с нуля"}
+                  bg={"#4682B4"}
+                  color={"white"}
+                  borderRadius={"10px"}
+                  placement="bottom-start"
+                >
+                  <Input
+                    borderRadius={"0px"}
+                    placeholder="Перейти на страницу"
+                    border={"2px solid #4682B4"}
+                    value={selectedPage}
+                    onChange={(e) =>
+                      setSelectedPage(e.target.value.replace(/\D/g, ""))
+                    }
+                  />
+                </Tooltip>
+
+                <Button
+                  width={"100%"}
                   border={"2px solid #4682B4"}
-                  value={selectedPage}
-                  onChange={(e) =>
-                    setSelectedPage(e.target.value.replace(/\D/g, ""))
-                  }
-                />
-              </Tooltip>
+                  boxShadow={"-2px 2px 0 0 #4682B4"}
+                  borderRadius={"0px"}
+                  bg={"white"}
+                  color={"black"}
+                  _hover={{ bg: "#4682B4", color: "white" }}
+                  onClick={async () => {
+                    pageStore.updateCurrentPage(selectedPage);
+                    await pageStore.getBaseByName(
+                      pageStore.selected_name_base,
+                      pageStore.selected_department,
+                      pageStore.current_page,
+                      pageStore.countRows
+                    );
+                    setSelectedPage("");
+                  }}
+                >
+                  <Text fontSize={width >= 1000 ? "16px" : "14px"}>
+                    Применить
+                  </Text>
+                </Button>
+              </HStack>
+            </VStack>
 
-              <Button
-                width={"100%"}
-                border={"2px solid #4682B4"}
-                boxShadow={"-2px 2px 0 0 #4682B4"}
-                borderRadius={"0px"}
-                bg={"white"}
-                color={"black"}
-                _hover={{ bg: "#4682B4", color: "white" }}
-                onClick={async () => {
-                  pageStore.updateCurrentPage(selectedPage);
-                  await pageStore.getBaseByName(
-                    pageStore.selected_name_base,
-                    pageStore.selected_department,
-                    pageStore.current_page,
-                    pageStore.countRows
-                  );
-                  setSelectedPage("");
-                }}
-              >
-                <Text fontSize={width >= 1000 ? "16px" : "14px"}>
-                  Применить
-                </Text>
-              </Button>
-            </HStack>
+            {pageStore.selected_base?.length > 0 ? (
+              <HStack justify={"center"} gap={"20px"}>
+                {pageStore.current_page >= 2 ? (
+                  <Text
+                    _hover={{ textDecoration: "underline" }}
+                    cursor={"pointer"}
+                    onClick={async () => {
+                      scrollTop();
+                      pageStore.updateCurrentPage(0);
+                      await pageStore.getBaseByName(
+                        pageStore.selected_name_base,
+                        pageStore.selected_department,
+                        pageStore.current_page,
+                        pageStore.countRows
+                      );
+                    }}
+                  >
+                    В начало
+                  </Text>
+                ) : null}
+                {pageStore.current_page == 0 ? null : (
+                  <Text
+                    _hover={{ textDecoration: "underline" }}
+                    cursor={"pointer"}
+                    onClick={async () => {
+                      scrollTop();
+                      pageStore.updateCurrentPage(
+                        Number(pageStore.current_page) - 1
+                      );
+                      await pageStore.getBaseByName(
+                        pageStore.selected_name_base,
+                        pageStore.selected_department,
+                        pageStore.current_page,
+                        pageStore.countRows
+                      );
+                    }}
+                  >
+                    Предыдущая страница
+                  </Text>
+                )}
+                {pageStore.has_more_data ? (
+                  <Text
+                    _hover={{ textDecoration: "underline" }}
+                    cursor={"pointer"}
+                    onClick={async () => {
+                      scrollTop();
+                      pageStore.updateCurrentPage(
+                        Number(pageStore.current_page) + 1
+                      );
+                      await pageStore.getBaseByName(
+                        pageStore.selected_name_base,
+                        pageStore.selected_department,
+                        pageStore.current_page,
+                        pageStore.countRows
+                      );
+                    }}
+                  >
+                    Следующая страница
+                  </Text>
+                ) : null}
+              </HStack>
+            ) : null}
+
+            <Text>
+              Страница
+              <br /> {Number(pageStore.current_page)} из{" "}
+              {parseInt(pageStore.countValues / pageStore.countRows)}
+            </Text>
+          </HStack>
+        ) : (
+          <VStack width={"100%"} align={"center"} justify={"flex-start"}>
+            {pageStore.selected_base?.length > 0 ? (
+              <HStack justify={"center"} gap={"20px"}>
+                {pageStore.current_page >= 2 ? (
+                  <Text
+                    width={"max-content"}
+                    _hover={{ textDecoration: "underline" }}
+                    cursor={"pointer"}
+                    onClick={async () => {
+                      scrollTop();
+                      pageStore.updateCurrentPage(0);
+                      await pageStore.getBaseByName(
+                        pageStore.selected_name_base,
+                        pageStore.selected_department,
+                        pageStore.current_page,
+                        pageStore.countRows
+                      );
+                    }}
+                  >
+                    В начало
+                  </Text>
+                ) : null}
+                {pageStore.current_page == 0 ? null : (
+                  <Text
+                    width={"max-content"}
+                    _hover={{ textDecoration: "underline" }}
+                    cursor={"pointer"}
+                    onClick={async () => {
+                      scrollTop();
+                      pageStore.updateCurrentPage(
+                        Number(pageStore.current_page) - 1
+                      );
+                      await pageStore.getBaseByName(
+                        pageStore.selected_name_base,
+                        pageStore.selected_department,
+                        pageStore.current_page,
+                        pageStore.countRows
+                      );
+                    }}
+                  >
+                    {"<"}
+                  </Text>
+                )}
+                {pageStore.has_more_data ? (
+                  <Text
+                    width={"max-content"}
+                    _hover={{ textDecoration: "underline" }}
+                    cursor={"pointer"}
+                    onClick={async () => {
+                      scrollTop();
+                      pageStore.updateCurrentPage(
+                        Number(pageStore.current_page) + 1
+                      );
+                      await pageStore.getBaseByName(
+                        pageStore.selected_name_base,
+                        pageStore.selected_department,
+                        pageStore.current_page,
+                        pageStore.countRows
+                      );
+                    }}
+                  >
+                    {">"}
+                  </Text>
+                ) : null}
+              </HStack>
+            ) : null}
+
+            <VStack align={"flex-start"}>
+              <Text>Перейти на страницу:</Text>
+              <HStack>
+                <Tooltip
+                  label={"Подсказка: отсчёт страниц начинается с нуля"}
+                  bg={"#4682B4"}
+                  color={"white"}
+                  borderRadius={"10px"}
+                  placement="bottom-start"
+                >
+                  <Input
+                    borderRadius={"0px"}
+                    placeholder="Перейти на страницу"
+                    border={"2px solid #4682B4"}
+                    value={selectedPage}
+                    onChange={(e) =>
+                      setSelectedPage(e.target.value.replace(/\D/g, ""))
+                    }
+                  />
+                </Tooltip>
+
+                <Button
+                  width={"100%"}
+                  border={"2px solid #4682B4"}
+                  boxShadow={"-2px 2px 0 0 #4682B4"}
+                  borderRadius={"0px"}
+                  bg={"white"}
+                  color={"black"}
+                  _hover={{ bg: "#4682B4", color: "white" }}
+                  onClick={async () => {
+                    pageStore.updateCurrentPage(selectedPage);
+                    await pageStore.getBaseByName(
+                      pageStore.selected_name_base,
+                      pageStore.selected_department,
+                      pageStore.current_page,
+                      pageStore.countRows
+                    );
+                    setSelectedPage("");
+                  }}
+                >
+                  <Text fontSize={width >= 1000 ? "16px" : "14px"}>
+                    Применить
+                  </Text>
+                </Button>
+              </HStack>
+            </VStack>
+            <Text>
+              Страница {Number(pageStore.current_page)} из{" "}
+              {parseInt(pageStore.countValues / pageStore.countRows)}
+            </Text>
           </VStack>
-
-          {pageStore.selected_base?.length > 0 ? (
-            <HStack justify={"center"} gap={"20px"}>
-              {pageStore.current_page >= 2 ? (
-                <Text
-                  _hover={{ textDecoration: "underline" }}
-                  cursor={"pointer"}
-                  onClick={async () => {
-                    scrollTop();
-                    pageStore.updateCurrentPage(0);
-                    await pageStore.getBaseByName(
-                      pageStore.selected_name_base,
-                      pageStore.selected_department,
-                      pageStore.current_page,
-                      pageStore.countRows
-                    );
-                  }}
-                >
-                  В начало
-                </Text>
-              ) : null}
-              {pageStore.current_page == 0 ? null : (
-                <Text
-                  _hover={{ textDecoration: "underline" }}
-                  cursor={"pointer"}
-                  onClick={async () => {
-                    scrollTop();
-                    pageStore.updateCurrentPage(
-                      Number(pageStore.current_page) - 1
-                    );
-                    await pageStore.getBaseByName(
-                      pageStore.selected_name_base,
-                      pageStore.selected_department,
-                      pageStore.current_page,
-                      pageStore.countRows
-                    );
-                  }}
-                >
-                  Предыдущая страница
-                </Text>
-              )}
-              {pageStore.has_more_data ? (
-                <Text
-                  _hover={{ textDecoration: "underline" }}
-                  cursor={"pointer"}
-                  onClick={async () => {
-                    scrollTop();
-                    pageStore.updateCurrentPage(
-                      Number(pageStore.current_page) + 1
-                    );
-                    await pageStore.getBaseByName(
-                      pageStore.selected_name_base,
-                      pageStore.selected_department,
-                      pageStore.current_page,
-                      pageStore.countRows
-                    );
-                  }}
-                >
-                  Следующая страница
-                </Text>
-              ) : null}
-            </HStack>
-          ) : null}
-
-          <Text>
-            Страница
-            <br /> {Number(pageStore.current_page)} из{" "}
-            {parseInt(pageStore.countValues / pageStore.countRows)}
-          </Text>
-        </HStack>
+        )
       ) : null}
     </>
   );
