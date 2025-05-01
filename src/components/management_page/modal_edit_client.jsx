@@ -98,7 +98,6 @@ const ModalEditClient = observer(({ obj = {} }) => {
     <>
       <Button
         onClick={() => onOpen()}
-        
         borderRadius={"8px"}
         border={"2px solid rgba(48, 141, 218, 1)"}
         bg={"white"}
@@ -120,6 +119,7 @@ const ModalEditClient = observer(({ obj = {} }) => {
           setEditCompanies(false);
           setEditUsers(false);
         }}
+        size={"3xl"}
       >
         <ModalOverlay />
         <ModalContent
@@ -238,12 +238,14 @@ const ModalEditClient = observer(({ obj = {} }) => {
                       <HStack width={"100%"} justify={"center"}>
                         <Button
                           onClick={() => setEditUsers(false)}
-                          
                           borderRadius={"8px"}
                           border={"2px solid rgba(48, 141, 218, 1)"}
                           bg={"white"}
                           color={"black"}
-                          _hover={{ bg: "rgba(48, 141, 218, 1)", color: "white" }}
+                          _hover={{
+                            bg: "rgba(48, 141, 218, 1)",
+                            color: "white",
+                          }}
                           flexShrink={0}
                           marginTop={"20px"}
                         >
@@ -251,12 +253,14 @@ const ModalEditClient = observer(({ obj = {} }) => {
                         </Button>
                         <Button
                           type="submit"
-                          
                           borderRadius={"8px"}
                           border={"2px solid rgba(48, 141, 218, 1)"}
                           bg={"white"}
                           color={"black"}
-                          _hover={{ bg: "rgba(48, 141, 218, 1)", color: "white" }}
+                          _hover={{
+                            bg: "rgba(48, 141, 218, 1)",
+                            color: "white",
+                          }}
                           flexShrink={0}
                           marginTop={"20px"}
                         >
@@ -308,7 +312,6 @@ const ModalEditClient = observer(({ obj = {} }) => {
                 </VStack>
                 <Button
                   onClick={() => setEditUsers(true)}
-                  
                   borderRadius={"8px"}
                   border={"2px solid rgba(48, 141, 218, 1)"}
                   bg={"white"}
@@ -390,12 +393,14 @@ const ModalEditClient = observer(({ obj = {} }) => {
                       <HStack width={"100%"} justify={"center"}>
                         <Button
                           onClick={() => setEditCompanies(false)}
-                          
                           borderRadius={"8px"}
                           border={"2px solid rgba(48, 141, 218, 1)"}
                           bg={"white"}
                           color={"black"}
-                          _hover={{ bg: "rgba(48, 141, 218, 1)", color: "white" }}
+                          _hover={{
+                            bg: "rgba(48, 141, 218, 1)",
+                            color: "white",
+                          }}
                           flexShrink={0}
                           marginTop={"20px"}
                         >
@@ -403,12 +408,14 @@ const ModalEditClient = observer(({ obj = {} }) => {
                         </Button>
                         <Button
                           type="submit"
-                          
                           borderRadius={"8px"}
                           border={"2px solid rgba(48, 141, 218, 1)"}
                           bg={"white"}
                           color={"black"}
-                          _hover={{ bg: "rgba(48, 141, 218, 1)", color: "white" }}
+                          _hover={{
+                            bg: "rgba(48, 141, 218, 1)",
+                            color: "white",
+                          }}
                           flexShrink={0}
                           marginTop={"20px"}
                         >
@@ -444,7 +451,6 @@ const ModalEditClient = observer(({ obj = {} }) => {
                 </VStack>
                 <Button
                   onClick={() => setEditCompanies(true)}
-                  
                   borderRadius={"8px"}
                   border={"2px solid rgba(48, 141, 218, 1)"}
                   bg={"white"}
@@ -470,7 +476,6 @@ const ModalEditClient = observer(({ obj = {} }) => {
                 setEditCompanies(false);
                 setEditUsers(false);
               }}
-              
               borderRadius={"8px"}
               border={"2px solid rgba(48, 141, 218, 1)"}
               bg={"white"}

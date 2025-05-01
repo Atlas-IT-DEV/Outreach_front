@@ -30,62 +30,74 @@ const TableUsers = observer(() => {
           <Text color={"black"} fontWeight={"600"}>
             Результаты поиска
           </Text>
-          <Table width={"100%"} padding={"10px"} border={"2px solid rgba(48, 141, 218, 1)"}>
-            <Thead bg={"rgba(48, 141, 218, 1)"} borderBottom={"none"}>
-              <Tr borderBottom={"2px solid rgba(48, 141, 218, 1)"}>
-                <Th color={"white"}>
-                  <Text>Никнейм</Text>
-                </Th>
-                <Th color={"white"}>
-                  <Text>Фамилия</Text>
-                </Th>
-                <Th color={"white"}>
-                  <Text>Имя</Text>
-                </Th>
-                <Th color={"white"}>
-                  <Text>Почта</Text>
-                </Th>
-                <Th color={"white"}>
-                  <Text>Номер телефона</Text>
-                </Th>
-                <Th color={"white"}>
-                  <Text></Text>
-                </Th>
-              </Tr>
-            </Thead>
-            <Tbody>
-              {pageStore.search_elements
-                ?.filter((item) => item?.ID != pageStore.user_info?.ID)
-                ?.map((item, index) => (
-                  <Tr color={"black"} key={index}>
-                    <Td border={"1px solid rgba(200,200,200,1)"}>
-                      <Text>{item?.username}</Text>
-                    </Td>
-                    <Td border={"1px solid rgba(200,200,200,1)"}>
-                      <Text>{item?.last_name || "-"}</Text>
-                    </Td>
-                    <Td border={"1px solid rgba(200,200,200,1)"}>
-                      <Text>{item?.first_name || "-"}</Text>
-                    </Td>
-                    <Td border={"1px solid rgba(200,200,200,1)"}>
-                      <Text>{item?.email || "-"}</Text>
-                    </Td>
-                    <Td border={"1px solid rgba(200,200,200,1)"}>
-                      <Text>{item?.phone || "-"}</Text>
-                    </Td>
-                    <Td
-                      width={"min-content"}
-                      border={"1px solid rgba(200,200,200,1)"}
-                    >
-                      <HStack justify={"center"}>
-                        <ModalEditUser obj={item} />
-                        <ModalDeleteUser obj={item} />
-                      </HStack>
-                    </Td>
-                  </Tr>
-                ))}
-            </Tbody>
-          </Table>
+          <HStack
+            width={"100%"}
+            overflow={"hidden"}
+            overflowX={"scroll"}
+            paddingBottom={"8px"}
+            borderRadius={"8px"}
+          >
+            <Table
+              width={"100%"}
+              padding={"10px"}
+              border={"2px solid rgba(48, 141, 218, 1)"}
+            >
+              <Thead bg={"rgba(48, 141, 218, 1)"} borderBottom={"none"}>
+                <Tr borderBottom={"2px solid rgba(48, 141, 218, 1)"}>
+                  <Th color={"white"}>
+                    <Text>Никнейм</Text>
+                  </Th>
+                  <Th color={"white"}>
+                    <Text>Фамилия</Text>
+                  </Th>
+                  <Th color={"white"}>
+                    <Text>Имя</Text>
+                  </Th>
+                  <Th color={"white"}>
+                    <Text>Почта</Text>
+                  </Th>
+                  <Th color={"white"}>
+                    <Text>Номер телефона</Text>
+                  </Th>
+                  <Th color={"white"}>
+                    <Text></Text>
+                  </Th>
+                </Tr>
+              </Thead>
+              <Tbody>
+                {pageStore.search_elements
+                  ?.filter((item) => item?.ID != pageStore.user_info?.ID)
+                  ?.map((item, index) => (
+                    <Tr color={"black"} key={index}>
+                      <Td border={"1px solid rgba(200,200,200,1)"}>
+                        <Text>{item?.username}</Text>
+                      </Td>
+                      <Td border={"1px solid rgba(200,200,200,1)"}>
+                        <Text>{item?.last_name || "-"}</Text>
+                      </Td>
+                      <Td border={"1px solid rgba(200,200,200,1)"}>
+                        <Text>{item?.first_name || "-"}</Text>
+                      </Td>
+                      <Td border={"1px solid rgba(200,200,200,1)"}>
+                        <Text>{item?.email || "-"}</Text>
+                      </Td>
+                      <Td border={"1px solid rgba(200,200,200,1)"}>
+                        <Text>{item?.phone || "-"}</Text>
+                      </Td>
+                      <Td
+                        width={"min-content"}
+                        border={"1px solid rgba(200,200,200,1)"}
+                      >
+                        <HStack justify={"center"}>
+                          <ModalEditUser obj={item} />
+                          <ModalDeleteUser obj={item} />
+                        </HStack>
+                      </Td>
+                    </Tr>
+                  ))}
+              </Tbody>
+            </Table>
+          </HStack>
         </VStack>
       ) : pageStore.search_elements?.length == 0 &&
         pageStore.searchValue != "" ? (
@@ -111,7 +123,8 @@ const TableUsers = observer(() => {
         width={"100%"}
         overflow={"hidden"}
         overflowX={"scroll"}
-        paddingBottom={"6px"}
+        paddingBottom={"8px"}
+        borderRadius={"8px"}
       >
         <Table
           width={"100%"}

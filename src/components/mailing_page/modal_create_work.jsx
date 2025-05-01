@@ -72,7 +72,6 @@ const ModalCreateWork = observer(() => {
       <Button
         onClick={onOpen}
         border={"2px solid rgba(48, 141, 218, 1)"}
-        
         borderRadius={"8px"}
         bg={"white"}
         color={"black"}
@@ -80,7 +79,7 @@ const ModalCreateWork = observer(() => {
       >
         <Text fontSize={width >= 1000 ? "16px" : "14px"}>Новая рассылка</Text>
       </Button>
-      <Modal isOpen={isOpen} onClose={onClose}>
+      <Modal isOpen={isOpen} onClose={onClose} size={"3xl"}>
         <ModalOverlay />
         <ModalContent padding={"20px"}>
           <ModalCloseButton />
@@ -237,7 +236,6 @@ const ModalCreateWork = observer(() => {
                   >
                     <Button
                       onClick={onClose}
-                      
                       borderRadius={"8px"}
                       border={"2px solid rgba(48, 141, 218, 1)"}
                       bg={"white"}
@@ -249,7 +247,6 @@ const ModalCreateWork = observer(() => {
                     </Button>
                     <Button
                       type="submit"
-                      
                       borderRadius={"8px"}
                       border={"2px solid rgba(48, 141, 218, 1)"}
                       bg={"white"}

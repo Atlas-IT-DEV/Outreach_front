@@ -159,7 +159,7 @@ const ModalScript = observer(({ obj = {} }) => {
           />
         )}
       </HStack>
-      <Modal isOpen={isOpen} onClose={onClose} size={"2xl"}>
+      <Modal isOpen={isOpen} onClose={onClose} size={"3xl"}>
         <ModalOverlay />
         <ModalContent
           width={"100%"}

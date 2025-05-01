@@ -111,7 +111,7 @@ const ModalNewScript = observer(() => {
         <Text fontSize={width >= 1000 ? "16px" : "14px"}>Новый скрипт</Text>
       </Button>
 
-      <Modal isOpen={isOpen} onClose={onClose} size={"2xl"}>
+      <Modal isOpen={isOpen} onClose={onClose} size={"3xl"}>
         <ModalOverlay />
         <ModalContent padding={"20px"}>
           <ModalCloseButton />

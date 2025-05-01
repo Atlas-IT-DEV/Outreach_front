@@ -78,7 +78,7 @@ const ModalCreateUser = observer(() => {
           Создать нового сотрудника
         </Text>
       </Button>
-      <Modal isOpen={isOpen} onClose={onClose} onEsc={onClose}>
+      <Modal isOpen={isOpen} onClose={onClose} onEsc={onClose} size={"3xl"}>
         <ModalOverlay />
         <ModalContent padding={"20px"}>
           <ModalCloseButton />

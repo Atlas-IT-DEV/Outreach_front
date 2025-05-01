@@ -69,7 +69,6 @@ const ModalEditUser = observer(({ obj = {} }) => {
     <>
       <Button
         onClick={() => onOpen()}
-        
         borderRadius={"8px"}
         border={"2px solid rgba(48, 141, 218, 1)"}
         bg={"white"}
@@ -89,6 +88,7 @@ const ModalEditUser = observer(({ obj = {} }) => {
           onClose();
           setEditUsers(false);
         }}
+        size={"3xl"}
       >
         <ModalOverlay />
         <ModalContent
@@ -225,12 +225,14 @@ const ModalEditUser = observer(({ obj = {} }) => {
                       <HStack width={"100%"} justify={"center"}>
                         <Button
                           onClick={() => setEditUsers(false)}
-                          
                           borderRadius={"8px"}
                           border={"2px solid rgba(48, 141, 218, 1)"}
                           bg={"white"}
                           color={"black"}
-                          _hover={{ bg: "rgba(48, 141, 218, 1)", color: "white" }}
+                          _hover={{
+                            bg: "rgba(48, 141, 218, 1)",
+                            color: "white",
+                          }}
                           flexShrink={0}
                           marginTop={"20px"}
                         >
@@ -238,12 +240,14 @@ const ModalEditUser = observer(({ obj = {} }) => {
                         </Button>
                         <Button
                           type="submit"
-                          
                           borderRadius={"8px"}
                           border={"2px solid rgba(48, 141, 218, 1)"}
                           bg={"white"}
                           color={"black"}
-                          _hover={{ bg: "rgba(48, 141, 218, 1)", color: "white" }}
+                          _hover={{
+                            bg: "rgba(48, 141, 218, 1)",
+                            color: "white",
+                          }}
                           flexShrink={0}
                           marginTop={"20px"}
                         >
@@ -305,7 +309,6 @@ const ModalEditUser = observer(({ obj = {} }) => {
                 </VStack>
                 <Button
                   onClick={() => setEditUsers(true)}
-                  
                   borderRadius={"8px"}
                   border={"2px solid rgba(48, 141, 218, 1)"}
                   bg={"white"}
@@ -328,7 +331,6 @@ const ModalEditUser = observer(({ obj = {} }) => {
                 onClose();
                 setEditUsers(false);
               }}
-              
               borderRadius={"8px"}
               border={"2px solid rgba(48, 141, 218, 1)"}
               bg={"white"}

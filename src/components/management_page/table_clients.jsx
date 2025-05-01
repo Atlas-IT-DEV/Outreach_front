@@ -29,76 +29,88 @@ const TableClients = observer(() => {
           <Text color={"black"} fontWeight={"600"}>
             Результаты поиска
           </Text>
-          <Table width={"100%"} padding={"10px"} border={"2px solid rgba(48, 141, 218, 1)"}>
-            <Thead bg={"rgba(48, 141, 218, 1)"} borderBottom={"none"}>
-              <Tr borderBottom={"2px solid rgba(48, 141, 218, 1)"}>
-                <Th color={"white"}>
-                  <Text>Никнейм</Text>
-                </Th>
-                <Th color={"white"}>
-                  <Text>Фамилия</Text>
-                </Th>
-                <Th color={"white"}>
-                  <Text>Имя</Text>
-                </Th>
-                <Th color={"white"}>
-                  <Text>Номер телефона</Text>
-                </Th>
-                <Th color={"white"}>
-                  <Text>Название компании</Text>
-                </Th>
-                <Th color={"white"}>
-                  <Text>Описание компании</Text>
-                </Th>
-                <Th color={"white"}>
-                  <Text></Text>
-                </Th>
-              </Tr>
-            </Thead>
-            <Tbody>
-              {pageStore.search_elements?.length > 0 ? (
-                pageStore.search_elements?.map((item, index) => (
-                  <Tr color={"black"} key={index}>
-                    <Td border={"1px solid rgba(200,200,200,1)"}>
-                      <Text>{item?.director?.username}</Text>
-                    </Td>
-                    <Td border={"1px solid rgba(200,200,200,1)"}>
-                      <Text>{item?.director?.last_name ?? "-"}</Text>
-                    </Td>
-                    <Td border={"1px solid rgba(200,200,200,1)"}>
-                      <Text>{item?.director?.first_name ?? "-"}</Text>
-                    </Td>
-                    <Td border={"1px solid rgba(200,200,200,1)"}>
-                      <Text>{item?.director?.phone ?? "-"}</Text>
-                    </Td>
-                    <Td border={"1px solid rgba(200,200,200,1)"}>
-                      <Text>{item?.name ?? "-"}</Text>
-                    </Td>
-                    <Td border={"1px solid rgba(200,200,200,1)"}>
-                      <Textarea
-                        value={item?.description}
-                        contentEditable={"false"}
-                      />
-                    </Td>
-                    <Td
-                      width={"min-content"}
-                      border={"1px solid rgba(200,200,200,1)"}
-                    >
-                      <HStack justify={"center"}>
-                        <ModalEditClient obj={item} />
-                        <ModalDeleteClient obj={item} />
-                      </HStack>
-                    </Td>
-                  </Tr>
-                ))
-              ) : pageStore.search_elements.length == 0 &&
-                pageStore.searchValue != "" ? (
-                <Text color={"black"} fontWeight={"600"}>
-                  По Вашему запросу ничего не найдено
-                </Text>
-              ) : null}
-            </Tbody>
-          </Table>
+          <HStack
+            width={"100%"}
+            overflow={"hidden"}
+            overflowX={"scroll"}
+            paddingBottom={"8px"}
+            borderRadius={"8px"}
+          >
+            <Table
+              width={"100%"}
+              padding={"10px"}
+              border={"2px solid rgba(48, 141, 218, 1)"}
+            >
+              <Thead bg={"rgba(48, 141, 218, 1)"} borderBottom={"none"}>
+                <Tr borderBottom={"2px solid rgba(48, 141, 218, 1)"}>
+                  <Th color={"white"}>
+                    <Text>Никнейм</Text>
+                  </Th>
+                  <Th color={"white"}>
+                    <Text>Фамилия</Text>
+                  </Th>
+                  <Th color={"white"}>
+                    <Text>Имя</Text>
+                  </Th>
+                  <Th color={"white"}>
+                    <Text>Номер телефона</Text>
+                  </Th>
+                  <Th color={"white"}>
+                    <Text>Название компании</Text>
+                  </Th>
+                  <Th color={"white"}>
+                    <Text>Описание компании</Text>
+                  </Th>
+                  <Th color={"white"}>
+                    <Text></Text>
+                  </Th>
+                </Tr>
+              </Thead>
+              <Tbody>
+                {pageStore.search_elements?.length > 0 ? (
+                  pageStore.search_elements?.map((item, index) => (
+                    <Tr color={"black"} key={index}>
+                      <Td border={"1px solid rgba(200,200,200,1)"}>
+                        <Text>{item?.director?.username}</Text>
+                      </Td>
+                      <Td border={"1px solid rgba(200,200,200,1)"}>
+                        <Text>{item?.director?.last_name ?? "-"}</Text>
+                      </Td>
+                      <Td border={"1px solid rgba(200,200,200,1)"}>
+                        <Text>{item?.director?.first_name ?? "-"}</Text>
+                      </Td>
+                      <Td border={"1px solid rgba(200,200,200,1)"}>
+                        <Text>{item?.director?.phone ?? "-"}</Text>
+                      </Td>
+                      <Td border={"1px solid rgba(200,200,200,1)"}>
+                        <Text>{item?.name ?? "-"}</Text>
+                      </Td>
+                      <Td border={"1px solid rgba(200,200,200,1)"}>
+                        <Textarea
+                          value={item?.description}
+                          contentEditable={"false"}
+                        />
+                      </Td>
+                      <Td
+                        width={"min-content"}
+                        border={"1px solid rgba(200,200,200,1)"}
+                      >
+                        <HStack justify={"center"}>
+                          <ModalEditClient obj={item} />
+                          <ModalDeleteClient obj={item} />
+                        </HStack>
+                      </Td>
+                    </Tr>
+                  ))
+                ) : pageStore.search_elements.length == 0 &&
+                  pageStore.searchValue != "" ? (
+                  <Text color={"black"} fontWeight={"600"}>
+                    По Вашему запросу ничего не найдено
+                  </Text>
+                ) : null}
+              </Tbody>
+            </Table>
+          </HStack>
         </VStack>
       )}
       <Text
@@ -113,7 +125,9 @@ const TableClients = observer(() => {
         width={"100%"}
         overflow={"hidden"}
         overflowX={"scroll"}
-        paddingBottom={"6px"}
+        paddingBottom={"8px"}
+        borderRadius={"8px"}
+        borderRight={"8px"}
       >
         <Table
           width={"100%"}

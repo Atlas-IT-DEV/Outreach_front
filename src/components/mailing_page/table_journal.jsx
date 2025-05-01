@@ -30,8 +30,13 @@ const TableJournal = observer(() => {
             overflow={"hidden"}
             overflowX={"scroll"}
             paddingBottom={"8px"}
+            borderRadius={"8px"}
           >
-            <Table width={"100%"} padding={"10px"} border={"2px solid rgba(48, 141, 218, 1)"}>
+            <Table
+              width={"100%"}
+              padding={"10px"}
+              border={"2px solid rgba(48, 141, 218, 1)"}
+            >
               <Thead bg={"rgba(48, 141, 218, 1)"} borderBottom={"none"}>
                 <Tr borderBottom={"2px solid rgba(48, 141, 218, 1)"}>
                   <Th color={"white"}>
@@ -150,8 +155,13 @@ const TableJournal = observer(() => {
         overflow={"hidden"}
         overflowX={"scroll"}
         paddingBottom={"8px"}
+        borderRadius={"8px"}
       >
-        <Table width={"100%"} padding={"10px"} border={"2px solid rgba(48, 141, 218, 1)"}>
+        <Table
+          width={"100%"}
+          padding={"10px"}
+          border={"2px solid rgba(48, 141, 218, 1)"}
+        >
           <Thead bg={"rgba(48, 141, 218, 1)"} borderBottom={"none"}>
             <Tr borderBottom={"2px solid rgba(48, 141, 218, 1)"}>
               <Th color={"white"}>
