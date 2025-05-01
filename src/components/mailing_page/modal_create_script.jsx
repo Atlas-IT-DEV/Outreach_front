@@ -101,12 +101,12 @@ const ModalCreateScript = observer(() => {
     <>
       <Button
         onClick={onOpen}
-        border={"2px solid #4682B4"}
-        boxShadow={"-2px 2px 0 0 #4682B4"}
-        borderRadius={"0px"}
+        border={"2px solid rgba(48, 141, 218, 1)"}
+        
+        borderRadius={"8px"}
         bg={"white"}
         color={"black"}
-        _hover={{ bg: "#4682B4", color: "white" }}
+        _hover={{ bg: "rgba(48, 141, 218, 1)", color: "white" }}
       >
         <Text fontSize={width >= 1000 ? "16px" : "14px"}>Новый скрипт</Text>
       </Button>
@@ -144,9 +144,9 @@ const ModalCreateScript = observer(() => {
                     <Input
                       placeholder="Название"
                       marginTop={"4px"}
-                      border={"2px solid #4682B4"}
-                      borderRadius={"0"}
-                      _hover={{ border: "2px solid #4682B4" }}
+                      border={"2px solid rgba(48, 141, 218, 1)"}
+                      borderRadius={"8px"}
+                      _hover={{ border: "2px solid rgba(48, 141, 218, 1)" }}
                       name="name"
                       onChange={handleChange}
                       onBlur={handleBlur}
@@ -162,9 +162,9 @@ const ModalCreateScript = observer(() => {
                       height={"auto"}
                       placeholder="Текст"
                       marginTop={"4px"}
-                      border={"2px solid #4682B4"}
-                      borderRadius={"0"}
-                      _hover={{ border: "2px solid #4682B4" }}
+                      border={"2px solid rgba(48, 141, 218, 1)"}
+                      borderRadius={"8px"}
+                      _hover={{ border: "2px solid rgba(48, 141, 218, 1)" }}
                       name="text"
                       onChange={(e) => setFieldValue("text", e.target.value)}
                       onBlur={handleBlur}
@@ -181,9 +181,9 @@ const ModalCreateScript = observer(() => {
                         value={target}
                         placeholder="Текст"
                         marginTop={"4px"}
-                        border={"2px solid #4682B4"}
-                        borderRadius={"0"}
-                        _hover={{ border: "2px solid #4682B4" }}
+                        border={"2px solid rgba(48, 141, 218, 1)"}
+                        borderRadius={"8px"}
+                        _hover={{ border: "2px solid rgba(48, 141, 218, 1)" }}
                         onChange={(e) => setTarget(e.target.value)}
                       />
                       <Text fontWeight={"500"}>Целевая аудитория</Text>
@@ -191,9 +191,9 @@ const ModalCreateScript = observer(() => {
                         value={audit}
                         placeholder="Текст"
                         marginTop={"4px"}
-                        border={"2px solid #4682B4"}
-                        borderRadius={"0"}
-                        _hover={{ border: "2px solid #4682B4" }}
+                        border={"2px solid rgba(48, 141, 218, 1)"}
+                        borderRadius={"8px"}
+                        _hover={{ border: "2px solid rgba(48, 141, 218, 1)" }}
                         onChange={(e) => setAudit(e.target.value)}
                       />
                       <Text fontWeight={"500"}>Предложение/продукт</Text>
@@ -201,9 +201,9 @@ const ModalCreateScript = observer(() => {
                         value={product}
                         placeholder="Текст"
                         marginTop={"4px"}
-                        border={"2px solid #4682B4"}
-                        borderRadius={"0"}
-                        _hover={{ border: "2px solid #4682B4" }}
+                        border={"2px solid rgba(48, 141, 218, 1)"}
+                        borderRadius={"8px"}
+                        _hover={{ border: "2px solid rgba(48, 141, 218, 1)" }}
                         onChange={(e) => setProduct(e.target.value)}
                       />
                       <Text fontWeight={"500"}>Образ автора</Text>
@@ -211,9 +211,9 @@ const ModalCreateScript = observer(() => {
                         value={author}
                         placeholder="Текст"
                         marginTop={"4px"}
-                        border={"2px solid #4682B4"}
-                        borderRadius={"0"}
-                        _hover={{ border: "2px solid #4682B4" }}
+                        border={"2px solid rgba(48, 141, 218, 1)"}
+                        borderRadius={"8px"}
+                        _hover={{ border: "2px solid rgba(48, 141, 218, 1)" }}
                         onChange={(e) => setAuthor(e.target.value)}
                       />
                       <Text fontWeight={"500"}>Прочее</Text>
@@ -221,9 +221,9 @@ const ModalCreateScript = observer(() => {
                         value={pro}
                         placeholder="Текст"
                         marginTop={"4px"}
-                        border={"2px solid #4682B4"}
-                        borderRadius={"0"}
-                        _hover={{ border: "2px solid #4682B4" }}
+                        border={"2px solid rgba(48, 141, 218, 1)"}
+                        borderRadius={"8px"}
+                        _hover={{ border: "2px solid rgba(48, 141, 218, 1)" }}
                         onChange={(e) => setPro(e.target.value)}
                       />
                       <Button
@@ -241,36 +241,36 @@ const ModalCreateScript = observer(() => {
                     >
                       <Button
                         onClick={() => setShowInputs(!showInputs)}
-                        boxShadow={"-2px 2px 0 0 #4682B4"}
-                        borderRadius={"0px"}
-                        border={"2px solid #4682B4"}
+                        
+                        borderRadius={"8px"}
+                        border={"2px solid rgba(48, 141, 218, 1)"}
                         bg={"white"}
                         color={"black"}
-                        _hover={{ bg: "#4682B4", color: "white" }}
+                        _hover={{ bg: "rgba(48, 141, 218, 1)", color: "white" }}
                         flexShrink={0}
                       >
                         <Text>Сгенерировать текст</Text>
                       </Button>
                       <Button
                         onClick={onClose}
-                        boxShadow={"-2px 2px 0 0 #4682B4"}
-                        borderRadius={"0px"}
-                        border={"2px solid #4682B4"}
+                        
+                        borderRadius={"8px"}
+                        border={"2px solid rgba(48, 141, 218, 1)"}
                         bg={"white"}
                         color={"black"}
-                        _hover={{ bg: "#4682B4", color: "white" }}
+                        _hover={{ bg: "rgba(48, 141, 218, 1)", color: "white" }}
                         flexShrink={0}
                       >
                         <Text>Отменить</Text>
                       </Button>
                       <Button
                         type="submit"
-                        boxShadow={"-2px 2px 0 0 #4682B4"}
-                        borderRadius={"0px"}
-                        border={"2px solid #4682B4"}
+                        
+                        borderRadius={"8px"}
+                        border={"2px solid rgba(48, 141, 218, 1)"}
                         bg={"white"}
                         color={"black"}
-                        _hover={{ bg: "#4682B4", color: "white" }}
+                        _hover={{ bg: "rgba(48, 141, 218, 1)", color: "white" }}
                         flexShrink={0}
                       >
                         <Text>Создать</Text>
@@ -284,12 +284,12 @@ const ModalCreateScript = observer(() => {
                     >
                       <Button
                         onClick={() => setShowInputs(!showInputs)}
-                        boxShadow={"-2px 2px 0 0 #4682B4"}
-                        borderRadius={"0px"}
-                        border={"2px solid #4682B4"}
+                        
+                        borderRadius={"8px"}
+                        border={"2px solid rgba(48, 141, 218, 1)"}
                         bg={"white"}
                         color={"black"}
-                        _hover={{ bg: "#4682B4", color: "white" }}
+                        _hover={{ bg: "rgba(48, 141, 218, 1)", color: "white" }}
                         flexShrink={0}
                       >
                         <Text>Сгенерировать текст</Text>
@@ -297,24 +297,24 @@ const ModalCreateScript = observer(() => {
                       <HStack width={"100%"} justify={"flex-end"}>
                         <Button
                           onClick={onClose}
-                          boxShadow={"-2px 2px 0 0 #4682B4"}
-                          borderRadius={"0px"}
-                          border={"2px solid #4682B4"}
+                          
+                          borderRadius={"8px"}
+                          border={"2px solid rgba(48, 141, 218, 1)"}
                           bg={"white"}
                           color={"black"}
-                          _hover={{ bg: "#4682B4", color: "white" }}
+                          _hover={{ bg: "rgba(48, 141, 218, 1)", color: "white" }}
                           flexShrink={0}
                         >
                           <Text>Отменить</Text>
                         </Button>
                         <Button
                           type="submit"
-                          boxShadow={"-2px 2px 0 0 #4682B4"}
-                          borderRadius={"0px"}
-                          border={"2px solid #4682B4"}
+                          
+                          borderRadius={"8px"}
+                          border={"2px solid rgba(48, 141, 218, 1)"}
                           bg={"white"}
                           color={"black"}
-                          _hover={{ bg: "#4682B4", color: "white" }}
+                          _hover={{ bg: "rgba(48, 141, 218, 1)", color: "white" }}
                           flexShrink={0}
                         >
                           <Text>Создать</Text>

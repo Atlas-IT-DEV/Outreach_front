@@ -27,19 +27,10 @@ const TableTasks = observer(() => {
     };
 
     tasks.forEach((task) => {
-      if (!task.date_finish) {
-        result.noDate.push(task);
-        return;
-      }
-
       const taskDate = new Date(task.date_finish);
 
       if (taskDate < now) {
         result.overdue.push(task);
-      } else if (taskDate >= todayStart && taskDate < todayEnd) {
-        result.today.push(task);
-      } else if (taskDate >= todayEnd && taskDate < tomorrowEnd) {
-        result.tomorrow.push(task);
       } else {
         result.future.push(task);
       }
@@ -85,77 +76,64 @@ const TableTasks = observer(() => {
         align={"flex-start"}
         overflow={"hidden"}
         overflowX={"scroll"}
-        gap={"2px"}
+        gap={"10px"}
+        paddingBottom={"8px"}
       >
-        <VStack width={"300px"} padding={"10px"} gap={"20px"}>
+        <VStack width={"100%"} gap={"10px"}>
           <Text
-            width={"max-content"}
-            border={"2px solid #4682B4"}
+            minWidth={"300px"}
+            border={"2px solid rgba(255,0,0)"}
             padding={"4px 10px"}
-            boxShadow={"-2px 2px 0 0 #4682B4"}
+            borderRadius={"8px"}
+            textAlign={"center"}
+            width={"100%"}
           >
             Просроченные
           </Text>
           {distributedTasks?.overdue.length > 0 &&
             distributedTasks?.overdue
               .filter((item) => !item?.is_completed)
-              ?.map((item, index) => <TaskCard key={index} obj={item} />)}
+              ?.map((item, index) => (
+                <TaskCard key={index} obj={item} color="rgba(255,0,0)" />
+              ))}
         </VStack>
-        <VStack width={"300px"} padding={"10px"} gap={"20px"}>
+
+        <VStack width={"100%"} gap={"10px"}>
           <Text
-            width={"max-content"}
-            border={"2px solid #4682B4"}
+            minWidth={"300px"}
+            border={"2px solid rgba(255,235,0,1)"}
             padding={"4px 10px"}
-            boxShadow={"-2px 2px 0 0 #4682B4"}
+            borderRadius={"8px"}
+            textAlign={"center"}
+            width={"100%"}
           >
-            На сегодня
-          </Text>
-          {distributedTasks?.today.length > 0 &&
-            distributedTasks?.today
-              .filter((item) => !item?.is_completed)
-              ?.map((item, index) => <TaskCard key={index} obj={item} />)}
-        </VStack>
-        <VStack width={"300px"} padding={"10px"} gap={"20px"}>
-          <Text
-            width={"max-content"}
-            border={"2px solid #4682B4"}
-            padding={"4px 10px"}
-            boxShadow={"-2px 2px 0 0 #4682B4"}
-          >
-            На завтра
-          </Text>
-          {distributedTasks?.tomorrow.length > 0 &&
-            distributedTasks?.tomorrow
-              .filter((item) => !item?.is_completed)
-              ?.map((item, index) => <TaskCard key={index} obj={item} />)}
-        </VStack>
-        <VStack width={"300px"} padding={"10px"} gap={"20px"}>
-          <Text
-            width={"max-content"}
-            border={"2px solid #4682B4"}
-            padding={"4px 10px"}
-            boxShadow={"-2px 2px 0 0 #4682B4"}
-          >
-            На будущее
+            К исполнению
           </Text>
           {distributedTasks?.future.length > 0 &&
             distributedTasks?.future
               .filter((item) => !item?.is_completed)
-              ?.map((item, index) => <TaskCard key={index} obj={item} />)}
+              ?.map((item, index) => (
+                <TaskCard key={index} obj={item} color="rgba(255,235,0,1)" />
+              ))}
         </VStack>
 
-        <VStack width={"300px"} padding={"10px"} gap={"20px"}>
+        <VStack width={"100%"} gap={"10px"}>
           <Text
-            border={"2px solid #4682B4"}
+            border={"2px solid rgba(0,255,0,1)"}
             padding={"4px 10px"}
-            boxShadow={"-2px 2px 0 0 #4682B4"}
+            borderRadius={"8px"}
+            minWidth={"300px"}
+            textAlign={"center"}
+            width={"100%"}
           >
             Завершенные
           </Text>
           {pageStore.tasks.length > 0 &&
             pageStore.tasks
               .filter((item) => item?.is_completed)
-              ?.map((item, index) => <TaskCard key={index} obj={item} />)}
+              ?.map((item, index) => (
+                <TaskCard key={index} obj={item} color="rgba(0,255,0,1)" />
+              ))}
         </VStack>
       </HStack>
     </VStack>

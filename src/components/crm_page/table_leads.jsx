@@ -28,9 +28,14 @@ const TableLeads = observer(() => {
           <Text color={"black"} fontWeight={"600"}>
             Результаты поиска
           </Text>
-          <Table width={"100%"} padding={"10px"} border={"2px solid #4682B4"}>
-            <Thead bg={"#4682B4"} borderBottom={"none"}>
-              <Tr borderBottom={"2px solid #4682B4"}>
+          <Table
+            width={"100%"}
+            padding={"10px"}
+            border={"2px solid rgba(48, 141, 218, 1)"}
+            borderRadius={"8px"}
+          >
+            <Thead bg={"rgba(48, 141, 218, 1)"} borderBottom={"none"}>
+              <Tr borderBottom={"2px solid rgba(48, 141, 218, 1)"}>
                 <Th color={"white"}>
                   <Text>Фамилия</Text>
                 </Th>
@@ -78,7 +83,7 @@ const TableLeads = observer(() => {
                           {index + 1}. {item2?.key}: {item2?.value}
                         </Text>
                       ))}
-                      bg={"#4682B4"}
+                      bg={"rgba(48, 141, 218, 1)"}
                       color={"white"}
                       borderRadius={"10px"}
                       placement="right"
@@ -148,15 +153,16 @@ const TableLeads = observer(() => {
         overflow={"hidden"}
         overflowX={"scroll"}
         paddingBottom={"6px"}
+        borderRadius={"8px"}
       >
         <Table
           width={"100%"}
           padding={"10px"}
-          border={"2px solid #4682B4"}
+          border={"1px solid rgba(48, 141, 218, 1)"}
           align={"flex-start"}
         >
-          <Thead bg={"#4682B4"} borderBottom={"none"}>
-            <Tr borderBottom={"2px solid #4682B4"}>
+          <Thead bg={"rgba(48, 141, 218, 1)"} borderBottom={"none"}>
+            <Tr borderBottom={"2px solid rgba(48, 141, 218, 1)"}>
               <Th color={"white"}>
                 <Text>Фамилия</Text>
               </Th>
@@ -205,7 +211,7 @@ const TableLeads = observer(() => {
                             {index + 1}. {item2?.key}: {item2?.value}
                           </Text>
                         ))}
-                        bg={"#4682B4"}
+                        bg={"rgba(48, 141, 218, 1)"}
                         color={"white"}
                         borderRadius={"10px"}
                         placement="right"

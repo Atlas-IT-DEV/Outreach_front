@@ -71,12 +71,12 @@ const ModalCreateWork = observer(() => {
     <>
       <Button
         onClick={onOpen}
-        border={"2px solid #4682B4"}
-        boxShadow={"-2px 2px 0 0 #4682B4"}
-        borderRadius={"0px"}
+        border={"2px solid rgba(48, 141, 218, 1)"}
+        
+        borderRadius={"8px"}
         bg={"white"}
         color={"black"}
-        _hover={{ bg: "#4682B4", color: "white" }}
+        _hover={{ bg: "rgba(48, 141, 218, 1)", color: "white" }}
       >
         <Text fontSize={width >= 1000 ? "16px" : "14px"}>Новая рассылка</Text>
       </Button>
@@ -113,9 +113,9 @@ const ModalCreateWork = observer(() => {
                     <Input
                       placeholder="Название"
                       marginTop={"4px"}
-                      border={"2px solid #4682B4"}
-                      borderRadius={"0"}
-                      _hover={{ border: "2px solid #4682B4" }}
+                      border={"2px solid rgba(48, 141, 218, 1)"}
+                      borderRadius={"8px"}
+                      _hover={{ border: "2px solid rgba(48, 141, 218, 1)" }}
                       name="name"
                       onChange={handleChange}
                       onBlur={handleBlur}
@@ -131,9 +131,9 @@ const ModalCreateWork = observer(() => {
                     <Textarea
                       placeholder="Описание"
                       marginTop={"4px"}
-                      border={"2px solid #4682B4"}
-                      borderRadius={"0"}
-                      _hover={{ border: "2px solid #4682B4" }}
+                      border={"2px solid rgba(48, 141, 218, 1)"}
+                      borderRadius={"8px"}
+                      _hover={{ border: "2px solid rgba(48, 141, 218, 1)" }}
                       name="description"
                       onChange={handleChange}
                       onBlur={handleBlur}
@@ -150,9 +150,9 @@ const ModalCreateWork = observer(() => {
                       placeholder=""
                       type="date"
                       marginTop={"4px"}
-                      border={"2px solid #4682B4"}
-                      borderRadius={"0"}
-                      _hover={{ border: "2px solid #4682B4" }}
+                      border={"2px solid rgba(48, 141, 218, 1)"}
+                      borderRadius={"8px"}
+                      _hover={{ border: "2px solid rgba(48, 141, 218, 1)" }}
                       name="date_start"
                       onChange={(e) =>
                         setFieldValue(
@@ -174,9 +174,9 @@ const ModalCreateWork = observer(() => {
                       <Input
                         placeholder="C"
                         marginTop={"4px"}
-                        border={"2px solid #4682B4"}
-                        borderRadius={"0"}
-                        _hover={{ border: "2px solid #4682B4" }}
+                        border={"2px solid rgba(48, 141, 218, 1)"}
+                        borderRadius={"8px"}
+                        _hover={{ border: "2px solid rgba(48, 141, 218, 1)" }}
                         name="time_start"
                         value={values?.time_start}
                         onChange={(e) =>
@@ -195,9 +195,9 @@ const ModalCreateWork = observer(() => {
                       <Input
                         placeholder="До"
                         marginTop={"4px"}
-                        border={"2px solid #4682B4"}
-                        borderRadius={"0"}
-                        _hover={{ border: "2px solid #4682B4" }}
+                        border={"2px solid rgba(48, 141, 218, 1)"}
+                        borderRadius={"8px"}
+                        _hover={{ border: "2px solid rgba(48, 141, 218, 1)" }}
                         name="time_finish"
                         value={values?.time_finish}
                         onChange={(e) =>
@@ -237,24 +237,24 @@ const ModalCreateWork = observer(() => {
                   >
                     <Button
                       onClick={onClose}
-                      boxShadow={"-2px 2px 0 0 #4682B4"}
-                      borderRadius={"0px"}
-                      border={"2px solid #4682B4"}
+                      
+                      borderRadius={"8px"}
+                      border={"2px solid rgba(48, 141, 218, 1)"}
                       bg={"white"}
                       color={"black"}
-                      _hover={{ bg: "#4682B4", color: "white" }}
+                      _hover={{ bg: "rgba(48, 141, 218, 1)", color: "white" }}
                       flexShrink={0}
                     >
                       <Text>Отменить</Text>
                     </Button>
                     <Button
                       type="submit"
-                      boxShadow={"-2px 2px 0 0 #4682B4"}
-                      borderRadius={"0px"}
-                      border={"2px solid #4682B4"}
+                      
+                      borderRadius={"8px"}
+                      border={"2px solid rgba(48, 141, 218, 1)"}
                       bg={"white"}
                       color={"black"}
-                      _hover={{ bg: "#4682B4", color: "white" }}
+                      _hover={{ bg: "rgba(48, 141, 218, 1)", color: "white" }}
                       flexShrink={0}
                     >
                       <Text>Создать</Text>

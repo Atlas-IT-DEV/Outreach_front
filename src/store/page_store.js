@@ -381,24 +381,16 @@ class PageStore {
     });
     const result = await response.json();
     this.works = result;
-    this.updateCallWorks(
-      result?.length != 0
-        ? result.filter(
-            (item) =>
-              item?.department_id == this.selected_department &&
-              item?.obzvon == "1"
-          )
-        : null
-    );
-    this.updateMailWorks(
-      result?.length != 0
-        ? result.filter(
-            (item) =>
-              item?.department_id == this.selected_department &&
-              item?.obzvon == "0"
-          )
-        : null
-    );
+    if (result?.length != 0) {
+      this.call_works = result.filter(
+        (item) =>
+          item?.department_id == this.selected_department && item?.obzvon == "1"
+      );
+      this.mail_works = result.filter(
+        (item) =>
+          item?.department_id == this.selected_department && item?.obzvon == "0"
+      );
+    }
     console.log("works", result);
   };
   createWork = async (values) => {

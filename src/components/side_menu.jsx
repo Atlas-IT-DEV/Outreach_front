@@ -72,7 +72,7 @@ const SideMenu = observer(() => {
           boxShadow="lg"
           p={2}
         >
-          <Icon as={MdMenu} boxSize={6} color={"#4682B4"} />
+          <Icon as={MdMenu} boxSize={6} color={"rgba(48, 141, 218, 1)"} />
         </Button>
       )}
 
@@ -98,7 +98,7 @@ const SideMenu = observer(() => {
         <VStack spacing="6">
           {/* Логотип */}
           <HStack marginTop="40px">
-            <Text color="#4682B4" fontSize="28px" fontWeight={600}>
+            <Text color="rgba(48, 141, 218, 1)" fontSize="28px" fontWeight={600}>
               OUTREACH
             </Text>
             <Text color="black" fontSize="28px" fontWeight={600}>
@@ -132,7 +132,7 @@ const SideMenu = observer(() => {
                 display="flex"
                 alignItems="center"
               >
-                <Icon as={item.icon} boxSize="5" color="#4682B4" />
+                <Icon as={item.icon} boxSize="5" color="rgba(48, 141, 218, 1)" />
                 <Text ml="3" cursor="pointer" color="black" fontWeight={500}>
                   {item.label}
                 </Text>
@@ -155,7 +155,7 @@ const SideMenu = observer(() => {
           <DrawerBody>
             <VStack spacing="6" pt="50px">
               <HStack>
-                <Text color="#4682B4" fontSize="28px" fontWeight={600}>
+                <Text color="rgba(48, 141, 218, 1)" fontSize="28px" fontWeight={600}>
                   OUTREACH
                 </Text>
                 <Text color="black" fontSize="28px" fontWeight={600}>
@@ -177,7 +177,7 @@ const SideMenu = observer(() => {
                     display="flex"
                     alignItems="center"
                   >
-                    <Icon as={item.icon} boxSize="5" color="#4682B4" />
+                    <Icon as={item.icon} boxSize="5" color="rgba(48, 141, 218, 1)" />
                     <Text
                       ml="3"
                       cursor="pointer"

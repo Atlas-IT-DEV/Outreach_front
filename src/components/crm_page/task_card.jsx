@@ -19,7 +19,7 @@ import { useStores } from "../../store/store_context";
 import * as Yup from "yup";
 import { Form, Formik } from "formik";
 
-const TaskCard = observer(({ obj = {} }) => {
+const TaskCard = observer(({ obj = {}, color = "" }) => {
   const { pageStore } = useStores();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const toast = useToast();
@@ -122,14 +122,14 @@ const TaskCard = observer(({ obj = {} }) => {
   return (
     <>
       <VStack
-        width={"180px"}
+        width={"100%"}
+        minW={"300px"}
         height={"auto"}
         padding={"10px"}
         cursor={"pointer"}
         gap={0}
-        boxShadow={"-2px 2px 0 0 #4682B4"}
-        borderRadius={"0px"}
-        border={"2px solid #4682B4"}
+        borderRadius={"8px"}
+        border={`2px solid ${color}`}
         onClick={onOpen}
       >
         <Text width={"100%"} textAlign={"center"} fontWeight={"600"}>
@@ -139,13 +139,13 @@ const TaskCard = observer(({ obj = {} }) => {
           {obj?.description}
         </Text>
         <Text marginTop={"20px"} width={"100%"}>
-          До {new Date(obj?.date_finish).toLocaleString("ru-RU")}
+          Срок до {new Date(obj?.date_finish).toLocaleString("ru-RU")}
         </Text>
         <Text marginTop={"10px"} width={"100%"}>
           {obj?.creator?.username || "-"}
         </Text>
       </VStack>
-      <Modal isOpen={isOpen} onClose={onClose}>
+      <Modal isOpen={isOpen} onClose={onClose} size={"3xl"}>
         <ModalOverlay />
         <ModalContent padding={"20px"}>
           <ModalCloseButton />
@@ -187,9 +187,9 @@ const TaskCard = observer(({ obj = {} }) => {
                         value={values?.name}
                         placeholder="Название"
                         marginTop={"4px"}
-                        border={"2px solid #4682B4"}
-                        borderRadius={"0"}
-                        _hover={{ border: "2px solid #4682B4" }}
+                        border={"2px solid rgba(48, 141, 218, 1)"}
+                        borderRadius={"8px"}
+                        _hover={{ border: "2px solid rgba(48, 141, 218, 1)" }}
                         name="name"
                         onChange={handleChange}
                         onBlur={handleBlur}
@@ -206,9 +206,9 @@ const TaskCard = observer(({ obj = {} }) => {
                         value={values?.description}
                         placeholder="Описание"
                         marginTop={"4px"}
-                        border={"2px solid #4682B4"}
-                        borderRadius={"0"}
-                        _hover={{ border: "2px solid #4682B4" }}
+                        border={"2px solid rgba(48, 141, 218, 1)"}
+                        borderRadius={"8px"}
+                        _hover={{ border: "2px solid rgba(48, 141, 218, 1)" }}
                         name="description"
                         onChange={handleChange}
                         onBlur={handleBlur}
@@ -226,9 +226,9 @@ const TaskCard = observer(({ obj = {} }) => {
                         placeholder=""
                         type="datetime-local"
                         marginTop={"4px"}
-                        border={"2px solid #4682B4"}
-                        borderRadius={"0"}
-                        _hover={{ border: "2px solid #4682B4" }}
+                        border={"2px solid rgba(48, 141, 218, 1)"}
+                        borderRadius={"8px"}
+                        _hover={{ border: "2px solid rgba(48, 141, 218, 1)" }}
                         name="date_finish"
                         onChange={(e) => {
                           const selectedDate = new Date(e.target.value);
@@ -264,24 +264,22 @@ const TaskCard = observer(({ obj = {} }) => {
                     >
                       <Button
                         onClick={async () => await handleDeleteTask()}
-                        boxShadow={"-2px 2px 0 0 #4682B4"}
-                        borderRadius={"0px"}
-                        border={"2px solid #4682B4"}
+                        borderRadius={"8px"}
+                        border={"2px solid rgba(48, 141, 218, 1)"}
                         bg={"white"}
                         color={"black"}
-                        _hover={{ bg: "#4682B4", color: "white" }}
+                        _hover={{ bg: "rgba(48, 141, 218, 1)", color: "white" }}
                         flexShrink={0}
                       >
                         <Text>Удалить</Text>
                       </Button>
                       <Button
                         onClick={async () => await handleCompleteTask()}
-                        boxShadow={"-2px 2px 0 0 #4682B4"}
-                        borderRadius={"0px"}
-                        border={"2px solid #4682B4"}
+                        borderRadius={"8px"}
+                        border={"2px solid rgba(48, 141, 218, 1)"}
                         bg={"white"}
                         color={"black"}
-                        _hover={{ bg: "#4682B4", color: "white" }}
+                        _hover={{ bg: "rgba(48, 141, 218, 1)", color: "white" }}
                         flexShrink={0}
                       >
                         <Text>Завершить</Text>
@@ -290,12 +288,11 @@ const TaskCard = observer(({ obj = {} }) => {
                     <HStack justify={"flex-end"} width={"100%"}>
                       <Button
                         onClick={onClose}
-                        boxShadow={"-2px 2px 0 0 #4682B4"}
-                        borderRadius={"0px"}
-                        border={"2px solid #4682B4"}
+                        borderRadius={"8px"}
+                        border={"2px solid rgba(48, 141, 218, 1)"}
                         bg={"white"}
                         color={"black"}
-                        _hover={{ bg: "#4682B4", color: "white" }}
+                        _hover={{ bg: "rgba(48, 141, 218, 1)", color: "white" }}
                         flexShrink={0}
                       >
                         <Text>Отменить</Text>
@@ -303,12 +300,11 @@ const TaskCard = observer(({ obj = {} }) => {
 
                       <Button
                         type="submit"
-                        boxShadow={"-2px 2px 0 0 #4682B4"}
-                        borderRadius={"0px"}
-                        border={"2px solid #4682B4"}
+                        borderRadius={"8px"}
+                        border={"2px solid rgba(48, 141, 218, 1)"}
                         bg={"white"}
                         color={"black"}
-                        _hover={{ bg: "#4682B4", color: "white" }}
+                        _hover={{ bg: "rgba(48, 141, 218, 1)", color: "white" }}
                         flexShrink={0}
                       >
                         <Text>Обновить</Text>
@@ -346,9 +342,9 @@ const TaskCard = observer(({ obj = {} }) => {
                   disabled
                   placeholder="Описание"
                   marginTop={"4px"}
-                  border={"2px solid #4682B4"}
-                  borderRadius={"0"}
-                  _hover={{ border: "2px solid #4682B4" }}
+                  border={"2px solid rgba(48, 141, 218, 1)"}
+                  borderRadius={"8px"}
+                  _hover={{ border: "2px solid rgba(48, 141, 218, 1)" }}
                 />
               </VStack>
               <VStack
@@ -364,24 +360,22 @@ const TaskCard = observer(({ obj = {} }) => {
               <HStack width={"100%"} justify={"flex-end"}>
                 <Button
                   onClick={async () => await handleDeleteTask()}
-                  boxShadow={"-2px 2px 0 0 #4682B4"}
-                  borderRadius={"0px"}
-                  border={"2px solid #4682B4"}
+                  borderRadius={"8px"}
+                  border={"2px solid rgba(48, 141, 218, 1)"}
                   bg={"white"}
                   color={"black"}
-                  _hover={{ bg: "#4682B4", color: "white" }}
+                  _hover={{ bg: "rgba(48, 141, 218, 1)", color: "white" }}
                   flexShrink={0}
                 >
                   <Text>Удалить</Text>
                 </Button>
                 <Button
                   onClick={onClose}
-                  boxShadow={"-2px 2px 0 0 #4682B4"}
-                  borderRadius={"0px"}
-                  border={"2px solid #4682B4"}
+                  borderRadius={"8px"}
+                  border={"2px solid rgba(48, 141, 218, 1)"}
                   bg={"white"}
                   color={"black"}
-                  _hover={{ bg: "#4682B4", color: "white" }}
+                  _hover={{ bg: "rgba(48, 141, 218, 1)", color: "white" }}
                   flexShrink={0}
                 >
                   <Text>Закрыть</Text>

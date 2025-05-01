@@ -45,7 +45,9 @@ const ModalEditLead = observer(({ obj = {} }) => {
 
   const hdChange = (id, field, value) => {
     setPairs(
-      pairs?.map((pair) => (pair.id === id ? { ...pair, [field]: value } : pair))
+      pairs?.map((pair) =>
+        pair.id === id ? { ...pair, [field]: value } : pair
+      )
     );
   };
 
@@ -87,12 +89,11 @@ const ModalEditLead = observer(({ obj = {} }) => {
     <>
       <Button
         onClick={() => onOpen()}
-        boxShadow={"-2px 2px 0 0 #4682B4"}
-        borderRadius={"0px"}
-        border={"2px solid #4682B4"}
+        borderRadius={"8px"}
+        border={"2px solid rgba(48, 141, 218, 1)"}
         bg={"white"}
         color={"black"}
-        _hover={{ bg: "#4682B4", color: "white" }}
+        _hover={{ bg: "rgba(48, 141, 218, 1)", color: "white" }}
         flexShrink={0}
       >
         <Text>Подробнее</Text>
@@ -107,6 +108,7 @@ const ModalEditLead = observer(({ obj = {} }) => {
           onClose();
           setEditUsers(false);
         }}
+        size={"3xl"}
       >
         <ModalOverlay />
         <ModalContent padding={"20px"}>
@@ -139,6 +141,7 @@ const ModalEditLead = observer(({ obj = {} }) => {
                       >
                         Редактирование клиента
                       </Text>
+
                       <FormControl
                         isInvalid={errors?.last_name && touched?.last_name}
                       >
@@ -148,9 +151,11 @@ const ModalEditLead = observer(({ obj = {} }) => {
                           placeholder="Фамилия"
                           width={"100%"}
                           marginTop={"4px"}
-                          border={"2px solid #4682B4"}
-                          borderRadius={"0"}
-                          _hover={{ border: "2px solid #4682B4" }}
+                          border={"2px solid rgba(48, 141, 218, 1)"}
+                          borderRadius={"8px"}
+                          _hover={{
+                            border: "2px solid rgba(48, 141, 218, 1)",
+                          }}
                           name="last_name"
                           onChange={handleChange}
                           onBlur={handleBlur}
@@ -168,9 +173,11 @@ const ModalEditLead = observer(({ obj = {} }) => {
                           placeholder="Имя"
                           width={"100%"}
                           marginTop={"4px"}
-                          border={"2px solid #4682B4"}
-                          borderRadius={"0"}
-                          _hover={{ border: "2px solid #4682B4" }}
+                          border={"2px solid rgba(48, 141, 218, 1)"}
+                          borderRadius={"8px"}
+                          _hover={{
+                            border: "2px solid rgba(48, 141, 218, 1)",
+                          }}
                           name="first_name"
                           onChange={handleChange}
                           onBlur={handleBlur}
@@ -186,9 +193,11 @@ const ModalEditLead = observer(({ obj = {} }) => {
                           placeholder="Email"
                           width={"100%"}
                           marginTop={"4px"}
-                          border={"2px solid #4682B4"}
-                          borderRadius={"0"}
-                          _hover={{ border: "2px solid #4682B4" }}
+                          border={"2px solid rgba(48, 141, 218, 1)"}
+                          borderRadius={"8px"}
+                          _hover={{
+                            border: "2px solid rgba(48, 141, 218, 1)",
+                          }}
                           name="email"
                           onChange={handleChange}
                           onBlur={handleBlur}
@@ -204,9 +213,11 @@ const ModalEditLead = observer(({ obj = {} }) => {
                           placeholder="Номер телефона"
                           width={"100%"}
                           marginTop={"4px"}
-                          border={"2px solid #4682B4"}
-                          borderRadius={"0"}
-                          _hover={{ border: "2px solid #4682B4" }}
+                          border={"2px solid rgba(48, 141, 218, 1)"}
+                          borderRadius={"8px"}
+                          _hover={{
+                            border: "2px solid rgba(48, 141, 218, 1)",
+                          }}
                           name="phone"
                           onChange={handleChange}
                           onBlur={handleBlur}
@@ -221,10 +232,11 @@ const ModalEditLead = observer(({ obj = {} }) => {
                         <Text fontWeight={"500"}>Доп. информация</Text>
                         <VStack width={"100%"} marginTop={"10px"}>
                           {pairs?.map((pair) => (
-                            <HStack key={pair.id} spacing={3}>
+                            <HStack key={pair.id} spacing={3} width={"100%"}>
                               <Input
-                                borderRadius={"0px"}
-                                border={"2px solid #4682B4"}
+                                borderRadius={"8px"}
+                                width={"100%"}
+                                border={"2px solid rgba(48, 141, 218, 1)"}
                                 placeholder="Key"
                                 value={pair.key}
                                 onChange={(e) => {
@@ -232,8 +244,9 @@ const ModalEditLead = observer(({ obj = {} }) => {
                                 }}
                               />
                               <Input
-                                borderRadius={"0px"}
-                                border={"2px solid #4682B4"}
+                                borderRadius={"8px"}
+                                width={"100%"}
+                                border={"2px solid rgba(48, 141, 218, 1)"}
                                 placeholder="Value"
                                 value={pair.value}
                                 onChange={(e) => {
@@ -241,7 +254,7 @@ const ModalEditLead = observer(({ obj = {} }) => {
                                 }}
                               />
                               <IconButton
-                                borderRadius={"0px"}
+                                borderRadius={"8px"}
                                 aria-label="Remove pair"
                                 icon={<DeleteIcon />}
                                 colorScheme="red"
@@ -255,26 +268,29 @@ const ModalEditLead = observer(({ obj = {} }) => {
                         <IconButton
                           width={"100%"}
                           icon={<AddIcon />}
-                          bgColor="#4682B4"
+                          bgColor="rgba(48, 141, 218, 1)"
                           color={"white"}
                           onClick={addPair}
                           mt={4}
-                          borderRadius={0}
+                          borderRadius={"8px"}
                         />
 
                         <FormErrorMessage marginTop={"2px"}>
                           {errors?.additions}
                         </FormErrorMessage>
                       </FormControl>
+
                       <HStack width={"100%"} justify={"center"}>
                         <Button
                           onClick={() => setEditUsers(false)}
-                          boxShadow={"-2px 2px 0 0 #4682B4"}
-                          borderRadius={"0px"}
-                          border={"2px solid #4682B4"}
+                          borderRadius={"8px"}
+                          border={"2px solid rgba(48, 141, 218, 1)"}
                           bg={"white"}
                           color={"black"}
-                          _hover={{ bg: "#4682B4", color: "white" }}
+                          _hover={{
+                            bg: "rgba(48, 141, 218, 1)",
+                            color: "white",
+                          }}
                           flexShrink={0}
                           marginTop={"20px"}
                         >
@@ -285,12 +301,14 @@ const ModalEditLead = observer(({ obj = {} }) => {
                             setFieldValue("additions", JSON.stringify(pairs))
                           }
                           type="submit"
-                          boxShadow={"-2px 2px 0 0 #4682B4"}
-                          borderRadius={"0px"}
-                          border={"2px solid #4682B4"}
+                          borderRadius={"8px"}
+                          border={"2px solid rgba(48, 141, 218, 1)"}
                           bg={"white"}
                           color={"black"}
-                          _hover={{ bg: "#4682B4", color: "white" }}
+                          _hover={{
+                            bg: "rgba(48, 141, 218, 1)",
+                            color: "white",
+                          }}
                           flexShrink={0}
                           marginTop={"20px"}
                         >
@@ -357,12 +375,11 @@ const ModalEditLead = observer(({ obj = {} }) => {
                 </VStack>
                 <Button
                   onClick={() => setEditUsers(true)}
-                  boxShadow={"-2px 2px 0 0 #4682B4"}
-                  borderRadius={"0px"}
-                  border={"2px solid #4682B4"}
+                  borderRadius={"8px"}
+                  border={"2px solid rgba(48, 141, 218, 1)"}
                   bg={"white"}
                   color={"black"}
-                  _hover={{ bg: "#4682B4", color: "white" }}
+                  _hover={{ bg: "rgba(48, 141, 218, 1)", color: "white" }}
                   flexShrink={0}
                   marginTop={"20px"}
                 >
@@ -379,12 +396,11 @@ const ModalEditLead = observer(({ obj = {} }) => {
                 onClose();
                 setEditUsers(false);
               }}
-              boxShadow={"-2px 2px 0 0 #4682B4"}
-              borderRadius={"0px"}
-              border={"2px solid #4682B4"}
+              borderRadius={"8px"}
+              border={"2px solid rgba(48, 141, 218, 1)"}
               bg={"white"}
               color={"black"}
-              _hover={{ bg: "#4682B4", color: "white" }}
+              _hover={{ bg: "rgba(48, 141, 218, 1)", color: "white" }}
               flexShrink={0}
               marginTop={"20px"}
             >

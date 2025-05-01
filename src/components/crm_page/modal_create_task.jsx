@@ -58,17 +58,16 @@ const ModalCreateTask = observer(() => {
     <>
       <Button
         onClick={onOpen}
-        boxShadow={"-2px 2px 0 0 #4682B4"}
-        borderRadius={"0px"}
-        border={"2px solid #4682B4"}
+        borderRadius={"8px"}
+        border={"2px solid rgba(48, 141, 218, 1)"}
         bg={"white"}
         color={"black"}
-        _hover={{ bg: "#4682B4", color: "white" }}
+        _hover={{ bg: "rgba(48, 141, 218, 1)", color: "white" }}
         flexShrink={0}
       >
         <Text>Создать задачу</Text>
       </Button>
-      <Modal isOpen={isOpen} onClose={onClose}>
+      <Modal isOpen={isOpen} onClose={onClose} size={"3xl"}>
         <ModalOverlay />
         <ModalContent padding={"20px"}>
           <ModalCloseButton />
@@ -107,9 +106,9 @@ const ModalCreateTask = observer(() => {
                     <Input
                       placeholder="Название"
                       marginTop={"4px"}
-                      border={"2px solid #4682B4"}
-                      borderRadius={"0"}
-                      _hover={{ border: "2px solid #4682B4" }}
+                      border={"2px solid rgba(48, 141, 218, 1)"}
+                      borderRadius={"8px"}
+                      _hover={{ border: "2px solid rgba(48, 141, 218, 1)" }}
                       name="name"
                       onChange={handleChange}
                       onBlur={handleBlur}
@@ -125,9 +124,9 @@ const ModalCreateTask = observer(() => {
                     <Textarea
                       placeholder="Описание"
                       marginTop={"4px"}
-                      border={"2px solid #4682B4"}
-                      borderRadius={"0"}
-                      _hover={{ border: "2px solid #4682B4" }}
+                      border={"2px solid rgba(48, 141, 218, 1)"}
+                      borderRadius={"8px"}
+                      _hover={{ border: "2px solid rgba(48, 141, 218, 1)" }}
                       name="description"
                       onChange={handleChange}
                       onBlur={handleBlur}
@@ -144,9 +143,9 @@ const ModalCreateTask = observer(() => {
                       placeholder=""
                       type="datetime-local"
                       marginTop={"4px"}
-                      border={"2px solid #4682B4"}
-                      borderRadius={"0"}
-                      _hover={{ border: "2px solid #4682B4" }}
+                      border={"2px solid rgba(48, 141, 218, 1)"}
+                      borderRadius={"8px"}
+                      _hover={{ border: "2px solid rgba(48, 141, 218, 1)" }}
                       name="date_finish"
                       onChange={(e) => {
                         const selectedDate = new Date(e.target.value);
@@ -182,24 +181,22 @@ const ModalCreateTask = observer(() => {
                   >
                     <Button
                       onClick={onClose}
-                      boxShadow={"-2px 2px 0 0 #4682B4"}
-                      borderRadius={"0px"}
-                      border={"2px solid #4682B4"}
+                      borderRadius={"8px"}
+                      border={"2px solid rgba(48, 141, 218, 1)"}
                       bg={"white"}
                       color={"black"}
-                      _hover={{ bg: "#4682B4", color: "white" }}
+                      _hover={{ bg: "rgba(48, 141, 218, 1)", color: "white" }}
                       flexShrink={0}
                     >
                       <Text>Отменить</Text>
                     </Button>
                     <Button
                       type="submit"
-                      boxShadow={"-2px 2px 0 0 #4682B4"}
-                      borderRadius={"0px"}
-                      border={"2px solid #4682B4"}
+                      borderRadius={"8px"}
+                      border={"2px solid rgba(48, 141, 218, 1)"}
                       bg={"white"}
                       color={"black"}
-                      _hover={{ bg: "#4682B4", color: "white" }}
+                      _hover={{ bg: "rgba(48, 141, 218, 1)", color: "white" }}
                       flexShrink={0}
                     >
                       <Text>Создать</Text>

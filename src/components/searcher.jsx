@@ -44,7 +44,7 @@ const Searcher = observer(
         </Text>
         <Tooltip
           label={"Подсказка: Вы можете делать поиск по любым полям"}
-          bg={"#4682B4"}
+          bg={"rgba(48, 141, 218, 1)"}
           color={"white"}
           borderRadius={"10px"}
           placement="bottom-start"
@@ -55,9 +55,9 @@ const Searcher = observer(
               pageStore.updateSearchValue(e.target.value.replace(/\s/g, ""))
             }
             width={"100%"}
-            border={"2px solid #4682B4"}
-            borderRadius={"0px"}
-            _hover={{ border: "2px solid #4682B4" }}
+            border={"2px solid rgba(48, 141, 218, 1)"}
+            borderRadius={"8px"}
+            _hover={{ border: "2px solid rgba(48, 141, 218, 1)" }}
             placeholder={`${placeholder}`}
           />
         </Tooltip>

@@ -50,12 +50,12 @@ const ModalImportBase = observer(() => {
     <>
       <Button
         onClick={onOpen}
-        boxShadow={"-2px 2px 0 0 #4682B4"}
-        borderRadius={"0px"}
-        border={"2px solid #4682B4"}
+        
+        borderRadius={"8px"}
+        border={"2px solid rgba(48, 141, 218, 1)"}
         bg={"white"}
         color={"black"}
-        _hover={{ bg: "#4682B4", color: "white" }}
+        _hover={{ bg: "rgba(48, 141, 218, 1)", color: "white" }}
         flexShrink={0}
       >
         <Text>Импортировать базу</Text>
@@ -79,8 +79,8 @@ const ModalImportBase = observer(() => {
             gap={"20px"}
           >
             <Input
-              border={"2px solid #4682B4"}
-              borderRadius={"0px"}
+              border={"2px solid rgba(48, 141, 218, 1)"}
+              borderRadius={"8px"}
               type="text"
               placeholder="Введите название базы"
               value={selectName}
@@ -100,24 +100,24 @@ const ModalImportBase = observer(() => {
           <HStack width={"100%"} justify={"flex-end"} marginTop={"20px"}>
             <Button
               onClick={onClose}
-              boxShadow={"-2px 2px 0 0 #4682B4"}
-              borderRadius={"0px"}
-              border={"2px solid #4682B4"}
+              
+              borderRadius={"8px"}
+              border={"2px solid rgba(48, 141, 218, 1)"}
               bg={"white"}
               color={"black"}
-              _hover={{ bg: "#4682B4", color: "white" }}
+              _hover={{ bg: "rgba(48, 141, 218, 1)", color: "white" }}
               flexShrink={0}
             >
               Отменить
             </Button>
             <Button
               onClick={async () => await handleImportBase()}
-              boxShadow={"-2px 2px 0 0 #4682B4"}
-              borderRadius={"0px"}
-              border={"2px solid #4682B4"}
+              
+              borderRadius={"8px"}
+              border={"2px solid rgba(48, 141, 218, 1)"}
               bg={"white"}
               color={"black"}
-              _hover={{ bg: "#4682B4", color: "white" }}
+              _hover={{ bg: "rgba(48, 141, 218, 1)", color: "white" }}
               flexShrink={0}
             >
               Импортировать

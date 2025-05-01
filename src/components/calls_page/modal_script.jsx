@@ -142,7 +142,7 @@ const ModalScript = observer(({ obj = {} }) => {
         ) ? (
           <MdOutlineStar
             size={"30px"}
-            color="#4682B4"
+            color="rgba(48, 141, 218, 1)"
             onClick={async (e) => {
               e.stopPropagation();
               await handleAddToFav();
@@ -151,7 +151,7 @@ const ModalScript = observer(({ obj = {} }) => {
         ) : (
           <MdOutlineStarBorder
             size={"30px"}
-            color="#4682B4"
+            color="rgba(48, 141, 218, 1)"
             onClick={async (e) => {
               e.stopPropagation();
               await handleAddToFav();
@@ -195,9 +195,9 @@ const ModalScript = observer(({ obj = {} }) => {
                       value={values?.name}
                       placeholder="Название"
                       marginTop={"4px"}
-                      border={"2px solid #4682B4"}
-                      borderRadius={"0"}
-                      _hover={{ border: "2px solid #4682B4" }}
+                      border={"2px solid rgba(48, 141, 218, 1)"}
+                      borderRadius={"8px"}
+                      _hover={{ border: "2px solid rgba(48, 141, 218, 1)" }}
                       name="name"
                       onChange={handleChange}
                       onBlur={handleBlur}
@@ -213,9 +213,9 @@ const ModalScript = observer(({ obj = {} }) => {
                       height={"auto"}
                       placeholder="Текст"
                       marginTop={"4px"}
-                      border={"2px solid #4682B4"}
-                      borderRadius={"0"}
-                      _hover={{ border: "2px solid #4682B4" }}
+                      border={"2px solid rgba(48, 141, 218, 1)"}
+                      borderRadius={"8px"}
+                      _hover={{ border: "2px solid rgba(48, 141, 218, 1)" }}
                       name="text"
                       onChange={(e) => setFieldValue("text", e.target.value)}
                       onBlur={handleBlur}
@@ -232,9 +232,9 @@ const ModalScript = observer(({ obj = {} }) => {
                         value={target}
                         placeholder="Текст"
                         marginTop={"4px"}
-                        border={"2px solid #4682B4"}
-                        borderRadius={"0"}
-                        _hover={{ border: "2px solid #4682B4" }}
+                        border={"2px solid rgba(48, 141, 218, 1)"}
+                        borderRadius={"8px"}
+                        _hover={{ border: "2px solid rgba(48, 141, 218, 1)" }}
                         onChange={(e) => setTarget(e.target.value)}
                       />
                       <Text fontWeight={"500"}>Целевая аудитория</Text>
@@ -242,9 +242,9 @@ const ModalScript = observer(({ obj = {} }) => {
                         value={audit}
                         placeholder="Текст"
                         marginTop={"4px"}
-                        border={"2px solid #4682B4"}
-                        borderRadius={"0"}
-                        _hover={{ border: "2px solid #4682B4" }}
+                        border={"2px solid rgba(48, 141, 218, 1)"}
+                        borderRadius={"8px"}
+                        _hover={{ border: "2px solid rgba(48, 141, 218, 1)" }}
                         onChange={(e) => setAudit(e.target.value)}
                       />
                       <Text fontWeight={"500"}>Предложение/продукт</Text>
@@ -252,9 +252,9 @@ const ModalScript = observer(({ obj = {} }) => {
                         value={product}
                         placeholder="Текст"
                         marginTop={"4px"}
-                        border={"2px solid #4682B4"}
-                        borderRadius={"0"}
-                        _hover={{ border: "2px solid #4682B4" }}
+                        border={"2px solid rgba(48, 141, 218, 1)"}
+                        borderRadius={"8px"}
+                        _hover={{ border: "2px solid rgba(48, 141, 218, 1)" }}
                         onChange={(e) => setProduct(e.target.value)}
                       />
                       <Text fontWeight={"500"}>Образ автора</Text>
@@ -262,9 +262,9 @@ const ModalScript = observer(({ obj = {} }) => {
                         value={author}
                         placeholder="Текст"
                         marginTop={"4px"}
-                        border={"2px solid #4682B4"}
-                        borderRadius={"0"}
-                        _hover={{ border: "2px solid #4682B4" }}
+                        border={"2px solid rgba(48, 141, 218, 1)"}
+                        borderRadius={"8px"}
+                        _hover={{ border: "2px solid rgba(48, 141, 218, 1)" }}
                         onChange={(e) => setAuthor(e.target.value)}
                       />
                       <Text fontWeight={"500"}>Прочее</Text>
@@ -272,9 +272,9 @@ const ModalScript = observer(({ obj = {} }) => {
                         value={pro}
                         placeholder="Текст"
                         marginTop={"4px"}
-                        border={"2px solid #4682B4"}
-                        borderRadius={"0"}
-                        _hover={{ border: "2px solid #4682B4" }}
+                        border={"2px solid rgba(48, 141, 218, 1)"}
+                        borderRadius={"8px"}
+                        _hover={{ border: "2px solid rgba(48, 141, 218, 1)" }}
                         onChange={(e) => setPro(e.target.value)}
                       />
                       <Button
@@ -293,12 +293,12 @@ const ModalScript = observer(({ obj = {} }) => {
                     <ModalDeleteScript obj={obj} />
                     <Button
                       onClick={() => setShowInputs(!showInputs)}
-                      boxShadow={"-2px 2px 0 0 #4682B4"}
-                      borderRadius={"0px"}
-                      border={"2px solid #4682B4"}
+                      
+                      borderRadius={"8px"}
+                      border={"2px solid rgba(48, 141, 218, 1)"}
                       bg={"white"}
                       color={"black"}
-                      _hover={{ bg: "#4682B4", color: "white" }}
+                      _hover={{ bg: "rgba(48, 141, 218, 1)", color: "white" }}
                       flexShrink={0}
                     >
                       <Text>Сгенерировать текст</Text>
@@ -306,24 +306,24 @@ const ModalScript = observer(({ obj = {} }) => {
 
                     <Button
                       onClick={onClose}
-                      boxShadow={"-2px 2px 0 0 #4682B4"}
-                      borderRadius={"0px"}
-                      border={"2px solid #4682B4"}
+                      
+                      borderRadius={"8px"}
+                      border={"2px solid rgba(48, 141, 218, 1)"}
                       bg={"white"}
                       color={"black"}
-                      _hover={{ bg: "#4682B4", color: "white" }}
+                      _hover={{ bg: "rgba(48, 141, 218, 1)", color: "white" }}
                       flexShrink={0}
                     >
                       <Text>Отменить</Text>
                     </Button>
                     <Button
                       type="submit"
-                      boxShadow={"-2px 2px 0 0 #4682B4"}
-                      borderRadius={"0px"}
-                      border={"2px solid #4682B4"}
+                      
+                      borderRadius={"8px"}
+                      border={"2px solid rgba(48, 141, 218, 1)"}
                       bg={"white"}
                       color={"black"}
-                      _hover={{ bg: "#4682B4", color: "white" }}
+                      _hover={{ bg: "rgba(48, 141, 218, 1)", color: "white" }}
                       flexShrink={0}
                     >
                       <Text>Обновить</Text>

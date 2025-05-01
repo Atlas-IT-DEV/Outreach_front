@@ -52,7 +52,7 @@ const LoginPage = observer(() => {
       <VStack backgroundColor={"transparent"} p={8} maxW={"600px"} spacing={2}>
         <HStack>
           <Text
-            color={"#4682B4"}
+            color={"rgba(48, 141, 218, 1)"}
             fontWeight={"700"}
             fontSize={"40px"}
             alignSelf={"center"}
@@ -75,7 +75,7 @@ const LoginPage = observer(() => {
         <LoginForm />
 
         <Flex justify="center" mt={4}>
-          <Link color="#4682B4" href="#" fontSize="sm" onClick={() => onOpen()}>
+          <Link color="rgba(48, 141, 218, 1)" href="#" fontSize="sm" onClick={() => onOpen()}>
             Забыли пароль?
           </Link>
           <Modal onClose={onClose} isOpen={isOpen}>
@@ -88,7 +88,7 @@ const LoginPage = observer(() => {
                   Восстановление доступно только для администраторов
                   авторизующихся по почте, свяжитесь с тех поддержкой в телеграм
                 </Text>
-                <Link href="https://t.me/AtlasCEO_77" color={"#4682B4"}>
+                <Link href="https://t.me/AtlasCEO_77" color={"rgba(48, 141, 218, 1)"}>
                   @AtlasCEO_77
                 </Link>
               </ModalBody>

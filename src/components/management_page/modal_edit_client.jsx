@@ -98,12 +98,12 @@ const ModalEditClient = observer(({ obj = {} }) => {
     <>
       <Button
         onClick={() => onOpen()}
-        boxShadow={"-2px 2px 0 0 #4682B4"}
-        borderRadius={"0px"}
-        border={"2px solid #4682B4"}
+        
+        borderRadius={"8px"}
+        border={"2px solid rgba(48, 141, 218, 1)"}
         bg={"white"}
         color={"black"}
-        _hover={{ bg: "#4682B4", color: "white" }}
+        _hover={{ bg: "rgba(48, 141, 218, 1)", color: "white" }}
         flexShrink={0}
       >
         <Text>Подробнее</Text>
@@ -166,9 +166,9 @@ const ModalEditClient = observer(({ obj = {} }) => {
                           value={values?.username}
                           placeholder="Никнейм"
                           marginTop={"4px"}
-                          border={"2px solid #4682B4"}
-                          borderRadius={"0"}
-                          _hover={{ border: "2px solid #4682B4" }}
+                          border={"2px solid rgba(48, 141, 218, 1)"}
+                          borderRadius={"8px"}
+                          _hover={{ border: "2px solid rgba(48, 141, 218, 1)" }}
                           name="username"
                           onChange={handleChange}
                           onBlur={handleBlur}
@@ -186,9 +186,9 @@ const ModalEditClient = observer(({ obj = {} }) => {
                           placeholder="Фамилия"
                           width={"100%"}
                           marginTop={"4px"}
-                          border={"2px solid #4682B4"}
-                          borderRadius={"0"}
-                          _hover={{ border: "2px solid #4682B4" }}
+                          border={"2px solid rgba(48, 141, 218, 1)"}
+                          borderRadius={"8px"}
+                          _hover={{ border: "2px solid rgba(48, 141, 218, 1)" }}
                           name="last_name"
                           onChange={handleChange}
                           onBlur={handleBlur}
@@ -206,9 +206,9 @@ const ModalEditClient = observer(({ obj = {} }) => {
                           placeholder="Имя"
                           width={"100%"}
                           marginTop={"4px"}
-                          border={"2px solid #4682B4"}
-                          borderRadius={"0"}
-                          _hover={{ border: "2px solid #4682B4" }}
+                          border={"2px solid rgba(48, 141, 218, 1)"}
+                          borderRadius={"8px"}
+                          _hover={{ border: "2px solid rgba(48, 141, 218, 1)" }}
                           name="first_name"
                           onChange={handleChange}
                           onBlur={handleBlur}
@@ -224,9 +224,9 @@ const ModalEditClient = observer(({ obj = {} }) => {
                           placeholder="Номер телефона"
                           width={"100%"}
                           marginTop={"4px"}
-                          border={"2px solid #4682B4"}
-                          borderRadius={"0"}
-                          _hover={{ border: "2px solid #4682B4" }}
+                          border={"2px solid rgba(48, 141, 218, 1)"}
+                          borderRadius={"8px"}
+                          _hover={{ border: "2px solid rgba(48, 141, 218, 1)" }}
                           name="phone"
                           onChange={handleChange}
                           onBlur={handleBlur}
@@ -238,12 +238,12 @@ const ModalEditClient = observer(({ obj = {} }) => {
                       <HStack width={"100%"} justify={"center"}>
                         <Button
                           onClick={() => setEditUsers(false)}
-                          boxShadow={"-2px 2px 0 0 #4682B4"}
-                          borderRadius={"0px"}
-                          border={"2px solid #4682B4"}
+                          
+                          borderRadius={"8px"}
+                          border={"2px solid rgba(48, 141, 218, 1)"}
                           bg={"white"}
                           color={"black"}
-                          _hover={{ bg: "#4682B4", color: "white" }}
+                          _hover={{ bg: "rgba(48, 141, 218, 1)", color: "white" }}
                           flexShrink={0}
                           marginTop={"20px"}
                         >
@@ -251,12 +251,12 @@ const ModalEditClient = observer(({ obj = {} }) => {
                         </Button>
                         <Button
                           type="submit"
-                          boxShadow={"-2px 2px 0 0 #4682B4"}
-                          borderRadius={"0px"}
-                          border={"2px solid #4682B4"}
+                          
+                          borderRadius={"8px"}
+                          border={"2px solid rgba(48, 141, 218, 1)"}
                           bg={"white"}
                           color={"black"}
-                          _hover={{ bg: "#4682B4", color: "white" }}
+                          _hover={{ bg: "rgba(48, 141, 218, 1)", color: "white" }}
                           flexShrink={0}
                           marginTop={"20px"}
                         >
@@ -308,12 +308,12 @@ const ModalEditClient = observer(({ obj = {} }) => {
                 </VStack>
                 <Button
                   onClick={() => setEditUsers(true)}
-                  boxShadow={"-2px 2px 0 0 #4682B4"}
-                  borderRadius={"0px"}
-                  border={"2px solid #4682B4"}
+                  
+                  borderRadius={"8px"}
+                  border={"2px solid rgba(48, 141, 218, 1)"}
                   bg={"white"}
                   color={"black"}
-                  _hover={{ bg: "#4682B4", color: "white" }}
+                  _hover={{ bg: "rgba(48, 141, 218, 1)", color: "white" }}
                   flexShrink={0}
                   marginTop={"20px"}
                 >
@@ -356,9 +356,9 @@ const ModalEditClient = observer(({ obj = {} }) => {
                           value={values?.name}
                           placeholder="Название компании"
                           marginTop={"4px"}
-                          border={"2px solid #4682B4"}
-                          borderRadius={"0"}
-                          _hover={{ border: "2px solid #4682B4" }}
+                          border={"2px solid rgba(48, 141, 218, 1)"}
+                          borderRadius={"8px"}
+                          _hover={{ border: "2px solid rgba(48, 141, 218, 1)" }}
                           name="name"
                           onChange={handleChange}
                           onBlur={handleBlur}
@@ -376,9 +376,9 @@ const ModalEditClient = observer(({ obj = {} }) => {
                           placeholder="Описание компании"
                           width={"100%"}
                           marginTop={"4px"}
-                          border={"2px solid #4682B4"}
-                          borderRadius={"0"}
-                          _hover={{ border: "2px solid #4682B4" }}
+                          border={"2px solid rgba(48, 141, 218, 1)"}
+                          borderRadius={"8px"}
+                          _hover={{ border: "2px solid rgba(48, 141, 218, 1)" }}
                           name="description"
                           onChange={handleChange}
                           onBlur={handleBlur}
@@ -390,12 +390,12 @@ const ModalEditClient = observer(({ obj = {} }) => {
                       <HStack width={"100%"} justify={"center"}>
                         <Button
                           onClick={() => setEditCompanies(false)}
-                          boxShadow={"-2px 2px 0 0 #4682B4"}
-                          borderRadius={"0px"}
-                          border={"2px solid #4682B4"}
+                          
+                          borderRadius={"8px"}
+                          border={"2px solid rgba(48, 141, 218, 1)"}
                           bg={"white"}
                           color={"black"}
-                          _hover={{ bg: "#4682B4", color: "white" }}
+                          _hover={{ bg: "rgba(48, 141, 218, 1)", color: "white" }}
                           flexShrink={0}
                           marginTop={"20px"}
                         >
@@ -403,12 +403,12 @@ const ModalEditClient = observer(({ obj = {} }) => {
                         </Button>
                         <Button
                           type="submit"
-                          boxShadow={"-2px 2px 0 0 #4682B4"}
-                          borderRadius={"0px"}
-                          border={"2px solid #4682B4"}
+                          
+                          borderRadius={"8px"}
+                          border={"2px solid rgba(48, 141, 218, 1)"}
                           bg={"white"}
                           color={"black"}
-                          _hover={{ bg: "#4682B4", color: "white" }}
+                          _hover={{ bg: "rgba(48, 141, 218, 1)", color: "white" }}
                           flexShrink={0}
                           marginTop={"20px"}
                         >
@@ -444,12 +444,12 @@ const ModalEditClient = observer(({ obj = {} }) => {
                 </VStack>
                 <Button
                   onClick={() => setEditCompanies(true)}
-                  boxShadow={"-2px 2px 0 0 #4682B4"}
-                  borderRadius={"0px"}
-                  border={"2px solid #4682B4"}
+                  
+                  borderRadius={"8px"}
+                  border={"2px solid rgba(48, 141, 218, 1)"}
                   bg={"white"}
                   color={"black"}
-                  _hover={{ bg: "#4682B4", color: "white" }}
+                  _hover={{ bg: "rgba(48, 141, 218, 1)", color: "white" }}
                   flexShrink={0}
                   marginTop={"20px"}
                 >
@@ -470,12 +470,12 @@ const ModalEditClient = observer(({ obj = {} }) => {
                 setEditCompanies(false);
                 setEditUsers(false);
               }}
-              boxShadow={"-2px 2px 0 0 #4682B4"}
-              borderRadius={"0px"}
-              border={"2px solid #4682B4"}
+              
+              borderRadius={"8px"}
+              border={"2px solid rgba(48, 141, 218, 1)"}
               bg={"white"}
               color={"black"}
-              _hover={{ bg: "#4682B4", color: "white" }}
+              _hover={{ bg: "rgba(48, 141, 218, 1)", color: "white" }}
               flexShrink={0}
               marginTop={"20px"}
             >

@@ -1,6 +1,7 @@
 import {
   Button,
   HStack,
+  IconButton,
   Input,
   Stack,
   Table,
@@ -17,6 +18,7 @@ import { observer } from "mobx-react-lite";
 import { useStores } from "../../store/store_context";
 import useWindowDimensions from "../../windowDimensions";
 import { useState } from "react";
+import { MdNavigateNext, MdNavigateBefore } from "react-icons/md";
 
 const TableBase = observer(() => {
   const { pageStore } = useStores();
@@ -40,8 +42,8 @@ const TableBase = observer(() => {
           <Text>Показывать по:</Text>
           <HStack>
             <Input
-              borderRadius={"0px"}
-              border={"2px solid #4682B4"}
+              borderRadius={"8px"}
+              border={"2px solid rgba(48, 141, 218, 1)"}
               value={pageStore.countRows}
               onChange={(e) =>
                 pageStore.updateCountRows(e.target.value.replace(/\D/g, ""))
@@ -49,12 +51,11 @@ const TableBase = observer(() => {
             />
             <Button
               width={"100%"}
-              border={"2px solid #4682B4"}
-              boxShadow={"-2px 2px 0 0 #4682B4"}
-              borderRadius={"0px"}
+              border={"2px solid rgba(48, 141, 218, 1)"}
+              borderRadius={"8px"}
               bg={"white"}
               color={"black"}
-              _hover={{ bg: "#4682B4", color: "white" }}
+              _hover={{ bg: "rgba(48, 141, 218, 1)", color: "white" }}
               onClick={async () => {
                 pageStore.updateCurrentPage(0);
                 await pageStore.getBaseByName(
@@ -82,9 +83,13 @@ const TableBase = observer(() => {
             overflowX={"scroll"}
             paddingBottom={"8px"}
           >
-            <Table width={"100%"} padding={"10px"} border={"2px solid #4682B4"}>
-              <Thead bg={"#4682B4"} borderBottom={"none"}>
-                <Tr borderBottom={"2px solid #4682B4"}>
+            <Table
+              width={"100%"}
+              padding={"10px"}
+              border={"2px solid rgba(48, 141, 218, 1)"}
+            >
+              <Thead bg={"rgba(48, 141, 218, 1)"} borderBottom={"none"}>
+                <Tr borderBottom={"2px solid rgba(48, 141, 218, 1)"}>
                   {pageStore.headers_base?.map((item, index) => (
                     <Th color={"white"} key={index}>
                       <Text>{item}</Text>
@@ -127,9 +132,13 @@ const TableBase = observer(() => {
         overflowX={"scroll"}
         paddingBottom={"8px"}
       >
-        <Table width={"100%"} padding={"10px"} border={"2px solid #4682B4"}>
-          <Thead bg={"#4682B4"} borderBottom={"none"}>
-            <Tr borderBottom={"2px solid #4682B4"}>
+        <Table
+          width={"100%"}
+          padding={"10px"}
+          border={"2px solid rgba(48, 141, 218, 1)"}
+        >
+          <Thead bg={"rgba(48, 141, 218, 1)"} borderBottom={"none"}>
+            <Tr borderBottom={"2px solid rgba(48, 141, 218, 1)"}>
               {pageStore.headers_base?.map((item, index) => (
                 <Th color={"white"} key={index}>
                   <Text>{item}</Text>
@@ -160,15 +169,15 @@ const TableBase = observer(() => {
               <HStack>
                 <Tooltip
                   label={"Подсказка: отсчёт страниц начинается с нуля"}
-                  bg={"#4682B4"}
+                  bg={"rgba(48, 141, 218, 1)"}
                   color={"white"}
                   borderRadius={"10px"}
                   placement="bottom-start"
                 >
                   <Input
-                    borderRadius={"0px"}
+                    borderRadius={"8px"}
                     placeholder="Перейти на страницу"
-                    border={"2px solid #4682B4"}
+                    border={"2px solid rgba(48, 141, 218, 1)"}
                     value={selectedPage}
                     onChange={(e) =>
                       setSelectedPage(e.target.value.replace(/\D/g, ""))
@@ -178,12 +187,11 @@ const TableBase = observer(() => {
 
                 <Button
                   width={"100%"}
-                  border={"2px solid #4682B4"}
-                  boxShadow={"-2px 2px 0 0 #4682B4"}
-                  borderRadius={"0px"}
+                  border={"2px solid rgba(48, 141, 218, 1)"}
+                  borderRadius={"8px"}
                   bg={"white"}
                   color={"black"}
-                  _hover={{ bg: "#4682B4", color: "white" }}
+                  _hover={{ bg: "rgba(48, 141, 218, 1)", color: "white" }}
                   onClick={async () => {
                     pageStore.updateCurrentPage(selectedPage);
                     await pageStore.getBaseByName(
@@ -223,9 +231,13 @@ const TableBase = observer(() => {
                   </Text>
                 ) : null}
                 {pageStore.current_page == 0 ? null : (
-                  <Text
-                    _hover={{ textDecoration: "underline" }}
-                    cursor={"pointer"}
+                  <IconButton
+                    icon={<MdNavigateBefore size={"30px"} />}
+                    border={"2px solid rgba(48, 141, 218, 1)"}
+                    bg={"white"}
+                    _hover={{
+                      bg: "rgba(48, 141, 218, 1)",
+                    }}
                     onClick={async () => {
                       scrollTop();
                       pageStore.updateCurrentPage(
@@ -238,14 +250,16 @@ const TableBase = observer(() => {
                         pageStore.countRows
                       );
                     }}
-                  >
-                    Предыдущая страница
-                  </Text>
+                  />
                 )}
                 {pageStore.has_more_data ? (
-                  <Text
-                    _hover={{ textDecoration: "underline" }}
-                    cursor={"pointer"}
+                  <IconButton
+                    icon={<MdNavigateNext size={"30px"} />}
+                    border={"2px solid rgba(48, 141, 218, 1)"}
+                    bg={"white"}
+                    _hover={{
+                      bg: "rgba(48, 141, 218, 1)",
+                    }}
                     onClick={async () => {
                       scrollTop();
                       pageStore.updateCurrentPage(
@@ -258,9 +272,7 @@ const TableBase = observer(() => {
                         pageStore.countRows
                       );
                     }}
-                  >
-                    Следующая страница
-                  </Text>
+                  />
                 ) : null}
               </HStack>
             ) : null}
@@ -295,10 +307,13 @@ const TableBase = observer(() => {
                   </Text>
                 ) : null}
                 {pageStore.current_page == 0 ? null : (
-                  <Text
-                    width={"max-content"}
-                    _hover={{ textDecoration: "underline" }}
-                    cursor={"pointer"}
+                  <IconButton
+                    icon={<MdNavigateBefore size={"30px"} />}
+                    border={"2px solid rgba(48, 141, 218, 1)"}
+                    bg={"white"}
+                    _hover={{
+                      bg: "rgba(48, 141, 218, 1)",
+                    }}
                     onClick={async () => {
                       scrollTop();
                       pageStore.updateCurrentPage(
@@ -311,15 +326,16 @@ const TableBase = observer(() => {
                         pageStore.countRows
                       );
                     }}
-                  >
-                    {"<"}
-                  </Text>
+                  />
                 )}
                 {pageStore.has_more_data ? (
-                  <Text
-                    width={"max-content"}
-                    _hover={{ textDecoration: "underline" }}
-                    cursor={"pointer"}
+                  <IconButton
+                    icon={<MdNavigateNext size={"30px"} />}
+                    border={"2px solid rgba(48, 141, 218, 1)"}
+                    bg={"white"}
+                    _hover={{
+                      bg: "rgba(48, 141, 218, 1)",
+                    }}
                     onClick={async () => {
                       scrollTop();
                       pageStore.updateCurrentPage(
@@ -332,9 +348,7 @@ const TableBase = observer(() => {
                         pageStore.countRows
                       );
                     }}
-                  >
-                    {">"}
-                  </Text>
+                  />
                 ) : null}
               </HStack>
             ) : null}
@@ -344,15 +358,15 @@ const TableBase = observer(() => {
               <HStack>
                 <Tooltip
                   label={"Подсказка: отсчёт страниц начинается с нуля"}
-                  bg={"#4682B4"}
+                  bg={"rgba(48, 141, 218, 1)"}
                   color={"white"}
                   borderRadius={"10px"}
                   placement="bottom-start"
                 >
                   <Input
-                    borderRadius={"0px"}
+                    borderRadius={"8px"}
                     placeholder="Перейти на страницу"
-                    border={"2px solid #4682B4"}
+                    border={"2px solid rgba(48, 141, 218, 1)"}
                     value={selectedPage}
                     onChange={(e) =>
                       setSelectedPage(e.target.value.replace(/\D/g, ""))
@@ -362,12 +376,11 @@ const TableBase = observer(() => {
 
                 <Button
                   width={"100%"}
-                  border={"2px solid #4682B4"}
-                  boxShadow={"-2px 2px 0 0 #4682B4"}
-                  borderRadius={"0px"}
+                  border={"2px solid rgba(48, 141, 218, 1)"}
+                  borderRadius={"8px"}
                   bg={"white"}
                   color={"black"}
-                  _hover={{ bg: "#4682B4", color: "white" }}
+                  _hover={{ bg: "rgba(48, 141, 218, 1)", color: "white" }}
                   onClick={async () => {
                     pageStore.updateCurrentPage(selectedPage);
                     await pageStore.getBaseByName(

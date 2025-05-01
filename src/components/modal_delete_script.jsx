@@ -49,12 +49,12 @@ const ModalDeleteScript = observer(({ obj = {}, onСloses }) => {
     <>
       <Button
         onClick={onOpen}
-        boxShadow={"-2px 2px 0 0 #4682B4"}
-        borderRadius={"0px"}
-        border={"2px solid #4682B4"}
+        
+        borderRadius={"8px"}
+        border={"2px solid rgba(48, 141, 218, 1)"}
         bg={"white"}
         color={"black"}
-        _hover={{ bg: "#4682B4", color: "white" }}
+        _hover={{ bg: "rgba(48, 141, 218, 1)", color: "white" }}
         flexShrink={0}
       >
         <Text>Удалить</Text>
@@ -69,24 +69,24 @@ const ModalDeleteScript = observer(({ obj = {}, onСloses }) => {
           <HStack marginTop={"20px"} justify={"center"} width={"100%"}>
             <Button
               onClick={onClose}
-              boxShadow={"-2px 2px 0 0 #4682B4"}
-              borderRadius={"0px"}
-              border={"2px solid #4682B4"}
+              
+              borderRadius={"8px"}
+              border={"2px solid rgba(48, 141, 218, 1)"}
               bg={"white"}
               color={"black"}
-              _hover={{ bg: "#4682B4", color: "white" }}
+              _hover={{ bg: "rgba(48, 141, 218, 1)", color: "white" }}
               flexShrink={0}
             >
               <Text>Отменить</Text>
             </Button>
             <Button
               onClick={async () => await handleDeleteScript()}
-              boxShadow={"-2px 2px 0 0 #4682B4"}
-              borderRadius={"0px"}
-              border={"2px solid #4682B4"}
+              
+              borderRadius={"8px"}
+              border={"2px solid rgba(48, 141, 218, 1)"}
               bg={"white"}
               color={"black"}
-              _hover={{ bg: "#4682B4", color: "white" }}
+              _hover={{ bg: "rgba(48, 141, 218, 1)", color: "white" }}
               flexShrink={0}
             >
               <Text>Удалить</Text>

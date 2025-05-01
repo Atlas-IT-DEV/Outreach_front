@@ -25,12 +25,12 @@ const ModalSelectBase = observer(() => {
     <>
       <Button
         onClick={onOpen}
-        boxShadow={"-2px 2px 0 0 #4682B4"}
-        borderRadius={"0px"}
-        border={"2px solid #4682B4"}
+        
+        borderRadius={"8px"}
+        border={"2px solid rgba(48, 141, 218, 1)"}
         bg={"white"}
         color={"black"}
-        _hover={{ bg: "#4682B4", color: "white" }}
+        _hover={{ bg: "rgba(48, 141, 218, 1)", color: "white" }}
         flexShrink={0}
       >
         <Text>Выбрать базу</Text>
@@ -76,12 +76,12 @@ const ModalSelectBase = observer(() => {
                 onClose();
                 pageStore.updateSelectedNameBase("");
               }}
-              boxShadow={"-2px 2px 0 0 #4682B4"}
-              borderRadius={"0px"}
-              border={"2px solid #4682B4"}
+              
+              borderRadius={"8px"}
+              border={"2px solid rgba(48, 141, 218, 1)"}
               bg={"white"}
               color={"black"}
-              _hover={{ bg: "#4682B4", color: "white" }}
+              _hover={{ bg: "rgba(48, 141, 218, 1)", color: "white" }}
               flexShrink={0}
             >
               Отменить
@@ -98,12 +98,12 @@ const ModalSelectBase = observer(() => {
                 );
                 onClose();
               }}
-              boxShadow={"-2px 2px 0 0 #4682B4"}
-              borderRadius={"0px"}
-              border={"2px solid #4682B4"}
+              
+              borderRadius={"8px"}
+              border={"2px solid rgba(48, 141, 218, 1)"}
               bg={"white"}
               color={"black"}
-              _hover={{ bg: "#4682B4", color: "white" }}
+              _hover={{ bg: "rgba(48, 141, 218, 1)", color: "white" }}
               flexShrink={0}
             >
               Выбрать

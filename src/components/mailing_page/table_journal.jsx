@@ -31,9 +31,9 @@ const TableJournal = observer(() => {
             overflowX={"scroll"}
             paddingBottom={"8px"}
           >
-            <Table width={"100%"} padding={"10px"} border={"2px solid #4682B4"}>
-              <Thead bg={"#4682B4"} borderBottom={"none"}>
-                <Tr borderBottom={"2px solid #4682B4"}>
+            <Table width={"100%"} padding={"10px"} border={"2px solid rgba(48, 141, 218, 1)"}>
+              <Thead bg={"rgba(48, 141, 218, 1)"} borderBottom={"none"}>
+                <Tr borderBottom={"2px solid rgba(48, 141, 218, 1)"}>
                   <Th color={"white"}>
                     <Text>Название</Text>
                   </Th>
@@ -151,9 +151,9 @@ const TableJournal = observer(() => {
         overflowX={"scroll"}
         paddingBottom={"8px"}
       >
-        <Table width={"100%"} padding={"10px"} border={"2px solid #4682B4"}>
-          <Thead bg={"#4682B4"} borderBottom={"none"}>
-            <Tr borderBottom={"2px solid #4682B4"}>
+        <Table width={"100%"} padding={"10px"} border={"2px solid rgba(48, 141, 218, 1)"}>
+          <Thead bg={"rgba(48, 141, 218, 1)"} borderBottom={"none"}>
+            <Tr borderBottom={"2px solid rgba(48, 141, 218, 1)"}>
               <Th color={"white"}>
                 <Text>Название</Text>
               </Th>
@@ -171,41 +171,35 @@ const TableJournal = observer(() => {
             </Tr>
           </Thead>
           <Tbody>
-            {pageStore.works.length > 0 &&
-              pageStore.works
-                .filter(
-                  (item) =>
-                    item?.department_id == pageStore.selected_department &&
-                    item?.obzvon == "0"
-                )
-                .map((item, index) => (
-                  <Tr color={"black"} key={index}>
-                    <Td border={"1px solid rgba(200,200,200,1)"}>
-                      <Text>{item?.name}</Text>
-                    </Td>
-                    <Td border={"1px solid rgba(200,200,200,1)"}>
-                      <Textarea disabled minW={"200px"}>
-                        {item?.description}
-                      </Textarea>
-                    </Td>
-                    <Td border={"1px solid rgba(200,200,200,1)"}>
-                      <Text>
-                        {new Date(item?.date_start).toLocaleDateString()}
-                      </Text>
-                    </Td>
-                    <Td border={"1px solid rgba(200,200,200,1)"}>
-                      <Text>
-                        С {item?.time_start}:00 до {item?.time_finish}:00
-                      </Text>
-                    </Td>
+            {pageStore.mail_works?.length > 0 &&
+              pageStore.mail_works?.map((item, index) => (
+                <Tr color={"black"} key={index}>
+                  <Td border={"1px solid rgba(200,200,200,1)"}>
+                    <Text>{item?.name}</Text>
+                  </Td>
+                  <Td border={"1px solid rgba(200,200,200,1)"}>
+                    <Textarea disabled minW={"200px"}>
+                      {item?.description}
+                    </Textarea>
+                  </Td>
+                  <Td border={"1px solid rgba(200,200,200,1)"}>
+                    <Text>
+                      {new Date(item?.date_start).toLocaleDateString()}
+                    </Text>
+                  </Td>
+                  <Td border={"1px solid rgba(200,200,200,1)"}>
+                    <Text>
+                      С {item?.time_start}:00 до {item?.time_finish}:00
+                    </Text>
+                  </Td>
 
-                    <Td border={"1px solid rgba(200,200,200,1)"}>
-                      {item.approved ? null : <ModalEditWork obj={item} />}
+                  <Td border={"1px solid rgba(200,200,200,1)"}>
+                    {item.approved ? null : <ModalEditWork obj={item} />}
 
-                      {/* <ModalDeleteWork obj={item} /> */}
-                    </Td>
-                  </Tr>
-                ))}
+                    {/* <ModalDeleteWork obj={item} /> */}
+                  </Td>
+                </Tr>
+              ))}
           </Tbody>
         </Table>
       </HStack>

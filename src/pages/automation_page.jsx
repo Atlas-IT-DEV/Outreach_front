@@ -31,11 +31,11 @@ const AutomationPage = observer(() => {
               width={"50px"}
               height={"50px"}
               border={
-                selected[0] == 1 ? "1px solid #4682B4" : "1px solid black"
+                selected[0] == 1 ? "1px solid rgba(48, 141, 218, 1)" : "1px solid black"
               }
               justify={"center"}
               align={"center"}
-              bg={selected[0] == 1 ? "#4682B4" : "none"}
+              bg={selected[0] == 1 ? "rgba(48, 141, 218, 1)" : "none"}
               color={selected[0] == 1 ? "white" : "black"}
               fontWeight={"600"}
               fontSize={"20px"}
@@ -52,11 +52,11 @@ const AutomationPage = observer(() => {
               width={"50px"}
               height={"50px"}
               border={
-                selected[1] == 1 ? "1px solid #4682B4" : "1px solid black"
+                selected[1] == 1 ? "1px solid rgba(48, 141, 218, 1)" : "1px solid black"
               }
               justify={"center"}
               align={"center"}
-              bg={selected[1] == 1 ? "#4682B4" : "none"}
+              bg={selected[1] == 1 ? "rgba(48, 141, 218, 1)" : "none"}
               color={selected[1] == 1 ? "white" : "black"}
               fontWeight={"600"}
               fontSize={"20px"}
@@ -77,11 +77,11 @@ const AutomationPage = observer(() => {
               width={"50px"}
               height={"50px"}
               border={
-                selected[2] == 1 ? "1px solid #4682B4" : "1px solid black"
+                selected[2] == 1 ? "1px solid rgba(48, 141, 218, 1)" : "1px solid black"
               }
               justify={"center"}
               align={"center"}
-              bg={selected[2] == 1 ? "#4682B4" : "none"}
+              bg={selected[2] == 1 ? "rgba(48, 141, 218, 1)" : "none"}
               color={selected[2] == 1 ? "white" : "black"}
               fontWeight={"600"}
               fontSize={"20px"}
@@ -98,11 +98,11 @@ const AutomationPage = observer(() => {
               width={"50px"}
               height={"50px"}
               border={
-                selected[3] == 1 ? "1px solid #4682B4" : "1px solid black"
+                selected[3] == 1 ? "1px solid rgba(48, 141, 218, 1)" : "1px solid black"
               }
               justify={"center"}
               align={"center"}
-              bg={selected[3] == 1 ? "#4682B4" : "none"}
+              bg={selected[3] == 1 ? "rgba(48, 141, 218, 1)" : "none"}
               color={selected[3] == 1 ? "white" : "black"}
               fontWeight={"600"}
               fontSize={"20px"}
@@ -119,11 +119,11 @@ const AutomationPage = observer(() => {
               width={"50px"}
               height={"50px"}
               border={
-                selected[4] == 1 ? "1px solid #4682B4" : "1px solid black"
+                selected[4] == 1 ? "1px solid rgba(48, 141, 218, 1)" : "1px solid black"
               }
               justify={"center"}
               align={"center"}
-              bg={selected[4] == 1 ? "#4682B4" : "none"}
+              bg={selected[4] == 1 ? "rgba(48, 141, 218, 1)" : "none"}
               color={selected[4] == 1 ? "white" : "black"}
               fontWeight={"600"}
               fontSize={"20px"}
@@ -149,11 +149,11 @@ const AutomationPage = observer(() => {
                 width={"50px"}
                 height={"50px"}
                 border={
-                  selected[0] == 1 ? "1px solid #4682B4" : "1px solid black"
+                  selected[0] == 1 ? "1px solid rgba(48, 141, 218, 1)" : "1px solid black"
                 }
                 justify={"center"}
                 align={"center"}
-                bg={selected[0] == 1 ? "#4682B4" : "none"}
+                bg={selected[0] == 1 ? "rgba(48, 141, 218, 1)" : "none"}
                 color={selected[0] == 1 ? "white" : "black"}
                 fontWeight={"600"}
                 fontSize={"20px"}
@@ -173,11 +173,11 @@ const AutomationPage = observer(() => {
                 width={"50px"}
                 height={"50px"}
                 border={
-                  selected[1] == 1 ? "1px solid #4682B4" : "1px solid black"
+                  selected[1] == 1 ? "1px solid rgba(48, 141, 218, 1)" : "1px solid black"
                 }
                 justify={"center"}
                 align={"center"}
-                bg={selected[1] == 1 ? "#4682B4" : "none"}
+                bg={selected[1] == 1 ? "rgba(48, 141, 218, 1)" : "none"}
                 color={selected[1] == 1 ? "white" : "black"}
                 fontWeight={"600"}
                 fontSize={"20px"}
@@ -198,11 +198,11 @@ const AutomationPage = observer(() => {
                 width={"50px"}
                 height={"50px"}
                 border={
-                  selected[2] == 1 ? "1px solid #4682B4" : "1px solid black"
+                  selected[2] == 1 ? "1px solid rgba(48, 141, 218, 1)" : "1px solid black"
                 }
                 justify={"center"}
                 align={"center"}
-                bg={selected[2] == 1 ? "#4682B4" : "none"}
+                bg={selected[2] == 1 ? "rgba(48, 141, 218, 1)" : "none"}
                 color={selected[2] == 1 ? "white" : "black"}
                 fontWeight={"600"}
                 fontSize={"20px"}
@@ -229,11 +229,11 @@ const AutomationPage = observer(() => {
                 width={"50px"}
                 height={"50px"}
                 border={
-                  selected[3] == 1 ? "1px solid #4682B4" : "1px solid black"
+                  selected[3] == 1 ? "1px solid rgba(48, 141, 218, 1)" : "1px solid black"
                 }
                 justify={"center"}
                 align={"center"}
-                bg={selected[3] == 1 ? "#4682B4" : "none"}
+                bg={selected[3] == 1 ? "rgba(48, 141, 218, 1)" : "none"}
                 color={selected[3] == 1 ? "white" : "black"}
                 fontWeight={"600"}
                 fontSize={"20px"}
@@ -253,11 +253,11 @@ const AutomationPage = observer(() => {
                 width={"50px"}
                 height={"50px"}
                 border={
-                  selected[4] == 1 ? "1px solid #4682B4" : "1px solid black"
+                  selected[4] == 1 ? "1px solid rgba(48, 141, 218, 1)" : "1px solid black"
                 }
                 justify={"center"}
                 align={"center"}
-                bg={selected[4] == 1 ? "#4682B4" : "none"}
+                bg={selected[4] == 1 ? "rgba(48, 141, 218, 1)" : "none"}
                 color={selected[4] == 1 ? "white" : "black"}
                 fontWeight={"600"}
                 fontSize={"20px"}

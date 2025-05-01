@@ -46,7 +46,9 @@ const ModalCreateLead = observer(() => {
 
   const hdChange = (id, field, value) => {
     setPairs(
-      pairs?.map((pair) => (pair.id === id ? { ...pair, [field]: value } : pair))
+      pairs?.map((pair) =>
+        pair.id === id ? { ...pair, [field]: value } : pair
+      )
     );
   };
 
@@ -90,19 +92,18 @@ const ModalCreateLead = observer(() => {
     <>
       <Button
         onClick={() => onOpen()}
-        boxShadow={"-2px 2px 0 0 #4682B4"}
-        borderRadius={"0px"}
-        border={"2px solid #4682B4"}
+        borderRadius={"8px"}
+        border={"2px solid rgba(48, 141, 218, 1)"}
         bg={"white"}
         color={"black"}
-        _hover={{ bg: "#4682B4", color: "white" }}
+        _hover={{ bg: "rgba(48, 141, 218, 1)", color: "white" }}
         flexShrink={0}
       >
         <Text fontSize={width >= 1000 ? "16px" : ["13px", "14px"]}>
           Создать нового лида
         </Text>
       </Button>
-      <Modal isOpen={isOpen} onClose={onClose} onEsc={onClose}>
+      <Modal isOpen={isOpen} onClose={onClose} onEsc={onClose} size={"3xl"}>
         <ModalOverlay />
         <ModalContent padding={"20px"}>
           <ModalCloseButton />
@@ -138,9 +139,9 @@ const ModalCreateLead = observer(() => {
                       <Input
                         placeholder="Фамилия"
                         marginTop={"4px"}
-                        border={"2px solid #4682B4"}
-                        borderRadius={"0"}
-                        _hover={{ border: "2px solid #4682B4" }}
+                        border={"2px solid rgba(48, 141, 218, 1)"}
+                        borderRadius={"8px"}
+                        _hover={{ border: "2px solid rgba(48, 141, 218, 1)" }}
                         name="last_name"
                         onChange={handleChange}
                         onBlur={handleBlur}
@@ -157,9 +158,9 @@ const ModalCreateLead = observer(() => {
                       <Input
                         placeholder="Имя"
                         marginTop={"4px"}
-                        border={"2px solid #4682B4"}
-                        borderRadius={"0"}
-                        _hover={{ border: "2px solid #4682B4" }}
+                        border={"2px solid rgba(48, 141, 218, 1)"}
+                        borderRadius={"8px"}
+                        _hover={{ border: "2px solid rgba(48, 141, 218, 1)" }}
                         name="first_name"
                         onChange={handleChange}
                         onBlur={handleBlur}
@@ -174,9 +175,9 @@ const ModalCreateLead = observer(() => {
                       <Input
                         placeholder="Номер телефона"
                         marginTop={"4px"}
-                        border={"2px solid #4682B4"}
-                        borderRadius={"0"}
-                        _hover={{ border: "2px solid #4682B4" }}
+                        border={"2px solid rgba(48, 141, 218, 1)"}
+                        borderRadius={"8px"}
+                        _hover={{ border: "2px solid rgba(48, 141, 218, 1)" }}
                         name="phone"
                         onChange={handleChange}
                         onBlur={handleBlur}
@@ -191,9 +192,9 @@ const ModalCreateLead = observer(() => {
                       <Input
                         placeholder="Email"
                         marginTop={"4px"}
-                        border={"2px solid #4682B4"}
-                        borderRadius={"0"}
-                        _hover={{ border: "2px solid #4682B4" }}
+                        border={"2px solid rgba(48, 141, 218, 1)"}
+                        borderRadius={"8px"}
+                        _hover={{ border: "2px solid rgba(48, 141, 218, 1)" }}
                         name="email"
                         onChange={handleChange}
                         onBlur={handleBlur}
@@ -208,10 +209,10 @@ const ModalCreateLead = observer(() => {
                       <Text fontWeight={"500"}>Доп. информация</Text>
                       <VStack width={"100%"} marginTop={"10px"}>
                         {pairs?.map((pair) => (
-                          <HStack key={pair.id} spacing={3}>
+                          <HStack key={pair.id} spacing={3} width={"100%"}>
                             <Input
-                              borderRadius={"0px"}
-                              border={"2px solid #4682B4"}
+                              borderRadius={"8px"}
+                              border={"2px solid rgba(48, 141, 218, 1)"}
                               placeholder="Key"
                               value={pair.key}
                               onChange={(e) => {
@@ -219,8 +220,8 @@ const ModalCreateLead = observer(() => {
                               }}
                             />
                             <Input
-                              borderRadius={"0px"}
-                              border={"2px solid #4682B4"}
+                              borderRadius={"8px"}
+                              border={"2px solid rgba(48, 141, 218, 1)"}
                               placeholder="Value"
                               value={pair.value}
                               onChange={(e) => {
@@ -228,7 +229,7 @@ const ModalCreateLead = observer(() => {
                               }}
                             />
                             <IconButton
-                              borderRadius={"0px"}
+                              borderRadius={"8px"}
                               aria-label="Remove pair"
                               icon={<DeleteIcon />}
                               colorScheme="red"
@@ -242,11 +243,11 @@ const ModalCreateLead = observer(() => {
                       <IconButton
                         width={"100%"}
                         icon={<AddIcon />}
-                        bgColor="#4682B4"
+                        bgColor="rgba(48, 141, 218, 1)"
                         color={"white"}
                         onClick={addPair}
                         mt={4}
-                        borderRadius={0}
+                        borderRadius={"8px"}
                       />
 
                       <FormErrorMessage marginTop={"2px"}>
@@ -261,12 +262,11 @@ const ModalCreateLead = observer(() => {
                   >
                     <Button
                       onClick={onClose}
-                      boxShadow={"-2px 2px 0 0 #4682B4"}
-                      borderRadius={"0px"}
-                      border={"2px solid #4682B4"}
+                      borderRadius={"8px"}
+                      border={"2px solid rgba(48, 141, 218, 1)"}
                       bg={"white"}
                       color={"black"}
-                      _hover={{ bg: "#4682B4", color: "white" }}
+                      _hover={{ bg: "rgba(48, 141, 218, 1)", color: "white" }}
                       flexShrink={0}
                     >
                       <Text>Отменить</Text>
@@ -276,12 +276,11 @@ const ModalCreateLead = observer(() => {
                         setFieldValue("additions", JSON.stringify(pairs))
                       }
                       type="submit"
-                      boxShadow={"-2px 2px 0 0 #4682B4"}
-                      borderRadius={"0px"}
-                      border={"2px solid #4682B4"}
+                      borderRadius={"8px"}
+                      border={"2px solid rgba(48, 141, 218, 1)"}
                       bg={"white"}
                       color={"black"}
-                      _hover={{ bg: "#4682B4", color: "white" }}
+                      _hover={{ bg: "rgba(48, 141, 218, 1)", color: "white" }}
                       flexShrink={0}
                     >
                       <Text>Создать</Text>

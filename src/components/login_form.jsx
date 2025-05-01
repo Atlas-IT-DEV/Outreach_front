@@ -81,12 +81,12 @@ const LoginForm = observer(() => {
                   placeholder="Enter your username"
                   bg="transparent"
                   color="black"
-                  borderRadius={0}
+                  borderRadius={"8px"}
                   _placeholder={{ color: "gray.400" }}
                   width={"20vw"}
                   minW={"300px"}
-                  borderColor="#4682B4" // Цвет рамки
-                  focusBorderColor="#4682B4" // Цвет рамки при фокусе
+                  borderColor="rgba(48, 141, 218, 1)" // Цвет рамки
+                  focusBorderColor="rgba(48, 141, 218, 1)" // Цвет рамки при фокусе
                 />
                 {errors.username && touched.username && (
                   <Text color="red.500" fontSize="sm">
@@ -109,12 +109,12 @@ const LoginForm = observer(() => {
                     placeholder="Enter your password"
                     bg="transparent"
                     color="black"
-                    borderRadius={0}
+                    borderRadius={"8px"}
                     _placeholder={{ color: "gray.400" }}
                     width={"20vw"}
                     minW={"300px"}
-                    borderColor="#4682B4" // Цвет рамки
-                    focusBorderColor="#4682B4" // Цвет рамки при фокусе
+                    borderColor="rgba(48, 141, 218, 1)" // Цвет рамки
+                    focusBorderColor="rgba(48, 141, 218, 1)" // Цвет рамки при фокусе
                   />
                 </Flex>
                 {errors.password && touched.password && (
@@ -129,8 +129,8 @@ const LoginForm = observer(() => {
                 mb={"20px"}
                 type="submit"
                 width="full"
-                bg="#4682B4"
-                _hover={{ bg: "#4682B4" }}
+                bg="rgba(48, 141, 218, 1)"
+                _hover={{ bg: "rgba(48, 141, 218, 1)" }}
                 color={"white"}
               >
                 Вход
@@ -179,12 +179,12 @@ const LoginForm = observer(() => {
           <HStack marginTop={"20px"} justify={"flex-end"} width={"100%"}>
             <Button
               onClick={onClose}
-              boxShadow={"-2px 2px 0 0 #4682B4"}
-              borderRadius={"0px"}
-              border={"2px solid #4682B4"}
+              
+              borderRadius={"8px"}
+              border={"2px solid rgba(48, 141, 218, 1)"}
               bg={"white"}
               color={"black"}
-              _hover={{ bg: "#4682B4", color: "white" }}
+              _hover={{ bg: "rgba(48, 141, 218, 1)", color: "white" }}
               flexShrink={0}
             >
               <Text>Отменить</Text>
@@ -193,12 +193,12 @@ const LoginForm = observer(() => {
               onClick={() =>
                 pageStore.selected_department ? navigate("/crm") : null
               }
-              boxShadow={"-2px 2px 0 0 #4682B4"}
-              borderRadius={"0px"}
-              border={"2px solid #4682B4"}
+              
+              borderRadius={"8px"}
+              border={"2px solid rgba(48, 141, 218, 1)"}
               bg={"white"}
               color={"black"}
-              _hover={{ bg: "#4682B4", color: "white" }}
+              _hover={{ bg: "rgba(48, 141, 218, 1)", color: "white" }}
               flexShrink={0}
             >
               <Text>Выбрать</Text>
