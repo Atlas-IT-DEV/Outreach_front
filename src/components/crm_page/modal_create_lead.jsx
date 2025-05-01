@@ -28,12 +28,7 @@ const ModalCreateLead = observer(() => {
   const { pageStore } = useStores();
   const toast = useToast();
 
-  const [pairs, setPairs] = useState([
-    { id: 1, key: "", value: "" },
-    { id: 2, key: "", value: "" },
-  ]);
-
-  console.log("JSON", typeof JSON.stringify(pairs));
+  const [pairs, setPairs] = useState([{ id: 1, key: "", value: "" }]);
 
   const addPair = () => {
     setPairs([...pairs, { id: Date.now(), key: "", value: "" }]);
@@ -75,6 +70,11 @@ const ModalCreateLead = observer(() => {
     return await pageStore.createClient(values);
   };
   const onSubmit = async (values) => {
+    const filteredPairs = pairs.filter(
+      (pair) => pair.key.trim() !== "" && pair.value.trim() !== ""
+    );
+    
+    values.additions = JSON.stringify(filteredPairs);
     const ok = await createClient(values);
     if (ok) {
       await pageStore.getAllClients();

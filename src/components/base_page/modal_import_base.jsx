@@ -29,13 +29,22 @@ const ModalImportBase = observer(() => {
   };
 
   const handleImportBase = async () => {
-    if (!selectedFile) {
+    if (!selectedFile || selectName == "") {
+      toast({
+        title: "",
+        description: "Название не указано или файл не выбран",
+        duration: "3000",
+        status: "warning",
+      });
       return;
     }
     const formData = new FormData();
     formData.append("file", selectedFile);
-    const ok = await uploadBase(selectName, formData);
-    if (ok) {
+    const response = await uploadBase(selectName, formData);
+    const result = await response.json();
+    console.log("res", result.message);
+    console.log(result?.message.split());
+    if (response?.ok) {
       await pageStore.getAllBases();
       toast({
         title: "Успех",
@@ -44,13 +53,31 @@ const ModalImportBase = observer(() => {
         status: "success",
       });
       onClose();
+    } else if (result?.message == "file extention not supported") {
+      toast({
+        title: "Ошибка",
+        description:
+          "Выбран неправильный формат файла. Выберите файл с форматом .csv или .xlsx",
+        duration: "3000",
+        status: "error",
+      });
+    } else if (
+      result?.message.split(" ")[0] == "no" &&
+      result?.message.split(" ")[1] == "column"
+    ) {
+      toast({
+        title: "Ошибка",
+        description:
+          "Колонка Имя, Фамилия, Почта и/или Телефон не найдена(-ы). Проверьте правильность таблицы или загрузите другую.",
+        duration: "3000",
+        status: "error",
+      });
     }
   };
   return (
     <>
       <Button
         onClick={onOpen}
-        
         borderRadius={"8px"}
         border={"2px solid rgba(48, 141, 218, 1)"}
         bg={"white"}
@@ -76,7 +103,7 @@ const ModalImportBase = observer(() => {
             width={"100$"}
             align={"flex-start"}
             marginTop={"20px"}
-            gap={"20px"}
+            gap={"10px"}
           >
             <Input
               border={"2px solid rgba(48, 141, 218, 1)"}
@@ -93,14 +120,28 @@ const ModalImportBase = observer(() => {
               onChange={(e) => setSelectedFile(e.target.files[0])}
             />
             <Text fontWeight={300} fontSize={"14px"}>
-              Подсказка: можно выбрать файлы с форматами .csv, или .xlsx
+              Подсказка: можно выбрать файлы с форматами .csv или .xlsx
             </Text>
+            <VStack width={"100%"} align={"flex-start"}>
+              <Text fontWeight={500} fontSize={"14px"}>
+                Важно:
+              </Text>
+              <Text fontWeight={300} fontSize={"14px"}>
+                В файле должны обязательно должны быть столбцы: <br />
+                Фамилия
+                <br />
+                Имя
+                <br />
+                Почта
+                <br />
+                Телефон
+              </Text>
+            </VStack>
           </VStack>
 
           <HStack width={"100%"} justify={"flex-end"} marginTop={"20px"}>
             <Button
               onClick={onClose}
-              
               borderRadius={"8px"}
               border={"2px solid rgba(48, 141, 218, 1)"}
               bg={"white"}
@@ -112,7 +153,6 @@ const ModalImportBase = observer(() => {
             </Button>
             <Button
               onClick={async () => await handleImportBase()}
-              
               borderRadius={"8px"}
               border={"2px solid rgba(48, 141, 218, 1)"}
               bg={"white"}

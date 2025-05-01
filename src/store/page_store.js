@@ -25,22 +25,35 @@ class PageStore {
 
   selected_department = null;
 
-  selected_name_base = "";
-  headers_base = [];
-  selected_base = [];
-
   generateText = {};
 
+  // базы
   current_page = 0;
   countRows = 20;
   has_more_data = true;
 
+  selected_name_base = "";
+  headers_base = [];
+  selected_base = [];
+  current_page_base_search = 0;
+  countRowsSearch = 20;
+  count_search_base_values = 0;
+  has_more_data_search = true;
+
   countValues = 0;
   searchBaseValue = "";
+  clickSearch = false;
 
   constructor() {
     makeAutoObservable(this);
   }
+
+  updateCurrentPageBaseSearch = (new_base) => {
+    this.current_page_base_search = new_base;
+  };
+  updateCountRowsSearch = (new_row) => {
+    this.countRowsSearch = new_row;
+  };
 
   resetData = () => {
     this.token = "";
@@ -49,6 +62,9 @@ class PageStore {
 
   updateSearchElement = (new_search) => {
     this.search_elements = new_search;
+  };
+  updateClickSearch = (newSearch) => {
+    this.clickSearch = newSearch;
   };
 
   updateSelectedScript = (new_scr) => {
@@ -170,13 +186,10 @@ class PageStore {
     this.headers_base = result.columns;
     this.selected_base = result.data;
     this.countValues = result.count;
-
-    this.selected_base = result.data;
-    this.countValues = result.count;
   };
-  searchInBase = async (value) => {
+  searchInBase = async (value, page, count) => {
     const response = await fetch(
-      `${base_url}/api/bases/find/${this.selected_department}/${this.selected_name_base}?value=${value}`,
+      `${base_url}/api/bases/find/${this.selected_department}/${this.selected_name_base}?value=${value}&page=${page}&count=${count}`,
       {
         method: "GET",
         headers: {
@@ -186,12 +199,27 @@ class PageStore {
       }
     );
     const result = await response.json();
-    if (result == null) {
+
+    this.has_more_data_search = true;
+    console.log("select base", result);
+    if (
+      result.arr == null ||
+      (result.arr.length == 1 && result.arr[0] == null)
+    ) {
+      this.has_more_data_search = false;
       this.search_elements = [];
-    } else {
-      this.search_elements = result;
     }
-    console.log("search", result);
+
+    if (result.arr[result.arr.length - 1] == null) {
+      this.has_more_data_search = false;
+      // Удаляем null из массива
+      result.arr.pop();
+    }
+
+    this.search_elements = result.arr;
+    this.count_search_base_values = result.count;
+
+    console.log("search base", result);
   };
 
   uploadBase = async (name, formData) => {
@@ -206,7 +234,7 @@ class PageStore {
         body: formData,
       }
     );
-    return response.ok;
+    return response;
   };
 
   // компании

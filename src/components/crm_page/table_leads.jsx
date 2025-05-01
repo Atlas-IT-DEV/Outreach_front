@@ -61,8 +61,8 @@ const TableLeads = observer(() => {
             </Thead>
             <Tbody>
               {pageStore.search_elements?.map((item, index) => {
-                let parse = JSON?.parse(item.additions);
-                console.log("pasr", parse);
+                let parse = JSON?.parse(item?.additions);
+                console.log("parse", parse);
                 return (
                   <Tr color={"black"} key={index}>
                     <Td border={"1px solid rgba(200,200,200,1)"}>
@@ -89,18 +89,18 @@ const TableLeads = observer(() => {
                       placement="right"
                     >
                       <Td border={"1px solid rgba(200,200,200,1)"}>
-                        {parse.length > 1 ? (
+                        {parse?.length > 1 ? (
                           <>
                             <Text width={"max-content"}>
-                              1. {parse[0].key}: {parse[0].value}
+                              1. {parse[0]?.key}: {parse[0]?.value}
                             </Text>
                             <Text width={"max-content"}>
-                              2. {parse[1].key}: {parse[1].value}
+                              2. {parse[1]?.key}: {parse[1]?.value}
                             </Text>
                           </>
                         ) : (
                           <Text width={"max-content"}>
-                            1. {parse[0].key}: {parse[0].value}
+                            1. {parse[0]?.key}: {parse[0]?.value}
                           </Text>
                         )}
                         {parse.length > 2 ? (
@@ -158,7 +158,7 @@ const TableLeads = observer(() => {
         <Table
           width={"100%"}
           padding={"10px"}
-          border={"1px solid rgba(48, 141, 218, 1)"}
+          border={"2px solid rgba(48, 141, 218, 1)"}
           align={"flex-start"}
         >
           <Thead bg={"rgba(48, 141, 218, 1)"} borderBottom={"none"}>

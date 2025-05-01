@@ -72,6 +72,12 @@ const ModalEditLead = observer(({ obj = {} }) => {
   });
 
   const onUserSumbit = async (values) => {
+    const filteredPairs = pairs.filter(
+      (pair) => pair.key.trim() !== "" && pair.value.trim() !== ""
+    );
+    console.log("filteredPairs", filteredPairs);
+    values.additions = JSON.stringify(filteredPairs);
+    console.log("vals", values);
     const ok = await editClient(obj?.ID, values);
     if (ok) {
       setEditUsers(false);
