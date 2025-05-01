@@ -70,7 +70,7 @@ const ModalEditClient = observer(({ obj = {} }) => {
     const ok = await editUser(obj?.director?.ID, values);
     if (ok) {
       setEditUsers(false);
-      await pageStore.getAllCompanies();
+      pageStore.getAllCompanies();
       toast({
         title: "Успех",
         description: "Данные об админе обновлены",
@@ -84,7 +84,7 @@ const ModalEditClient = observer(({ obj = {} }) => {
     const ok = await editCompany(obj?.ID, values);
     if (ok) {
       setEditCompanies(false);
-      await pageStore.getAllCompanies();
+      pageStore.getAllCompanies();
       toast({
         title: "Успех",
         description: "Данные о компании обновлены",

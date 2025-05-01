@@ -43,7 +43,7 @@ const ModalCreateTask = observer(() => {
   const onSubmit = async (values) => {
     const ok = await createTask(values);
     if (ok) {
-      await pageStore.getAllTasks();
+      pageStore.getAllTasks();
       toast({
         title: "Успех",
         description: "Задача успешно создана",

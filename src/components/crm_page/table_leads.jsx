@@ -78,11 +78,14 @@ const TableLeads = observer(() => {
                       <Text>{item?.phone || "-"}</Text>
                     </Td>
                     <Tooltip
-                      label={parse?.map((item2, index) => (
-                        <Text width={"max-content"} key={index}>
-                          {index + 1}. {item2?.key}: {item2?.value}
-                        </Text>
-                      ))}
+                      label={
+                        parse?.length > 0 &&
+                        parse?.map((item2, index2) => (
+                          <Text width={"max-content"} key={index2}>
+                            {index2 + 1}. {item2?.key}: {item2?.value}
+                          </Text>
+                        ))
+                      }
                       bg={"rgba(48, 141, 218, 1)"}
                       color={"white"}
                       borderRadius={"10px"}

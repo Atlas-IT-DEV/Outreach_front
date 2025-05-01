@@ -51,7 +51,7 @@ const ModalCreateUser = observer(() => {
   const onSubmit = async (values) => {
     const ok = await createUser(values);
     if (ok) {
-      await pageStore.getAllUsers();
+      pageStore.getAllUsers();
       toast({
         title: "Успех",
         description: "Новый лид успешно создан",
@@ -66,7 +66,6 @@ const ModalCreateUser = observer(() => {
     <>
       <Button
         onClick={onOpen}
-        
         borderRadius={"8px"}
         border={"2px solid rgba(48, 141, 218, 1)"}
         bg={"white"}
@@ -220,7 +219,6 @@ const ModalCreateUser = observer(() => {
                   >
                     <Button
                       onClick={onClose}
-                      
                       borderRadius={"8px"}
                       border={"2px solid rgba(48, 141, 218, 1)"}
                       bg={"white"}
@@ -232,7 +230,6 @@ const ModalCreateUser = observer(() => {
                     </Button>
                     <Button
                       type="submit"
-                      
                       borderRadius={"8px"}
                       border={"2px solid rgba(48, 141, 218, 1)"}
                       bg={"white"}

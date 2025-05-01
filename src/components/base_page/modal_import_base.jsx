@@ -45,7 +45,7 @@ const ModalImportBase = observer(() => {
     console.log("res", result.message);
     console.log(result?.message.split());
     if (response?.ok) {
-      await pageStore.getAllBases();
+      pageStore.getAllBases();
       toast({
         title: "Успех",
         description: "База успешно импортирована",

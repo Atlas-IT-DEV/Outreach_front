@@ -36,7 +36,7 @@ const ModalDeleteWork = observer(({ obj = {} }) => {
   const handleDelete = async () => {
     const ok = await deleteWork();
     if (ok) {
-      await pageStore.getAllWorks();
+      pageStore.getAllWorks();
       toast({
         title: "Успех",
         description: "Рассылка успешно удалена",
@@ -51,7 +51,6 @@ const ModalDeleteWork = observer(({ obj = {} }) => {
       <Button
         onClick={onOpen}
         border={"2px solid rgba(48, 141, 218, 1)"}
-        
         borderRadius={"8px"}
         bg={"white"}
         color={"black"}
@@ -69,7 +68,6 @@ const ModalDeleteWork = observer(({ obj = {} }) => {
           <HStack marginTop={"20px"} justify={"center"} width={"100%"}>
             <Button
               onClick={onClose}
-              
               borderRadius={"8px"}
               border={"2px solid rgba(48, 141, 218, 1)"}
               bg={"white"}
@@ -81,7 +79,6 @@ const ModalDeleteWork = observer(({ obj = {} }) => {
             </Button>
             <Button
               onClick={async () => await handleDelete()}
-              
               borderRadius={"8px"}
               border={"2px solid rgba(48, 141, 218, 1)"}
               bg={"white"}

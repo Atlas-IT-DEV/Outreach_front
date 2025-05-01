@@ -34,7 +34,7 @@ const ModalDeleteUser = observer(({ obj = {} }) => {
   const handleDeleteCompany = async () => {
     const ok = await deleteUser();
     if (ok) {
-      await pageStore.getAllUsers();
+      pageStore.getAllUsers();
       toast({
         title: "Успех",
         description: "Лид успешно удален",
@@ -48,7 +48,6 @@ const ModalDeleteUser = observer(({ obj = {} }) => {
     <>
       <Button
         onClick={() => onOpen()}
-        
         borderRadius={"8px"}
         border={"2px solid rgba(48, 141, 218, 1)"}
         bg={"white"}
@@ -69,7 +68,6 @@ const ModalDeleteUser = observer(({ obj = {} }) => {
           <HStack marginTop={"20px"} justify={"center"} width={"100%"}>
             <Button
               onClick={onClose}
-              
               borderRadius={"8px"}
               border={"2px solid rgba(48, 141, 218, 1)"}
               bg={"white"}
@@ -81,7 +79,6 @@ const ModalDeleteUser = observer(({ obj = {} }) => {
             </Button>
             <Button
               onClick={async () => await handleDeleteCompany()}
-              
               borderRadius={"8px"}
               border={"2px solid rgba(48, 141, 218, 1)"}
               bg={"white"}

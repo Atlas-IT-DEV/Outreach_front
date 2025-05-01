@@ -81,7 +81,7 @@ const ModalEditLead = observer(({ obj = {} }) => {
     const ok = await editClient(obj?.ID, values);
     if (ok) {
       setEditUsers(false);
-      await pageStore.getAllClients();
+      pageStore.getAllClients();
       toast({
         title: "Успех",
         description: "Данные об админе обновлены",

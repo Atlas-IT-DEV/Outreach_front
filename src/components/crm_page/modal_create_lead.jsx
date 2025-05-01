@@ -19,7 +19,7 @@ import * as Yup from "yup";
 import useWindowDimensions from "../../windowDimensions";
 import { useStores } from "../../store/store_context";
 import { observer } from "mobx-react-lite";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { AddIcon, DeleteIcon } from "@chakra-ui/icons";
 
 const ModalCreateLead = observer(() => {
@@ -27,6 +27,9 @@ const ModalCreateLead = observer(() => {
   const { width, height } = useWindowDimensions();
   const { pageStore } = useStores();
   const toast = useToast();
+
+  const [innValues, setInnValues] = useState("");
+  const [innData, setInnData] = useState([]);
 
   const [pairs, setPairs] = useState([{ id: 1, key: "", value: "" }]);
 
@@ -45,6 +48,56 @@ const ModalCreateLead = observer(() => {
         pair.id === id ? { ...pair, [field]: value } : pair
       )
     );
+  };
+
+  const getCompanyByINN = async (values) => {
+    const response = await fetch(
+      "http://suggestions.dadata.ru/suggestions/api/4_1/rs/findById/party",
+      {
+        method: "POST",
+        headers: {
+          accept: "application/json",
+          "Content-Type": "application/json",
+          Authorization: "Token 96d81fed256fcf8842ec456e35e134f5aa9e1fa0",
+        },
+        body: JSON.stringify({
+          query: values,
+        }),
+      }
+    );
+    const result = await response.json();
+    setInnData(result.suggestions[0]);
+    if (innData?.value) {
+      setPairs([
+        ...pairs,
+        {
+          id: Date.now(),
+          key: "Наименование компании",
+          value: innData?.value,
+        },
+      ]);
+    }
+    if (innData?.inn) {
+      setPairs([
+        ...pairs,
+        {
+          id: Date.now(),
+          key: "ИНН",
+          value: innData?.inn,
+        },
+      ]);
+    }
+    if (innData?.kpp) {
+      setPairs([
+        ...pairs,
+        {
+          id: Date.now(),
+          key: "КПП",
+          value: innData?.kpp,
+        },
+      ]);
+    }
+    console.log("pairs", pairs);
   };
 
   const clientValues = {
@@ -73,11 +126,11 @@ const ModalCreateLead = observer(() => {
     const filteredPairs = pairs.filter(
       (pair) => pair.key.trim() !== "" && pair.value.trim() !== ""
     );
-    
+
     values.additions = JSON.stringify(filteredPairs);
     const ok = await createClient(values);
     if (ok) {
-      await pageStore.getAllClients();
+      pageStore.getAllClients();
       toast({
         title: "Успех",
         description: "Новый лид успешно создан",
@@ -207,6 +260,33 @@ const ModalCreateLead = observer(() => {
                       isInvalid={errors?.additions && touched?.additions}
                     >
                       <Text fontWeight={"500"}>Доп. информация</Text>
+                      <HStack width={"100%"}>
+                        <Input
+                          value={innValues}
+                          onChange={(e) => setInnValues(e.target.value)}
+                          placeholder="ПОИСК ПО ИНН"
+                          marginTop={"4px"}
+                          border={"2px solid rgba(48, 141, 218, 1)"}
+                          borderRadius={"8px"}
+                          _hover={{ border: "2px solid rgba(48, 141, 218, 1)" }}
+                          name="inn"
+                        />
+                        <Button
+                          onClick={async () => await getCompanyByINN(innValues)}
+                          borderRadius={"8px"}
+                          border={"2px solid rgba(48, 141, 218, 1)"}
+                          bg={"white"}
+                          color={"black"}
+                          _hover={{
+                            bg: "rgba(48, 141, 218, 1)",
+                            color: "white",
+                          }}
+                          flexShrink={0}
+                        >
+                          <Text>Найти</Text>
+                        </Button>
+                      </HStack>
+
                       <VStack width={"100%"} marginTop={"10px"}>
                         {pairs?.map((pair) => (
                           <HStack key={pair.id} spacing={3} width={"100%"}>

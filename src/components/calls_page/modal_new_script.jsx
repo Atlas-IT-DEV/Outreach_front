@@ -67,7 +67,7 @@ const ModalNewScript = observer(() => {
   const onSubmit = async (values) => {
     const ok = await createScript(values);
     if (ok) {
-      await pageStore.getAllScripts();
+      pageStore.getAllScripts();
       toast({
         title: "Успех",
         description: "Скрипт создан успешно",
@@ -102,7 +102,6 @@ const ModalNewScript = observer(() => {
       <Button
         onClick={onOpen}
         border={"2px solid rgba(48, 141, 218, 1)"}
-        
         borderRadius={"8px"}
         bg={"white"}
         color={"black"}
@@ -241,7 +240,6 @@ const ModalNewScript = observer(() => {
                     >
                       <Button
                         onClick={() => setShowInputs(!showInputs)}
-                        
                         borderRadius={"8px"}
                         border={"2px solid rgba(48, 141, 218, 1)"}
                         bg={"white"}
@@ -253,7 +251,6 @@ const ModalNewScript = observer(() => {
                       </Button>
                       <Button
                         onClick={onClose}
-                        
                         borderRadius={"8px"}
                         border={"2px solid rgba(48, 141, 218, 1)"}
                         bg={"white"}
@@ -265,7 +262,6 @@ const ModalNewScript = observer(() => {
                       </Button>
                       <Button
                         type="submit"
-                        
                         borderRadius={"8px"}
                         border={"2px solid rgba(48, 141, 218, 1)"}
                         bg={"white"}
@@ -284,7 +280,6 @@ const ModalNewScript = observer(() => {
                     >
                       <Button
                         onClick={() => setShowInputs(!showInputs)}
-                        
                         borderRadius={"8px"}
                         border={"2px solid rgba(48, 141, 218, 1)"}
                         bg={"white"}
@@ -297,24 +292,28 @@ const ModalNewScript = observer(() => {
                       <HStack width={"100%"} justify={"flex-end"}>
                         <Button
                           onClick={onClose}
-                          
                           borderRadius={"8px"}
                           border={"2px solid rgba(48, 141, 218, 1)"}
                           bg={"white"}
                           color={"black"}
-                          _hover={{ bg: "rgba(48, 141, 218, 1)", color: "white" }}
+                          _hover={{
+                            bg: "rgba(48, 141, 218, 1)",
+                            color: "white",
+                          }}
                           flexShrink={0}
                         >
                           <Text>Отменить</Text>
                         </Button>
                         <Button
                           type="submit"
-                          
                           borderRadius={"8px"}
                           border={"2px solid rgba(48, 141, 218, 1)"}
                           bg={"white"}
                           color={"black"}
-                          _hover={{ bg: "rgba(48, 141, 218, 1)", color: "white" }}
+                          _hover={{
+                            bg: "rgba(48, 141, 218, 1)",
+                            color: "white",
+                          }}
                           flexShrink={0}
                         >
                           <Text>Создать</Text>

@@ -55,7 +55,7 @@ const ModalEditUser = observer(({ obj = {} }) => {
     const ok = await editUser(obj?.ID, values);
     if (ok) {
       setEditUsers(false);
-      await pageStore.getAllUsers();
+      pageStore.getAllUsers();
       toast({
         title: "Успех",
         description: "Данные об админе обновлены",

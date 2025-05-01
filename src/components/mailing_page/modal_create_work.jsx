@@ -57,7 +57,7 @@ const ModalCreateWork = observer(() => {
   const onSubmit = async (values) => {
     const ok = await createWork(values);
     if (ok) {
-      await pageStore.getAllWorks();
+      pageStore.getAllWorks();
       toast({
         title: "Успех",
         description: "Рассылка успешно создана",

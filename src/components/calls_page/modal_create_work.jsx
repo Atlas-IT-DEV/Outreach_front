@@ -57,7 +57,7 @@ const ModalCreateWork = observer(() => {
   const onSubmit = async (values) => {
     const ok = await createWork(values);
     if (ok) {
-      await pageStore.getAllWorks();
+      pageStore.getAllWorks();
       toast({
         title: "Успех",
         description: "Рассылка успешно создана",
@@ -72,7 +72,6 @@ const ModalCreateWork = observer(() => {
       <Button
         onClick={onOpen}
         border={"2px solid rgba(48, 141, 218, 1)"}
-        
         borderRadius={"8px"}
         bg={"white"}
         color={"black"}
@@ -237,7 +236,6 @@ const ModalCreateWork = observer(() => {
                   >
                     <Button
                       onClick={onClose}
-                      
                       borderRadius={"8px"}
                       border={"2px solid rgba(48, 141, 218, 1)"}
                       bg={"white"}
@@ -249,7 +247,6 @@ const ModalCreateWork = observer(() => {
                     </Button>
                     <Button
                       type="submit"
-                      
                       borderRadius={"8px"}
                       border={"2px solid rgba(48, 141, 218, 1)"}
                       bg={"white"}

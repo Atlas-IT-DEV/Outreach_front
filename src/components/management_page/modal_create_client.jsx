@@ -60,7 +60,7 @@ const ModalCreateClient = observer(() => {
   const onSubmit = async (values) => {
     const ok = await createCompamy(values);
     if (ok) {
-      await pageStore.getAllCompanies();
+      pageStore.getAllCompanies();
       toast({
         title: "Успех",
         description: "Новый лид успешно создан",
@@ -75,7 +75,6 @@ const ModalCreateClient = observer(() => {
     <>
       <Button
         onClick={() => onOpen()}
-        
         borderRadius={"8px"}
         border={"2px solid rgba(48, 141, 218, 1)"}
         bg={"white"}
@@ -267,7 +266,6 @@ const ModalCreateClient = observer(() => {
                   >
                     <Button
                       onClick={onClose}
-                      
                       borderRadius={"8px"}
                       border={"2px solid rgba(48, 141, 218, 1)"}
                       bg={"white"}
@@ -279,7 +277,6 @@ const ModalCreateClient = observer(() => {
                     </Button>
                     <Button
                       type="submit"
-                      
                       borderRadius={"8px"}
                       border={"2px solid rgba(48, 141, 218, 1)"}
                       bg={"white"}

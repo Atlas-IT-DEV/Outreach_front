@@ -63,7 +63,7 @@ const TaskCard = observer(({ obj = {}, color = "" }) => {
   const handleDeleteTask = async () => {
     const ok = await deleteTask();
     if (ok) {
-      await pageStore.getAllTasks();
+      pageStore.getAllTasks();
       toast({
         title: "Успех",
         description: "Задача удалена",
@@ -77,7 +77,7 @@ const TaskCard = observer(({ obj = {}, color = "" }) => {
   const handleCompleteTask = async () => {
     const ok = await completeTask(obj?.ID);
     if (ok) {
-      await pageStore.getAllTasks();
+      pageStore.getAllTasks();
       toast({
         title: "Успех",
         description: "Задача завершена",

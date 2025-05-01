@@ -127,7 +127,6 @@ const TableClients = observer(() => {
         overflowX={"scroll"}
         paddingBottom={"8px"}
         borderRadius={"8px"}
-        borderRight={"8px"}
       >
         <Table
           width={"100%"}

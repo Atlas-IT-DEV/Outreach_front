@@ -71,7 +71,7 @@ const ModalScript = observer(({ obj = {} }) => {
   const onSubmit = async (values) => {
     const ok = await editScript(obj?.ID, values);
     if (ok) {
-      await pageStore.getAllScripts();
+      pageStore.getAllScripts();
       toast({
         title: "Успех",
         description: "Скрипт успешно обновлен",
@@ -293,7 +293,6 @@ const ModalScript = observer(({ obj = {} }) => {
                     <ModalDeleteScript obj={obj} />
                     <Button
                       onClick={() => setShowInputs(!showInputs)}
-                      
                       borderRadius={"8px"}
                       border={"2px solid rgba(48, 141, 218, 1)"}
                       bg={"white"}
@@ -306,7 +305,6 @@ const ModalScript = observer(({ obj = {} }) => {
 
                     <Button
                       onClick={onClose}
-                      
                       borderRadius={"8px"}
                       border={"2px solid rgba(48, 141, 218, 1)"}
                       bg={"white"}
@@ -318,7 +316,6 @@ const ModalScript = observer(({ obj = {} }) => {
                     </Button>
                     <Button
                       type="submit"
-                      
                       borderRadius={"8px"}
                       border={"2px solid rgba(48, 141, 218, 1)"}
                       bg={"white"}

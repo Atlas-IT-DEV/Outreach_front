@@ -45,11 +45,11 @@ const LoginForm = observer(() => {
   const handleSubmit = async (values) => {
     const ok = await login(values);
     if (ok) {
-      await pageStore.getAllCompanies();
-
+      pageStore.getAllCompanies();
       const filterCompany = pageStore.clients.find(
         (item) => item?.ID == pageStore.user_info?.company_id
       );
+      console.log("filter", filterCompany);
       if (pageStore.user_info?.role == "0") {
         navigate("/crm");
       } else {
@@ -179,7 +179,6 @@ const LoginForm = observer(() => {
           <HStack marginTop={"20px"} justify={"flex-end"} width={"100%"}>
             <Button
               onClick={onClose}
-              
               borderRadius={"8px"}
               border={"2px solid rgba(48, 141, 218, 1)"}
               bg={"white"}
@@ -193,7 +192,6 @@ const LoginForm = observer(() => {
               onClick={() =>
                 pageStore.selected_department ? navigate("/crm") : null
               }
-              
               borderRadius={"8px"}
               border={"2px solid rgba(48, 141, 218, 1)"}
               bg={"white"}
