@@ -3,31 +3,127 @@ import {
   Drawer,
   DrawerCloseButton,
   DrawerContent,
+  FormControl,
+  FormErrorMessage,
   HStack,
   Input,
+  Modal,
+  ModalCloseButton,
+  ModalContent,
+  ModalOverlay,
   Stack,
   Text,
   Textarea,
   useDisclosure,
+  useToast,
   VStack,
 } from "@chakra-ui/react";
 import { useStores } from "../../store/store_context";
 import { MdOutlineStar, MdOutlineStarBorder } from "react-icons/md";
 import useWindowDimensions from "../../windowDimensions";
+import * as Yup from "yup";
+import { observer } from "mobx-react-lite";
+import { Form, Formik } from "formik";
+import ModalDeleteScript from "../modal_delete_script";
+import { useEffect, useState } from "react";
 
-const ModalScript = ({ obj = {} }) => {
+const ModalScript = observer(({ obj = {} }) => {
   const { pageStore } = useStores();
   const { width } = useWindowDimensions();
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const toast = useToast();
+  const [showInputs, setShowInputs] = useState(false);
+
+  const [target, setTarget] = useState("");
+  const [audit, setAudit] = useState("");
+  const [product, setProduct] = useState("");
+  const [author, setAuthor] = useState("");
+  const [pro, setPro] = useState("");
+
+  useEffect(() => {
+    setTarget("");
+    setAudit("");
+    setProduct("");
+    setAuthor("");
+    setPro("");
+    pageStore.updateGenerateText("");
+    setShowInputs(false);
+  }, [isOpen]);
+
+  const editScript = async (id, values) => {
+    return await pageStore.editScript(id, values);
+  };
+
+  const initialValues = {
+    creator_id: obj?.creator_id,
+    department_id: pageStore.selected_department,
+    is_email: obj?.is_email,
+    is_hiden: false,
+    name: obj?.name,
+    text: obj?.text,
+  };
+
+  const validationSchema = Yup.object({
+    name: Yup.string().required("Обязательное поле"),
+    text: Yup.string().required("Обязательное поле"),
+  });
+
+  const onSubmit = async (values) => {
+    const ok = await editScript(obj?.ID, values);
+    if (ok) {
+      pageStore.getAllScripts();
+      toast({
+        title: "Успех",
+        description: "Скрипт успешно обновлен",
+        duration: "3000",
+        status: "success",
+      });
+      onClose();
+    }
+  };
+
+  console.log("Favorite scripts:", pageStore.user_info?.favorite_scripts);
+  console.log("Current obj:", obj);
+  console.log(
+    "Comparison result:",
+    pageStore.user_info?.favorite_scripts?.some((item) => item?.ID === obj?.ID)
+  );
+  const generateText = async (values) => {
+    return await pageStore.generateGPT(values);
+  };
+
+  const generate = async (setFieldValue) => {
+    const ok = await generateText(
+      `Сгенерируй мне текст email письма для рассылки клиентам с целью ${target}, целевая аудитория: ${audit}, предложение ${product}, образ автора: ${author}. ${pro}`
+    );
+    if (ok) {
+      setFieldValue("text", pageStore.generateText?.answer || "");
+      toast({
+        title: "Успех",
+        description: "Текст успешно сгенерирован",
+        duration: "3000",
+        status: "success",
+      });
+    }
+  };
+
+  const addToFav = async (id) => {
+    return await pageStore.addToFavouriveScript(id);
+  };
+
+  const handleAddToFav = async () => {
+    const ok = await addToFav(obj?.ID);
+    if (ok) {
+      await pageStore.getMe();
+    }
+  };
+
   return (
     <>
       <HStack
-        onClick={() => {
-          pageStore.updateSelectedScript(obj);
-          onOpen();
-        }}
+        onClick={onOpen}
         bg={
-          pageStore.selected_script?.id == obj?.id
+          pageStore.selected_script?.ID == obj?.ID
             ? "rgba(200,200,200,0.5)"
             : null
         }
@@ -40,124 +136,204 @@ const ModalScript = ({ obj = {} }) => {
           bg: "rgba(200,200,200,0.5)",
         }}
       >
-        <Text color={"black"}>{obj?.templateName}</Text>
-        {obj?.is_fav ? (
-          <MdOutlineStar size={"30px"} color="#4682B4" />
+        <Text color={"black"}>{obj?.name}</Text>
+        {pageStore.user_info?.favorite_scripts?.some(
+          (item) => item?.ID == obj?.ID
+        ) ? (
+          <MdOutlineStar
+            size={"30px"}
+            color="rgba(48, 141, 218, 1)"
+            onClick={async (e) => {
+              e.stopPropagation();
+              await handleAddToFav();
+            }}
+          />
         ) : (
-          <MdOutlineStarBorder size={"30px"} color="#4682B4" />
+          <MdOutlineStarBorder
+            size={"30px"}
+            color="rgba(48, 141, 218, 1)"
+            onClick={async (e) => {
+              e.stopPropagation();
+              await handleAddToFav();
+            }}
+          />
         )}
       </HStack>
-      <Drawer isOpen={isOpen} onClose={onClose} size={"full"} placement="right">
-        <DrawerContent
+      <Modal isOpen={isOpen} onClose={onClose} size={"3xl"}>
+        <ModalOverlay />
+        <ModalContent
           width={"100%"}
           justifyContent={"center"}
           alignItems={"center"}
+          padding={"20px"}
         >
-          <DrawerCloseButton
-            onClick={() => pageStore.updateSelectedScript({})}
-          />
-          <VStack
-            width={"100%"}
-            height={"auto"}
-            minH={"100vh"}
-            overflow={"hidden"}
-            overflowY={"scroll"}
-            padding={"20px"}
-            fontWeight={"600"}
+          <ModalCloseButton />
+          <Formik
+            initialValues={initialValues}
+            validationSchema={validationSchema}
+            onSubmit={onSubmit}
           >
-            <VStack align={"flex-start"} width={"100%"}>
-              <Text>Цель рассылки</Text>
-              <Input
-                placeholder="Цель рассылки"
-                value={pageStore.selected_script?.purpose}
-              />
-            </VStack>
-            <VStack align={"flex-start"} width={"100%"}>
-              <Text>Целевая аудитория</Text>
-              <Input
-                placeholder="Целевая аудитория"
-                value={pageStore.selected_script?.targetAudience}
-              />
-            </VStack>
-            <VStack align={"flex-start"} width={"100%"}>
-              <Text>Предложение/продукт</Text>
-              <Input placeholder="Предложение/продукт" />
-            </VStack>
-            <VStack align={"flex-start"} width={"100%"}>
-              <Text>Целевое действие</Text>
-              <Input
-                placeholder="Целевое действие"
-                value={pageStore.selected_script?.targetAction}
-              />
-            </VStack>
-            <VStack align={"flex-start"} width={"100%"}>
-              <Text>Образ автора</Text>
-              <Input
-                placeholder="Образ автора"
-                value={pageStore.selected_script?.authorImage}
-              />
-            </VStack>
-            <VStack align={"flex-start"} width={"100%"}>
-              <Text>Прочее</Text>
-              <Textarea placeholder="Прочее" />
-            </VStack>
+            {({
+              values,
+              touched,
+              errors,
+              handleBlur,
+              handleChange,
+              setFieldValue,
+            }) => (
+              <Form style={{ width: "100%" }}>
+                <VStack
+                  width={"100%"}
+                  marginTop={"10px"}
+                  align={"flex-start"}
+                  justify={"flex-start"}
+                  gap={"10px"}
+                >
+                  <FormControl isInvalid={errors?.name && touched?.name}>
+                    <Text fontWeight={"500"}>Название</Text>
+                    <Input
+                      value={values?.name}
+                      placeholder="Название"
+                      marginTop={"4px"}
+                      border={"2px solid rgba(48, 141, 218, 1)"}
+                      borderRadius={"8px"}
+                      _hover={{ border: "2px solid rgba(48, 141, 218, 1)" }}
+                      name="name"
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                    />
+                    <FormErrorMessage marginTop={"2px"}>
+                      {errors?.name}
+                    </FormErrorMessage>
+                  </FormControl>
+                  <FormControl isInvalid={errors?.text && touched?.text}>
+                    <Text fontWeight={"500"}>Текст</Text>
+                    <Textarea
+                      value={values?.text}
+                      height={"auto"}
+                      placeholder="Текст"
+                      marginTop={"4px"}
+                      border={"2px solid rgba(48, 141, 218, 1)"}
+                      borderRadius={"8px"}
+                      _hover={{ border: "2px solid rgba(48, 141, 218, 1)" }}
+                      name="text"
+                      onChange={(e) => setFieldValue("text", e.target.value)}
+                      onBlur={handleBlur}
+                    />
+                    <FormErrorMessage marginTop={"2px"}>
+                      {errors?.text}
+                    </FormErrorMessage>
+                  </FormControl>
 
-            <VStack align={"flex-start"} width={"100%"}>
-              <Text>Название</Text>
-              <Input
-                placeholder="Название"
-                value={pageStore.selected_script?.templateName}
-              />
-            </VStack>
-            <VStack align={"flex-start"} width={"100%"}>
-              <Text>Текст рассылки</Text>
-              <Textarea
-                placeholder="Текст рассылки"
-                height={width >= 1400 ? "420px" : "200px"}
-                value={pageStore.selected_script?.message}
-              />
-            </VStack>
+                  {showInputs && (
+                    <>
+                      <Text fontWeight={"500"}> Цель рассылки</Text>
+                      <Textarea
+                        value={target}
+                        placeholder="Текст"
+                        marginTop={"4px"}
+                        border={"2px solid rgba(48, 141, 218, 1)"}
+                        borderRadius={"8px"}
+                        _hover={{ border: "2px solid rgba(48, 141, 218, 1)" }}
+                        onChange={(e) => setTarget(e.target.value)}
+                      />
+                      <Text fontWeight={"500"}>Целевая аудитория</Text>
+                      <Textarea
+                        value={audit}
+                        placeholder="Текст"
+                        marginTop={"4px"}
+                        border={"2px solid rgba(48, 141, 218, 1)"}
+                        borderRadius={"8px"}
+                        _hover={{ border: "2px solid rgba(48, 141, 218, 1)" }}
+                        onChange={(e) => setAudit(e.target.value)}
+                      />
+                      <Text fontWeight={"500"}>Предложение/продукт</Text>
+                      <Textarea
+                        value={product}
+                        placeholder="Текст"
+                        marginTop={"4px"}
+                        border={"2px solid rgba(48, 141, 218, 1)"}
+                        borderRadius={"8px"}
+                        _hover={{ border: "2px solid rgba(48, 141, 218, 1)" }}
+                        onChange={(e) => setProduct(e.target.value)}
+                      />
+                      <Text fontWeight={"500"}>Образ автора</Text>
+                      <Textarea
+                        value={author}
+                        placeholder="Текст"
+                        marginTop={"4px"}
+                        border={"2px solid rgba(48, 141, 218, 1)"}
+                        borderRadius={"8px"}
+                        _hover={{ border: "2px solid rgba(48, 141, 218, 1)" }}
+                        onChange={(e) => setAuthor(e.target.value)}
+                      />
+                      <Text fontWeight={"500"}>Прочее</Text>
+                      <Textarea
+                        value={pro}
+                        placeholder="Текст"
+                        marginTop={"4px"}
+                        border={"2px solid rgba(48, 141, 218, 1)"}
+                        borderRadius={"8px"}
+                        _hover={{ border: "2px solid rgba(48, 141, 218, 1)" }}
+                        onChange={(e) => setPro(e.target.value)}
+                      />
+                      <Button
+                        onClick={async () => await generate(setFieldValue)}
+                      >
+                        Сгенерировать
+                      </Button>
+                    </>
+                  )}
 
-            <Stack
-              width={"100%"}
-              justify={"flex-end"}
-              flexDirection={width >= 600 ? "row" : "column"}
-              gap={0}
-            >
-              <Button
-                marginTop={"10px"}
-                boxShadow={"-2px 2px 0 0 #4682B4"}
-                borderRadius={"0px"}
-                border={"1px solid #4682B4"}
-                bg={"white"}
-                color={"black"}
-                _hover={{ bg: "#4682B4", color: "white" }}
-                flexShrink={width >= 600 ? 0 : 1}
-              >
-                <Text fontSize={width >= 1000 ? "16px" : "14px"}>
-                  Сгенерировать текст рассылки
-                </Text>
-              </Button>
-              <Button
-                marginTop={"10px"}
-                boxShadow={"-2px 2px 0 0 #4682B4"}
-                borderRadius={"0px"}
-                border={"1px solid #4682B4"}
-                bg={"white"}
-                color={"black"}
-                _hover={{ bg: "#4682B4", color: "white" }}
-                flexShrink={width >= 600 ? 0 : 1}
-              >
-                <Text fontSize={width >= 1000 ? "16px" : "14px"}>
-                  Сохранить
-                </Text>
-              </Button>
-            </Stack>
-          </VStack>
-        </DrawerContent>
-      </Drawer>
+                  <HStack
+                    marginTop={"20px"}
+                    justify={"flex-end"}
+                    width={"100%"}
+                  >
+                    <ModalDeleteScript obj={obj} />
+                    <Button
+                      onClick={() => setShowInputs(!showInputs)}
+                      borderRadius={"8px"}
+                      border={"2px solid rgba(48, 141, 218, 1)"}
+                      bg={"white"}
+                      color={"black"}
+                      _hover={{ bg: "rgba(48, 141, 218, 1)", color: "white" }}
+                      flexShrink={0}
+                    >
+                      <Text>Сгенерировать текст</Text>
+                    </Button>
+
+                    <Button
+                      onClick={onClose}
+                      borderRadius={"8px"}
+                      border={"2px solid rgba(48, 141, 218, 1)"}
+                      bg={"white"}
+                      color={"black"}
+                      _hover={{ bg: "rgba(48, 141, 218, 1)", color: "white" }}
+                      flexShrink={0}
+                    >
+                      <Text>Отменить</Text>
+                    </Button>
+                    <Button
+                      type="submit"
+                      borderRadius={"8px"}
+                      border={"2px solid rgba(48, 141, 218, 1)"}
+                      bg={"white"}
+                      color={"black"}
+                      _hover={{ bg: "rgba(48, 141, 218, 1)", color: "white" }}
+                      flexShrink={0}
+                    >
+                      <Text>Обновить</Text>
+                    </Button>
+                  </HStack>
+                </VStack>
+              </Form>
+            )}
+          </Formik>
+        </ModalContent>
+      </Modal>
     </>
   );
-};
+});
 
 export default ModalScript;

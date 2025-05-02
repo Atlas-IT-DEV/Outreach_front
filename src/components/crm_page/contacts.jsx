@@ -4,12 +4,13 @@ import Searcher from "../searcher";
 import TableContacts from "./table_contacts";
 import ModalAddContact from "./modal_add_contact";
 import { useStores } from "../../store/store_context";
+import { observer } from "mobx-react-lite";
 
-const Contacts = () => {
+const Contacts = observer(() => {
   const { pageStore } = useStores();
   const options = {
     keys: ["fullName", "company"], // Поля для поиска
-    threshold: 0, // 0 = точное совпадение, 1 = любые совпадения
+    threshold: 0.5, // 0 = точное совпадение, 1 = любые совпадения
   };
   return (
     <VStack width={"100%"}>
@@ -25,6 +26,6 @@ const Contacts = () => {
       <TableContacts />
     </VStack>
   );
-};
+});
 
 export default Contacts;

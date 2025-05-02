@@ -1,15 +1,30 @@
 import { Button, HStack, Text, VStack } from "@chakra-ui/react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import Leads from "../components/crm_page/leads";
 import Contacts from "../components/crm_page/contacts";
 import Automation from "../components/crm_page/automation";
 import Tasks from "../components/crm_page/tasks";
 import useWindowDimensions from "../windowDimensions";
+import { observer } from "mobx-react-lite";
+import { useStores } from "../store/store_context";
 
-const CrmPage = () => {
+const CrmPage = observer(() => {
   const [selected, setSelected] = useState([1, 0, 0, 0]);
   const { width } = useWindowDimensions();
+  const { pageStore } = useStores();
+
+  useEffect(() => {
+    pageStore.getAllClients();
+    pageStore.getAllCompanies();
+    pageStore.getAllBases();
+    pageStore.getAllScripts();
+    pageStore.getAllWorks();
+    pageStore.getAllTasks();
+    pageStore.getAllUsers();
+    pageStore.updateSearchElement([]);
+    pageStore.updateSearchValue("");
+  }, []);
 
   return (
     <VStack
@@ -26,51 +41,25 @@ const CrmPage = () => {
         <HStack width={"100%"} gap={"10px"} justify={"space-between"}>
           <Button
             width={"100%"}
-            border={"1px solid #4682B4"}
-            boxShadow={"-2px 2px 0 0 #4682B4"}
-            borderRadius={"0px"}
-            bg={selected[0] == 1 ? "#4682B4" : "white"}
+            border={"2px solid rgba(48, 141, 218, 1)"}
+            borderRadius={"8px"}
+            bg={selected[0] == 1 ? "rgba(48, 141, 218, 1)" : "white"}
             color={selected[0] == 1 ? "white" : "black"}
             onClick={() => setSelected([1, 0, 0, 0])}
-            _hover={{ bg: "#4682B4", color: "white" }}
+            _hover={{ bg: "rgba(48, 141, 218, 1)", color: "white" }}
           >
             <Text fontSize={width >= 1000 ? "16px" : "14px"}>Лиды</Text>
           </Button>
-          {/* <Button
-            width={"100%"}
-            border={"1px solid #4682B4"}
-            borderRadius={"0px"}
-            boxShadow={"-2px 2px 0 0 #4682B4"}
-            bg={selected[1] == 1 ? "#4682B4" : "white"}
-            color={selected[1] == 1 ? "white" : "black"}
-            onClick={() => setSelected([0, 1, 0, 0])}
-            _hover={{ bg: "#4682B4", color: "white" }}
-          >
-            <Text fontSize={width >= 1000 ? "16px" : "14px"}>Контакты</Text>
-          </Button> */}
+
           <Button
             width={"100%"}
-            border={"1px solid #4682B4"}
-            borderRadius={"0px"}
-            boxShadow={"-2px 2px 0 0 #4682B4"}
-            bg={selected[2] == 1 ? "#4682B4" : "white"}
-            color={selected[2] == 1 ? "white" : "black"}
-            onClick={() => setSelected([0, 0, 1, 0])}
-            _hover={{ bg: "#4682B4", color: "white" }}
-          >
-            <Text fontSize={width >= 1000 ? "16px" : "14px"}>
-              Автоматизация продаж
-            </Text>
-          </Button>
-          <Button
-            width={"100%"}
-            border={"1px solid #4682B4"}
-            boxShadow={"-2px 2px 0 0 #4682B4"}
-            borderRadius={"0px"}
-            bg={selected[3] == 1 ? "#4682B4" : "white"}
+            border={"2px solid rgba(48, 141, 218, 1)"}
+            
+            borderRadius={"8px"}
+            bg={selected[3] == 1 ? "rgba(48, 141, 218, 1)" : "white"}
             color={selected[3] == 1 ? "white" : "black"}
             onClick={() => setSelected([0, 0, 0, 1])}
-            _hover={{ bg: "#4682B4", color: "white" }}
+            _hover={{ bg: "rgba(48, 141, 218, 1)", color: "white" }}
           >
             <Text fontSize={width >= 1000 ? "16px" : "14px"}>
               Задачи и уведомления
@@ -79,66 +68,34 @@ const CrmPage = () => {
         </HStack>
       ) : (
         <VStack width={"100%"} gap={"10px"}>
-          <HStack width={"100%"} justify={"space-between"}>
-            <Button
-              width={"100%"}
-              border={"1px solid #4682B4"}
-              boxShadow={"-2px 2px 0 0 #4682B4"}
-              borderRadius={"0px"}
-              bg={selected[0] == 1 ? "#4682B4" : "white"}
-              color={selected[0] == 1 ? "white" : "black"}
-              onClick={() => setSelected([1, 0, 0, 0])}
-              _hover={{ bg: "#4682B4", color: "white" }}
-            >
-              <Text fontSize={width >= 1000 ? "16px" : ["13px", "14px"]}>
-                Лиды
-              </Text>
-            </Button>
-            {/* <Button
-              width={"100%"}
-              border={"1px solid #4682B4"}
-              borderRadius={"0px"}
-              boxShadow={"-2px 2px 0 0 #4682B4"}
-              bg={selected[1] == 1 ? "#4682B4" : "white"}
-              color={selected[1] == 1 ? "white" : "black"}
-              onClick={() => setSelected([0, 1, 0, 0])}
-              _hover={{ bg: "#4682B4", color: "white" }}
-            >
-              <Text fontSize={width >= 1000 ? "16px" : ["13px", "14px"]}>
-                Контакты
-              </Text>
-            </Button> */}
-          </HStack>
-          <HStack width={"100%"} justify={"space-between"}>
-            <Button
-              width={"100%"}
-              border={"1px solid #4682B4"}
-              borderRadius={"0px"}
-              boxShadow={"-2px 2px 0 0 #4682B4"}
-              bg={selected[2] == 1 ? "#4682B4" : "white"}
-              color={selected[2] == 1 ? "white" : "black"}
-              onClick={() => setSelected([0, 0, 1, 0])}
-              _hover={{ bg: "#4682B4", color: "white" }}
-            >
-              <Text fontSize={width >= 1000 ? "16px" : ["13px", "14px"]}>
-                Автоматизация продаж
-              </Text>
-            </Button>
-            <Button
-              width={"100%"}
-              border={"1px solid #4682B4"}
-              boxShadow={"-2px 2px 0 0 #4682B4"}
-              borderRadius={"0px"}
-              bg={selected[3] == 1 ? "#4682B4" : "white"}
-              color={selected[3] == 1 ? "white" : "black"}
-              onClick={() => setSelected([0, 0, 0, 1])}
-              _hover={{ bg: "#4682B4", color: "white" }}
-            >
-              <Text fontSize={width >= 1000 ? "16px" : ["13px", "14px"]}>
-                Задачи и уведомления
-              </Text>
-            </Button>
-          </HStack>
+          <Button
+            width={"100%"}
+            border={"2px solid rgb(48, 141, 218)"}
+            
+            borderRadius={"8px"}
+            bg={selected[0] == 1 ? "rgb(48, 141, 218)" : "white"}
+            color={selected[0] == 1 ? "white" : "black"}
+            onClick={() => setSelected([1, 0, 0, 0])}
+            _hover={{ bg: "rgba(48, 141, 218, 1)", color: "white" }}
+          >
+            <Text fontSize={width >= 1000 ? "16px" : ["13px", "14px"]}>
+              Лиды
+            </Text>
+          </Button>
+          <Button
+            width={"100%"}
+            border={"2px solid rgba(48, 141, 218, 1)"}
+            
+            borderRadius={"8px"}
+            bg={selected[3] == 1 ? "rgba(48, 141, 218, 1)" : "white"}
+            color={selected[3] == 1 ? "white" : "black"}
+            onClick={() => setSelected([0, 0, 0, 1])}
+            _hover={{ bg: "rgba(48, 141, 218, 1)", color: "white" }}
+          >
+            <Text fontSize={width >= 1000 ? "16px" : "14px"}>
+              Задачи и уведомления
+            </Text>
+          </Button>
         </VStack>
       )}
 
@@ -153,6 +110,6 @@ const CrmPage = () => {
       )}
     </VStack>
   );
-};
+});
 
 export default CrmPage;

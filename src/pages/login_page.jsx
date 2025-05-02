@@ -30,8 +30,9 @@ import { FcGoogle } from "react-icons/fc";
 
 import Cookies from "js-cookie";
 import LoginForm from "../components/login_form";
+import { observer } from "mobx-react-lite";
 
-const LoginPage = () => {
+const LoginPage = observer(() => {
   const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
   const { pageStore } = useStores();
@@ -51,7 +52,7 @@ const LoginPage = () => {
       <VStack backgroundColor={"transparent"} p={8} maxW={"600px"} spacing={2}>
         <HStack>
           <Text
-            color={"#4682B4"}
+            color={"rgba(48, 141, 218, 1)"}
             fontWeight={"700"}
             fontSize={"40px"}
             alignSelf={"center"}
@@ -73,21 +74,8 @@ const LoginPage = () => {
         </Text>
         <LoginForm />
 
-        {/* <HStack
-          border="1px solid #4682B4"
-          _hover={{ bg: "#4682B4", color: "white" }}
-          padding={"5px 15px"}
-          borderRadius={"8px"}
-          cursor={"pointer"}
-        >
-          <Text color={"black"} fontWeight={500}>
-            Вход
-          </Text>
-          <FcGoogle />
-        </HStack> */}
-
         <Flex justify="center" mt={4}>
-          <Link color="#4682B4" href="#" fontSize="sm" onClick={() => onOpen()}>
+          <Link color="rgba(48, 141, 218, 1)" href="#" fontSize="sm" onClick={() => onOpen()}>
             Забыли пароль?
           </Link>
           <Modal onClose={onClose} isOpen={isOpen}>
@@ -100,7 +88,7 @@ const LoginPage = () => {
                   Восстановление доступно только для администраторов
                   авторизующихся по почте, свяжитесь с тех поддержкой в телеграм
                 </Text>
-                <Link href="https://t.me/AtlasCEO_77" color={"#4682B4"}>
+                <Link href="https://t.me/AtlasCEO_77" color={"rgba(48, 141, 218, 1)"}>
                   @AtlasCEO_77
                 </Link>
               </ModalBody>
@@ -110,6 +98,6 @@ const LoginPage = () => {
       </VStack>
     </Flex>
   );
-};
+});
 
 export default LoginPage;

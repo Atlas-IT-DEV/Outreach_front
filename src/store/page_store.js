@@ -9,129 +9,107 @@ class PageStore {
 
   bases = [];
 
+  users = [];
+  clients = [];
   leads = [];
+  scripts = [];
+  works = [];
+  call_works = [];
+  mail_works = [];
+  tasks = [];
 
-  crm_contacts = [
-    {
-      id: 1,
-      fullName: "Иванов Иван Иванович",
-      phoneNumber: "+7 (123) 456-78-90",
-      company: "ООО 'Ромашка'",
-      email: "ivanov@example.com",
-      inn: "123456789012",
-    },
-    {
-      id: 2,
-      fullName: "Петрова Анна Сергеевна",
-      phoneNumber: "+7 (987) 654-32-10",
-      company: "АО 'Технологии'",
-      email: "petrova@example.com",
-      inn: "987654321098",
-    },
-    {
-      id: 3,
-      fullName: "Сидоров Алексей Дмитриевич",
-      phoneNumber: "+7 (555) 123-45-67",
-      company: "ПАО 'Нефтегаз'",
-      email: "sidorov@example.com",
-      inn: "456789012345",
-    },
-    {
-      id: 4,
-      fullName: "Кузнецова Елена Викторовна",
-      phoneNumber: "+7 (777) 888-99-00",
-      company: "ЗАО 'Стройинвест'",
-      email: "kuznetsova@example.com",
-      inn: "789012345678",
-    },
-    {
-      id: 5,
-      fullName: "Смирнов Денис Олегович",
-      phoneNumber: "+7 (999) 111-22-33",
-      company: "ИП Смирнов",
-      email: "smirnov@example.com",
-      inn: "345678901234",
-    },
-  ];
-
-  emailTemplates = [
-    {
-      id: 1,
-      is_fav: false,
-      templateName: "Приветственное письмо новым клиентам",
-      purpose: "Знакомство с компанией",
-      targetAudience: "Новые клиенты, оформившие заказ",
-      targetAction: "Повышение лояльности, повторные покупки",
-      authorImage: "Менеджер по работе с клиентами",
-      message:
-        "Добрый день, {Имя}! Рады приветствовать вас среди наших клиентов. Хотим рассказать о ключевых преимуществах работы с нами...",
-    },
-    {
-      id: 2,
-      is_fav: false,
-      templateName: "Акция для постоянных клиентов",
-      purpose: "Стимулирование повторных покупок",
-      targetAudience: "Клиенты с 2+ заказами",
-      targetAction: "Покупка по акции",
-      authorImage: "Руководитель отдела продаж",
-      message:
-        "Уважаемый {Имя}! Благодарим за доверие. Специально для вас — скидка 15% на следующий заказ до {дата}. Перейдите в каталог...",
-    },
-    {
-      id: 3,
-      is_fav: false,
-      templateName: "Восстановление брошенной корзины",
-      purpose: "Возврат потерянных продаж",
-      targetAudience: "Пользователи, не завершившие заказ",
-      targetAction: "Завершение покупки",
-      authorImage: "Автоматизированная рассылка",
-      message:
-        "Вы забыли кое-что в корзине! Товары ждут вас: {список}. Для удобства сохранили вашу корзину. Оформите заказ за 2 клика!",
-    },
-    {
-      id: 4,
-      is_fav: true,
-      templateName: "Приглашение на вебинар",
-      purpose: "Привлечение потенциальных клиентов",
-      targetAudience: "Подписчики рассылки",
-      targetAction: "Регистрация на мероприятие",
-      authorImage: "Эксперт компании",
-      message:
-        "Как увеличить продажи в 2024 году? Приглашаем на бесплатный вебинар {дата}. Спикер — {имя эксперта}. Зарегистрируйтесь сейчас!",
-    },
-    {
-      id: 5,
-      is_fav: true,
-      templateName: "Обратная связь после покупки",
-      purpose: "Сбор отзывов",
-      targetAudience: "Клиенты, получившие заказ",
-      targetAction: "Оставление отзыва",
-      authorImage: "Служба заботы о клиентах",
-      message:
-        "{Имя}, надеемся, вы довольны покупкой! Поделитесь впечатлениями — это поможет нам стать лучше. Оставить отзыв можно здесь: {ссылка}.",
-    },
-  ];
-
+  emailTemplates = [];
   selected_script = {};
-
+  searchValue = "";
   search_elements = [];
+
+  selected_department = null;
+
+  generateText = {};
+
+  // базы
+  current_page = 0;
+  countRows = 20;
+  has_more_data = true;
+
+  selected_name_base = "";
+  headers_base = [];
+  selected_base = [];
+  current_page_base_search = 0;
+  countRowsSearch = 20;
+  count_search_base_values = 0;
+  has_more_data_search = true;
+
+  countValues = 0;
+  searchBaseValue = "";
+  clickSearch = false;
 
   constructor() {
     makeAutoObservable(this);
   }
 
+  updateCurrentPageBaseSearch = (new_base) => {
+    this.current_page_base_search = new_base;
+  };
+  updateCountRowsSearch = (new_row) => {
+    this.countRowsSearch = new_row;
+  };
+
+  resetData = () => {
+    this.token = "";
+    this.user_info = {};
+  };
+
   updateSearchElement = (new_search) => {
     this.search_elements = new_search;
+  };
+  updateClickSearch = (newSearch) => {
+    this.clickSearch = newSearch;
   };
 
   updateSelectedScript = (new_scr) => {
     this.selected_script = new_scr;
   };
 
+  updateSearchValue = (newValue) => {
+    this.searchValue = newValue;
+  };
+
   setIsOpen = (new_is_open) => {
     this.isOpen = new_is_open;
   };
 
+  updateSelectedDepartament = (new_dep) => {
+    this.selected_department = new_dep;
+  };
+
+  updateCallWorks = (new_works) => {
+    this.call_works = new_works;
+  };
+
+  updateMailWorks = (new_works) => {
+    this.mail_works = new_works;
+  };
+
+  updateGenerateText = (new_text) => {
+    this.generateText = new_text;
+  };
+
+  updateSelectedNameBase = (new_base) => {
+    this.selected_name_base = new_base;
+  };
+  updateCurrentPage = (new_page) => {
+    this.current_page = new_page;
+  };
+
+  updateCountRows = (new_rows) => {
+    this.countRows = new_rows;
+  };
+  updateSearchBaseValue = (new_value) => {
+    this.searchBaseValue = new_value;
+  };
+
+  // авторизация
   login = async (values) => {
     const response = await fetch(`${base_url}/auth/login`, {
       method: "POST",
@@ -148,7 +126,6 @@ class PageStore {
     }
     return response.ok;
   };
-
   getMe = async () => {
     const response = await fetch(`${base_url}/api/me`, {
       method: "GET",
@@ -162,19 +139,105 @@ class PageStore {
     console.log("me", result.me);
   };
 
+  // базы
   getAllBases = async () => {
-    const response = await fetch(`${base_url}/api/bases/`, {
-      method: "GET",
-      headers: {
-        accept: "application/json",
-        Authorization: `${this.token}`,
-      },
-    });
+    const response = await fetch(
+      `${base_url}/api/bases/${this.selected_department}`,
+      {
+        method: "GET",
+        headers: {
+          accept: "application/json",
+          Authorization: `${this.token}`,
+        },
+      }
+    );
     const result = await response.json();
-    this.bases = result.data;
-    console.log("getAllBases", response);
+    this.bases = result;
+  };
+  getBaseByName = async (name, selected_department, page, size) => {
+    const response = await fetch(
+      `${base_url}/api/bases/${selected_department}/${name}?page=${page}&size=${size}`,
+      {
+        method: "GET",
+        headers: {
+          accept: "application/json",
+          Authorization: `${this.token}`,
+        },
+      }
+    );
+    const result = await response.json();
+    this.has_more_data = true;
+    console.log("select base", result);
+    if (
+      result.data == null ||
+      (result.data.length == 1 && result.data[0] == null)
+    ) {
+      this.has_more_data = false;
+      this.selected_base = [];
+      return {};
+    }
+
+    if (result.data[result.data.length - 1] == null) {
+      this.has_more_data = false;
+      // Удаляем null из массива
+      result.data.pop();
+    }
+
+    this.headers_base = result.columns;
+    this.selected_base = result.data;
+    this.countValues = result.count;
+  };
+  searchInBase = async (value, page, count) => {
+    const response = await fetch(
+      `${base_url}/api/bases/find/${this.selected_department}/${this.selected_name_base}?value=${value}&page=${page}&count=${count}`,
+      {
+        method: "GET",
+        headers: {
+          accept: "application/json",
+          Authorization: `${this.token}`,
+        },
+      }
+    );
+    const result = await response.json();
+
+    this.has_more_data_search = true;
+    console.log("select base", result);
+    if (
+      result.arr == null ||
+      (result.arr.length == 1 && result.arr[0] == null)
+    ) {
+      this.has_more_data_search = false;
+      this.search_elements = [];
+    }
+
+    if (result.arr[result.arr.length - 1] == null) {
+      this.has_more_data_search = false;
+      // Удаляем null из массива
+      result.arr.pop();
+    }
+
+    this.search_elements = result.arr;
+    this.count_search_base_values = result.count;
+
+    console.log("search base", result);
   };
 
+  uploadBase = async (name, formData) => {
+    const response = await fetch(
+      `${base_url}/api/bases/upload/${this.selected_department}/${name}`,
+      {
+        method: "POST",
+        headers: {
+          accept: "application/json",
+          Authorization: `${this.token}`,
+        },
+        body: formData,
+      }
+    );
+    return response;
+  };
+
+  // компании
   createCompamy = async (values) => {
     const response = await fetch(`${base_url}/api/companies`, {
       method: "POST",
@@ -188,7 +251,6 @@ class PageStore {
     console.log("val", values);
     return response.ok;
   };
-
   getAllCompanies = async () => {
     const response = await fetch(`${base_url}/api/companies`, {
       method: "GET",
@@ -198,7 +260,7 @@ class PageStore {
       },
     });
     const result = await response.json();
-    this.leads = result;
+    this.clients = result;
   };
   editCompany = async (id, values) => {
     const response = await fetch(`${base_url}/api/companies/${id}`, {
@@ -212,6 +274,8 @@ class PageStore {
     });
     return response.ok;
   };
+
+  // сотрудники
   editUser = async (id, values) => {
     const response = await fetch(`${base_url}/api/users/${id}`, {
       method: "PUT",
@@ -222,6 +286,228 @@ class PageStore {
       },
       body: JSON.stringify(values),
     });
+    return response.ok;
+  };
+  getAllUsers = async () => {
+    const response = await fetch(`${base_url}/api/users`, {
+      method: "GET",
+      headers: {
+        accept: "application/json",
+        Authorization: `${this.token}`,
+      },
+    });
+    const result = await response.json();
+    this.users = result;
+  };
+  createUser = async (values) => {
+    const response = await fetch(`${base_url}/api/users`, {
+      method: "POST",
+      headers: {
+        accept: "application/json",
+        "Content-Type": "application/json",
+        Authorization: `${this.token}`,
+      },
+      body: JSON.stringify(values),
+    });
+    return response.ok;
+  };
+
+  // клиенты
+  createClient = async (values) => {
+    const response = await fetch(`${base_url}/api/clients`, {
+      method: "POST",
+      headers: {
+        accept: "application/json",
+        "Content-Type": "application/json",
+        Authorization: `${this.token}`,
+      },
+      body: JSON.stringify(values),
+    });
+    return response.ok;
+  };
+  editClient = async (id, values) => {
+    const response = await fetch(`${base_url}/api/clients/${id}`, {
+      method: "PUT",
+      headers: {
+        accept: "application/json",
+        "Content-Type": "application/json",
+        Authorization: `${this.token}`,
+      },
+      body: JSON.stringify(values),
+    });
+    return response.ok;
+  };
+  getAllClients = async () => {
+    const response = await fetch(`${base_url}/api/clients`, {
+      method: "GET",
+      headers: {
+        accept: "application/json",
+        Authorization: `${this.token}`,
+      },
+    });
+    const result = await response.json();
+    this.leads = result;
+    console.log("leads", result);
+  };
+
+  // скрипты
+  getAllScripts = async () => {
+    const response = await fetch(`${base_url}/api/scripts`, {
+      method: "GET",
+      headers: {
+        accept: "application/json",
+        Authorization: `${this.token}`,
+      },
+    });
+    const result = await response.json();
+    this.scripts = result;
+    console.log("scripts", result);
+  };
+  createScript = async (values) => {
+    const response = await fetch(`${base_url}/api/scripts`, {
+      method: "POST",
+      headers: {
+        accept: "application/json",
+        "Content-Type": "application/json",
+        Authorization: `${this.token}`,
+      },
+      body: JSON.stringify(values),
+    });
+    return response.ok;
+  };
+  editScript = async (id, values) => {
+    const response = await fetch(`${base_url}/api/scripts/${id}`, {
+      method: "PUT",
+      headers: {
+        accept: "application/json",
+        "Content-Type": "application/json",
+        Authorization: `${this.token}`,
+      },
+      body: JSON.stringify(values),
+    });
+    return response.ok;
+  };
+  addToFavouriveScript = async (id) => {
+    const response = await fetch(`${base_url}/api/scripts/favorite/${id}`, {
+      method: "POST",
+      headers: {
+        accept: "application/json",
+        Authorization: `${this.token}`,
+      },
+    });
+    return response.ok;
+  };
+
+  // рассылки
+  getAllWorks = async () => {
+    const response = await fetch(`${base_url}/api/works`, {
+      method: "GET",
+      headers: {
+        accept: "application/json",
+        Authorization: `${this.token}`,
+      },
+    });
+    const result = await response.json();
+    this.works = result;
+    if (result?.length != 0) {
+      this.call_works = result.filter(
+        (item) =>
+          item?.department_id == this.selected_department && item?.obzvon == "1"
+      );
+      this.mail_works = result.filter(
+        (item) =>
+          item?.department_id == this.selected_department && item?.obzvon == "0"
+      );
+    }
+    console.log("works", result);
+  };
+  createWork = async (values) => {
+    const response = await fetch(`${base_url}/api/works`, {
+      method: "POST",
+      headers: {
+        accept: "application/json",
+        "Content-Type": "application/json",
+        Authorization: `${this.token}`,
+      },
+      body: JSON.stringify(values),
+    });
+    return response.ok;
+  };
+  editWork = async (id, values) => {
+    const response = await fetch(`${base_url}/api/works/${id}`, {
+      method: "PUT",
+      headers: {
+        accept: "application/json",
+        "Content-Type": "application/json",
+        Authorization: `${this.token}`,
+      },
+      body: JSON.stringify(values),
+    });
+    return response.ok;
+  };
+
+  // таски
+  getAllTasks = async () => {
+    const response = await fetch(`${base_url}/api/tasks`, {
+      method: "GET",
+      headers: {
+        accept: "application/json",
+        Authorization: `${this.token}`,
+      },
+    });
+    const result = await response.json();
+    this.tasks = result.filter(
+      (item) => item?.company_id == this.user_info?.company_id
+    );
+    console.log("tasks", this.tasks);
+  };
+  createTask = async (values) => {
+    const response = await fetch(`${base_url}/api/tasks`, {
+      method: "POST",
+      headers: {
+        accept: "application/json",
+        "Content-Type": "application/json",
+        Authorization: `${this.token}`,
+      },
+      body: JSON.stringify(values),
+    });
+    return response.ok;
+  };
+  completeTask = async (id) => {
+    const response = await fetch(`${base_url}/api/tasks/complete/${id}`, {
+      method: "POST",
+      headers: {
+        accept: "application/json",
+        Authorization: `${this.token}`,
+      },
+    });
+    return response.ok;
+  };
+  updateTask = async (id, values) => {
+    const response = await fetch(`${base_url}/api/tasks/${id}`, {
+      method: "PUT",
+      headers: {
+        accept: "application/json",
+        "Content-Type": "application/json",
+        Authorization: `${this.token}`,
+      },
+      body: JSON.stringify(values),
+    });
+    return response.ok;
+  };
+
+  generateGPT = async (values) => {
+    const response = await fetch(`https://i-panel.pro:8808/gpt`, {
+      method: "POST",
+      headers: {
+        accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ question: values }),
+    });
+
+    const result = await response.json();
+    this.generateText = result;
     return response.ok;
   };
 }

@@ -6,7 +6,7 @@ import CampaignAnalytics from "./campaign_analytics";
 const CallsStatistic = () => {
   return (
     <VStack width={"100%"} align={"flex-start"} paddingTop={["10px", "20px"]}>
-      <Text color={"#4682B4"} fontWeight={500} fontSize={["16px", "20px"]}>
+      <Text color={"rgba(48, 141, 218, 1)"} fontWeight={500} fontSize={["16px", "20px"]}>
         Аналитика звонков
       </Text>
       <HStack

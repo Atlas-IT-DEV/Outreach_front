@@ -18,9 +18,9 @@ const ModalDeleteLead = observer(({ obj = {} }) => {
   const { pageStore } = useStores();
   const toast = useToast();
 
-  const deleteCompany = async () => {
+  const deleteClient = async () => {
     const response = await fetch(
-      `http://158.255.7.7:8081/api/companies/${obj?.ID}`,
+      `http://158.255.7.7:8081/api/clients/${obj?.ID}`,
       {
         method: "DELETE",
         headers: {
@@ -31,10 +31,10 @@ const ModalDeleteLead = observer(({ obj = {} }) => {
     );
     return response.ok;
   };
-  const handleDeleteCompany = async () => {
-    const ok = await deleteCompany();
+  const handleDeleteClient = async () => {
+    const ok = await deleteClient();
     if (ok) {
-      await pageStore.getAllCompanies();
+      pageStore.getAllClients();
       toast({
         title: "Успех",
         description: "Лид успешно удален",
@@ -48,51 +48,42 @@ const ModalDeleteLead = observer(({ obj = {} }) => {
     <>
       <Button
         onClick={() => onOpen()}
-        boxShadow={"-2px 2px 0 0 #4682B4"}
-        borderRadius={"0px"}
-        border={"1px solid #4682B4"}
+        borderRadius={"8px"}
+        border={"2px solid rgba(48, 141, 218, 1)"}
         bg={"white"}
         color={"black"}
-        _hover={{ bg: "#4682B4", color: "white" }}
+        _hover={{ bg: "rgba(48, 141, 218, 1)", color: "white" }}
         flexShrink={0}
       >
         <Text>Удалить</Text>
       </Button>
 
-      <Modal isOpen={isOpen} onClose={onClose} onEsc={onClose} size={"3xl"}>
+      <Modal isOpen={isOpen} onClose={onClose} onEsc={onClose}>
         <ModalOverlay />
-        <ModalContent
-          margin={"auto"}
-          borderRadius={"0px"}
-          border={"2px solid #4682B4"}
-          height={"auto"}
-          padding={"20px"}
-        >
-          <ModalCloseButton onClick={() => console.log("click")} />
+        <ModalContent padding={"20px"}>
+          <ModalCloseButton />
           <Text width={"100%"} textAlign={"center"} fontWeight={"600"}>
             Удалить лида?
           </Text>
           <HStack marginTop={"20px"} justify={"center"} width={"100%"}>
             <Button
               onClick={onClose}
-              boxShadow={"-2px 2px 0 0 #4682B4"}
-              borderRadius={"0px"}
-              border={"1px solid #4682B4"}
+              borderRadius={"8px"}
+              border={"2px solid rgba(48, 141, 218, 1)"}
               bg={"white"}
               color={"black"}
-              _hover={{ bg: "#4682B4", color: "white" }}
+              _hover={{ bg: "rgba(48, 141, 218, 1)", color: "white" }}
               flexShrink={0}
             >
               <Text>Отменить</Text>
             </Button>
             <Button
-              onClick={async () => await handleDeleteCompany()}
-              boxShadow={"-2px 2px 0 0 #4682B4"}
-              borderRadius={"0px"}
-              border={"1px solid #4682B4"}
+              onClick={async () => await handleDeleteClient()}
+              borderRadius={"8px"}
+              border={"2px solid rgba(48, 141, 218, 1)"}
               bg={"white"}
               color={"black"}
-              _hover={{ bg: "#4682B4", color: "white" }}
+              _hover={{ bg: "rgba(48, 141, 218, 1)", color: "white" }}
               flexShrink={0}
             >
               <Text>Удалить</Text>

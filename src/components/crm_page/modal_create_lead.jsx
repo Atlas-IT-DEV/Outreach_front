@@ -3,9 +3,9 @@ import {
   FormControl,
   FormErrorMessage,
   HStack,
+  IconButton,
   Input,
   Modal,
-  ModalBody,
   ModalCloseButton,
   ModalContent,
   ModalOverlay,
@@ -19,6 +19,8 @@ import * as Yup from "yup";
 import useWindowDimensions from "../../windowDimensions";
 import { useStores } from "../../store/store_context";
 import { observer } from "mobx-react-lite";
+import { useEffect, useState } from "react";
+import { AddIcon, DeleteIcon } from "@chakra-ui/icons";
 
 const ModalCreateLead = observer(() => {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -26,41 +28,109 @@ const ModalCreateLead = observer(() => {
   const { pageStore } = useStores();
   const toast = useToast();
 
-  const leadValues = {
-    name: "",
-    description: "",
-    director: {
-      first_name: "",
-      last_name: "",
-      password: "",
-      phone: "",
-      username: "",
-    },
+  const [innValues, setInnValues] = useState("");
+  const [innData, setInnData] = useState([]);
+
+  const [pairs, setPairs] = useState([{ id: 1, key: "", value: "" }]);
+
+  const addPair = () => {
+    setPairs([...pairs, { id: Date.now(), key: "", value: "" }]);
+  };
+
+  const removePair = (id) => {
+    if (pairs.length <= 1) return; // Оставляем хотя бы одну пару
+    setPairs(pairs.filter((pair) => pair.id !== id));
+  };
+
+  const hdChange = (id, field, value) => {
+    setPairs(
+      pairs?.map((pair) =>
+        pair.id === id ? { ...pair, [field]: value } : pair
+      )
+    );
+  };
+
+  const getCompanyByINN = async (values) => {
+    const response = await fetch(
+      "http://suggestions.dadata.ru/suggestions/api/4_1/rs/findById/party",
+      {
+        method: "POST",
+        headers: {
+          accept: "application/json",
+          "Content-Type": "application/json",
+          Authorization: "Token 96d81fed256fcf8842ec456e35e134f5aa9e1fa0",
+        },
+        body: JSON.stringify({
+          query: values,
+        }),
+      }
+    );
+    const result = await response.json();
+    setInnData(result.suggestions[0]);
+    if (innData?.value) {
+      setPairs([
+        ...pairs,
+        {
+          id: Date.now(),
+          key: "Наименование компании",
+          value: innData?.value,
+        },
+      ]);
+    }
+    if (innData?.inn) {
+      setPairs([
+        ...pairs,
+        {
+          id: Date.now(),
+          key: "ИНН",
+          value: innData?.inn,
+        },
+      ]);
+    }
+    if (innData?.kpp) {
+      setPairs([
+        ...pairs,
+        {
+          id: Date.now(),
+          key: "КПП",
+          value: innData?.kpp,
+        },
+      ]);
+    }
+    console.log("pairs", pairs);
+  };
+
+  const clientValues = {
+    additions: "",
+    email: "",
+    first_name: "",
+    last_name: "",
+    phone: "",
   };
 
   const validationSchema = Yup.object({
-    director: Yup.object().shape({
-      first_name: Yup.string().required("Обязательное поле"),
-      last_name: Yup.string().required("Обязательное поле"),
-      password: Yup.string().required("Обязательное поле"),
-      phone: Yup.string()
-        .required("Обязательное поле")
-        .min(11, "Номер слишком короткий")
-        .max(15, "Номер слишком длинный"),
-      username: Yup.string().required("Обязательное поле"),
-    }),
-    name: Yup.string().required("Обязательное поле"),
-    description: Yup.string().required("Обязательное поле"),
+    first_name: Yup.string().required("Обязательное поле"),
+    last_name: Yup.string().required("Обязательное поле"),
+    phone: Yup.string()
+      .required("Обязательное поле")
+      .min(11, "Номер слишком короткий")
+      .max(15, "Номер слишком длинный"),
+    email: Yup.string().required("Обязательное поле"),
+    additions: Yup.string().required("Обязательное поле"),
   });
 
-  const createCompamy = async (values) => {
-    return await pageStore.createCompamy(values);
+  const createClient = async (values) => {
+    return await pageStore.createClient(values);
   };
   const onSubmit = async (values) => {
-    const ok = await createCompamy(values);
-    console.log("values", values);
+    const filteredPairs = pairs.filter(
+      (pair) => pair.key.trim() !== "" && pair.value.trim() !== ""
+    );
+
+    values.additions = JSON.stringify(filteredPairs);
+    const ok = await createClient(values);
     if (ok) {
-      await pageStore.getAllCompanies();
+      pageStore.getAllClients();
       toast({
         title: "Успех",
         description: "Новый лид успешно создан",
@@ -75,12 +145,11 @@ const ModalCreateLead = observer(() => {
     <>
       <Button
         onClick={() => onOpen()}
-        boxShadow={"-2px 2px 0 0 #4682B4"}
-        borderRadius={"0px"}
-        border={"1px solid #4682B4"}
+        borderRadius={"8px"}
+        border={"2px solid rgba(48, 141, 218, 1)"}
         bg={"white"}
         color={"black"}
-        _hover={{ bg: "#4682B4", color: "white" }}
+        _hover={{ bg: "rgba(48, 141, 218, 1)", color: "white" }}
         flexShrink={0}
       >
         <Text fontSize={width >= 1000 ? "16px" : ["13px", "14px"]}>
@@ -89,16 +158,10 @@ const ModalCreateLead = observer(() => {
       </Button>
       <Modal isOpen={isOpen} onClose={onClose} onEsc={onClose} size={"3xl"}>
         <ModalOverlay />
-        <ModalContent
-          margin={"auto"}
-          borderRadius={"0px"}
-          border={"2px solid #4682B4"}
-          height={"auto"}
-          minH={width >= 1400 ? "auto" : height}
-        >
-          <ModalCloseButton onClick={() => console.log("click")} />
+        <ModalContent padding={"20px"}>
+          <ModalCloseButton />
           <Formik
-            initialValues={leadValues}
+            initialValues={clientValues}
             validationSchema={validationSchema}
             onSubmit={onSubmit}
           >
@@ -111,120 +174,64 @@ const ModalCreateLead = observer(() => {
               setFieldValue,
             }) => (
               <Form>
-                {console.log(values)}
-                <VStack
-                  bg={"white"}
-                  padding={"20px"}
-                  width={"100%"}
-                  align={"flex-start"}
-                  marginTop={"20px"}
-                >
-                  <Text color={"black"} fontWeight={"600"}>
+                <VStack bg={"white"} width={"100%"} align={"flex-start"}>
+                  {console.log(values)}
+                  <Text
+                    color={"black"}
+                    fontWeight={"600"}
+                    width={"100%"}
+                    textAlign={"center"}
+                  >
                     Создание лида
                   </Text>
                   <VStack width={"100%"} gap={"10px"} marginTop={"10px"}>
                     <FormControl
-                      isInvalid={
-                        errors?.director?.username &&
-                        touched?.director?.username
-                      }
-                    >
-                      <Text fontWeight={"500"}>Никнейм</Text>
-                      <Input
-                        placeholder="Никнейм"
-                        marginTop={"4px"}
-                        border={"2px solid #4682B4"}
-                        borderRadius={"0"}
-                        _hover={{ border: "2px solid #4682B4" }}
-                        name="director.username"
-                        onChange={handleChange}
-                        onBlur={handleBlur}
-                      />
-                      <FormErrorMessage marginTop={"2px"}>
-                        {errors?.director?.username}
-                      </FormErrorMessage>
-                    </FormControl>
-
-                    <FormControl
-                      isInvalid={
-                        errors?.director?.password &&
-                        touched?.director?.password
-                      }
-                    >
-                      <Text fontWeight={"500"}>Пароль</Text>
-                      <Input
-                        placeholder="Пароль"
-                        type="password"
-                        marginTop={"4px"}
-                        border={"2px solid #4682B4"}
-                        borderRadius={"0"}
-                        _hover={{ border: "2px solid #4682B4" }}
-                        name="director.password"
-                        onChange={handleChange}
-                        onBlur={handleBlur}
-                      />
-                      <FormErrorMessage marginTop={"2px"}>
-                        {errors?.director?.password}
-                      </FormErrorMessage>
-                    </FormControl>
-
-                    <FormControl
-                      isInvalid={
-                        errors?.director?.last_name &&
-                        touched?.director?.last_name
-                      }
+                      isInvalid={errors?.last_name && touched?.last_name}
                     >
                       <Text fontWeight={"500"}>Фамилия</Text>
                       <Input
                         placeholder="Фамилия"
                         marginTop={"4px"}
-                        border={"2px solid #4682B4"}
-                        borderRadius={"0"}
-                        _hover={{ border: "2px solid #4682B4" }}
-                        name="director.last_name"
+                        border={"2px solid rgba(48, 141, 218, 1)"}
+                        borderRadius={"8px"}
+                        _hover={{ border: "2px solid rgba(48, 141, 218, 1)" }}
+                        name="last_name"
                         onChange={handleChange}
                         onBlur={handleBlur}
                       />
                       <FormErrorMessage marginTop={"2px"}>
-                        {errors?.director?.last_name}
+                        {errors?.last_name}
                       </FormErrorMessage>
                     </FormControl>
 
                     <FormControl
-                      isInvalid={
-                        errors?.director?.first_name &&
-                        touched?.director?.first_name
-                      }
+                      isInvalid={errors?.first_name && touched?.first_name}
                     >
                       <Text fontWeight={"500"}>Имя</Text>
                       <Input
                         placeholder="Имя"
                         marginTop={"4px"}
-                        border={"2px solid #4682B4"}
-                        borderRadius={"0"}
-                        _hover={{ border: "2px solid #4682B4" }}
-                        name="director.first_name"
+                        border={"2px solid rgba(48, 141, 218, 1)"}
+                        borderRadius={"8px"}
+                        _hover={{ border: "2px solid rgba(48, 141, 218, 1)" }}
+                        name="first_name"
                         onChange={handleChange}
                         onBlur={handleBlur}
                       />
                       <FormErrorMessage marginTop={"2px"}>
-                        {errors?.director?.first_name}
+                        {errors?.first_name}
                       </FormErrorMessage>
                     </FormControl>
 
-                    <FormControl
-                      isInvalid={
-                        errors?.director?.phone && touched?.director?.phone
-                      }
-                    >
+                    <FormControl isInvalid={errors?.phone && touched?.phone}>
                       <Text fontWeight={"500"}>Номер телефона</Text>
                       <Input
                         placeholder="Номер телефона"
                         marginTop={"4px"}
-                        border={"2px solid #4682B4"}
-                        borderRadius={"0"}
-                        _hover={{ border: "2px solid #4682B4" }}
-                        name="director.phone"
+                        border={"2px solid rgba(48, 141, 218, 1)"}
+                        borderRadius={"8px"}
+                        _hover={{ border: "2px solid rgba(48, 141, 218, 1)" }}
+                        name="phone"
                         onChange={handleChange}
                         onBlur={handleBlur}
                       />
@@ -233,38 +240,98 @@ const ModalCreateLead = observer(() => {
                       </FormErrorMessage>
                     </FormControl>
 
-                    <FormControl isInvalid={errors?.name && touched?.name}>
-                      <Text fontWeight={"500"}>Название компаниии</Text>
+                    <FormControl isInvalid={errors?.email && touched?.email}>
+                      <Text fontWeight={"500"}>email</Text>
                       <Input
-                        placeholder="Название компании"
+                        placeholder="Email"
                         marginTop={"4px"}
-                        border={"2px solid #4682B4"}
-                        borderRadius={"0"}
-                        _hover={{ border: "2px solid #4682B4" }}
-                        name="name"
+                        border={"2px solid rgba(48, 141, 218, 1)"}
+                        borderRadius={"8px"}
+                        _hover={{ border: "2px solid rgba(48, 141, 218, 1)" }}
+                        name="email"
                         onChange={handleChange}
                         onBlur={handleBlur}
                       />
                       <FormErrorMessage marginTop={"2px"}>
-                        {errors?.name}
+                        {errors?.email}
                       </FormErrorMessage>
                     </FormControl>
                     <FormControl
-                      isInvalid={errors?.description && touched?.description}
+                      isInvalid={errors?.additions && touched?.additions}
                     >
-                      <Text fontWeight={"500"}>Описание компании</Text>
-                      <Input
-                        placeholder="Описание компании"
-                        marginTop={"4px"}
-                        border={"2px solid #4682B4"}
-                        borderRadius={"0"}
-                        _hover={{ border: "2px solid #4682B4" }}
-                        name="description"
-                        onChange={handleChange}
-                        onBlur={handleBlur}
+                      <Text fontWeight={"500"}>Доп. информация</Text>
+                      <HStack width={"100%"}>
+                        <Input
+                          value={innValues}
+                          onChange={(e) => setInnValues(e.target.value)}
+                          placeholder="ПОИСК ПО ИНН"
+                          marginTop={"4px"}
+                          border={"2px solid rgba(48, 141, 218, 1)"}
+                          borderRadius={"8px"}
+                          _hover={{ border: "2px solid rgba(48, 141, 218, 1)" }}
+                          name="inn"
+                        />
+                        <Button
+                          onClick={async () => await getCompanyByINN(innValues)}
+                          borderRadius={"8px"}
+                          border={"2px solid rgba(48, 141, 218, 1)"}
+                          bg={"white"}
+                          color={"black"}
+                          _hover={{
+                            bg: "rgba(48, 141, 218, 1)",
+                            color: "white",
+                          }}
+                          flexShrink={0}
+                        >
+                          <Text>Найти</Text>
+                        </Button>
+                      </HStack>
+
+                      <VStack width={"100%"} marginTop={"10px"}>
+                        {pairs?.map((pair) => (
+                          <HStack key={pair.id} spacing={3} width={"100%"}>
+                            <Input
+                              borderRadius={"8px"}
+                              border={"2px solid rgba(48, 141, 218, 1)"}
+                              placeholder="Key"
+                              value={pair.key}
+                              onChange={(e) => {
+                                hdChange(pair.id, "key", e.target.value);
+                              }}
+                            />
+                            <Input
+                              borderRadius={"8px"}
+                              border={"2px solid rgba(48, 141, 218, 1)"}
+                              placeholder="Value"
+                              value={pair.value}
+                              onChange={(e) => {
+                                hdChange(pair.id, "value", e.target.value);
+                              }}
+                            />
+                            <IconButton
+                              borderRadius={"8px"}
+                              aria-label="Remove pair"
+                              icon={<DeleteIcon />}
+                              colorScheme="red"
+                              onClick={() => removePair(pair.id)}
+                              isDisabled={pairs.length <= 1}
+                            />
+                          </HStack>
+                        ))}
+                      </VStack>
+
+                      <IconButton
+                        width={"100%"}
+                        icon={<AddIcon />}
+                        bgColor="rgba(48, 141, 218, 1)"
+                        color={"white"}
+                        onClick={addPair}
+                        mt={4}
+                        borderRadius={"8px"}
                       />
+
                       <FormErrorMessage marginTop={"2px"}>
-                        {errors?.description}
+                        {errors?.additions}
                       </FormErrorMessage>
                     </FormControl>
                   </VStack>
@@ -275,24 +342,25 @@ const ModalCreateLead = observer(() => {
                   >
                     <Button
                       onClick={onClose}
-                      boxShadow={"-2px 2px 0 0 #4682B4"}
-                      borderRadius={"0px"}
-                      border={"1px solid #4682B4"}
+                      borderRadius={"8px"}
+                      border={"2px solid rgba(48, 141, 218, 1)"}
                       bg={"white"}
                       color={"black"}
-                      _hover={{ bg: "#4682B4", color: "white" }}
+                      _hover={{ bg: "rgba(48, 141, 218, 1)", color: "white" }}
                       flexShrink={0}
                     >
                       <Text>Отменить</Text>
                     </Button>
                     <Button
+                      onClick={() =>
+                        setFieldValue("additions", JSON.stringify(pairs))
+                      }
                       type="submit"
-                      boxShadow={"-2px 2px 0 0 #4682B4"}
-                      borderRadius={"0px"}
-                      border={"1px solid #4682B4"}
+                      borderRadius={"8px"}
+                      border={"2px solid rgba(48, 141, 218, 1)"}
                       bg={"white"}
                       color={"black"}
-                      _hover={{ bg: "#4682B4", color: "white" }}
+                      _hover={{ bg: "rgba(48, 141, 218, 1)", color: "white" }}
                       flexShrink={0}
                     >
                       <Text>Создать</Text>

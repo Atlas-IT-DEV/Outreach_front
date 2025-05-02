@@ -1,22 +1,34 @@
-import { HStack, Stack, Text, VStack } from "@chakra-ui/react";
+import { HStack, Stack, VStack } from "@chakra-ui/react";
 
 import Searcher from "../searcher";
 import TableTasks from "./table_tasks";
+import ModalCreateTask from "./modal_create_task";
+import { observer } from "mobx-react-lite";
+import { useStores } from "../../store/store_context";
 
-const Tasks = () => {
+const Tasks = observer(() => {
+  const { pageStore } = useStores();
+  const options = {
+    keys: ["name", "description"],
+    threshold: 0.5, // 0 = точное совпадение, 1 = любые совпадения
+  };
   return (
     <VStack width={"100%"}>
-      <Text marginTop={"20px"} fontWeight={"600"} color={"black"} w={"100%"}>
-        Поиск по задачам
-      </Text>
       <HStack width={"100%"}>
-        <Searcher />
+        <Searcher
+          search_by="Поиск по задачам"
+          array={pageStore.tasks}
+          options={options}
+        />
+      </HStack>
+      <HStack width={"100%"} align={"flex-start"} marginTop={"20px"}>
+        <ModalCreateTask />
       </HStack>
       <Stack marginTop={"10px"} w={"100%"}>
         <TableTasks />
       </Stack>
     </VStack>
   );
-};
+});
 
 export default Tasks;

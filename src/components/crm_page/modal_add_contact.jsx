@@ -15,8 +15,9 @@ import {
 import { Form, Formik } from "formik";
 import * as Yup from "yup";
 import useWindowDimensions from "../../windowDimensions";
+import { observer } from "mobx-react-lite";
 
-const ModalAddContact = () => {
+const ModalAddContact = observer(() => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { width, height } = useWindowDimensions();
 
@@ -42,12 +43,12 @@ const ModalAddContact = () => {
     <>
       <Button
         onClick={onOpen}
-        boxShadow={"-2px 2px 0 0 #4682B4"}
-        borderRadius={"0px"}
-        border={"1px solid #4682B4"}
+        
+        borderRadius={"8px"}
+        border={"2px solid rgba(48, 141, 218, 1)"}
         bg={"white"}
         color={"black"}
-        _hover={{ bg: "#4682B4", color: "white" }}
+        _hover={{ bg: "rgba(48, 141, 218, 1)", color: "white" }}
         flexShrink={0}
       >
         <Text fontSize={width >= 1000 ? "16px" : ["13px", "14px"]}>
@@ -59,14 +60,14 @@ const ModalAddContact = () => {
         <ModalOverlay />
         <ModalContent
           margin={"auto"}
-          borderRadius={"0px"}
-          border={"2px solid #4682B4"}
+          borderRadius={"8px"}
+          border={"2px solid rgba(48, 141, 218, 1)"}
           height={"auto"}
           //   minH={width >= 1400 ? height - 100 : height}
           overflow={"hidden"}
           overflowY={"scroll"}
         >
-          <ModalCloseButton onClick={() => console.log("click")} />
+          <ModalCloseButton />
           <Formik
             initialValues={leadValues}
             validationSchema={validationSchema}
@@ -96,9 +97,9 @@ const ModalAddContact = () => {
                       <Input
                         placeholder="ФИО"
                         marginTop={"4px"}
-                        border={"2px solid #4682B4"}
-                        borderRadius={"0"}
-                        _hover={{ border: "2px solid #4682B4" }}
+                        border={"2px solid rgba(48, 141, 218, 1)"}
+                        borderRadius={"8px"}
+                        _hover={{ border: "2px solid rgba(48, 141, 218, 1)" }}
                         name="fullName"
                         onChange={handleChange}
                         onBlur={handleBlur}
@@ -115,9 +116,9 @@ const ModalAddContact = () => {
                       <Input
                         placeholder="Номер телефона"
                         marginTop={"4px"}
-                        border={"2px solid #4682B4"}
-                        borderRadius={"0"}
-                        _hover={{ border: "2px solid #4682B4" }}
+                        border={"2px solid rgba(48, 141, 218, 1)"}
+                        borderRadius={"8px"}
+                        _hover={{ border: "2px solid rgba(48, 141, 218, 1)" }}
                         name="phoneNumber"
                         onChange={handleChange}
                         onBlur={handleBlur}
@@ -132,9 +133,9 @@ const ModalAddContact = () => {
                       <Input
                         placeholder="Компания"
                         marginTop={"4px"}
-                        border={"2px solid #4682B4"}
-                        borderRadius={"0"}
-                        _hover={{ border: "2px solid #4682B4" }}
+                        border={"2px solid rgba(48, 141, 218, 1)"}
+                        borderRadius={"8px"}
+                        _hover={{ border: "2px solid rgba(48, 141, 218, 1)" }}
                         name="company"
                         onChange={handleChange}
                         onBlur={handleBlur}
@@ -149,9 +150,9 @@ const ModalAddContact = () => {
                       <Input
                         placeholder="Email"
                         marginTop={"4px"}
-                        border={"2px solid #4682B4"}
-                        borderRadius={"0"}
-                        _hover={{ border: "2px solid #4682B4" }}
+                        border={"2px solid rgba(48, 141, 218, 1)"}
+                        borderRadius={"8px"}
+                        _hover={{ border: "2px solid rgba(48, 141, 218, 1)" }}
                         name="email"
                         onChange={handleChange}
                         onBlur={handleBlur}
@@ -166,9 +167,9 @@ const ModalAddContact = () => {
                       <Input
                         placeholder="ИНН"
                         marginTop={"4px"}
-                        border={"2px solid #4682B4"}
-                        borderRadius={"0"}
-                        _hover={{ border: "2px solid #4682B4" }}
+                        border={"2px solid rgba(48, 141, 218, 1)"}
+                        borderRadius={"8px"}
+                        _hover={{ border: "2px solid rgba(48, 141, 218, 1)" }}
                         name="inn"
                         onChange={handleChange}
                         onBlur={handleBlur}
@@ -185,24 +186,24 @@ const ModalAddContact = () => {
                   >
                     <Button
                       onClick={onClose}
-                      boxShadow={"-2px 2px 0 0 #4682B4"}
-                      borderRadius={"0px"}
-                      border={"1px solid #4682B4"}
+                      
+                      borderRadius={"8px"}
+                      border={"2px solid rgba(48, 141, 218, 1)"}
                       bg={"white"}
                       color={"black"}
-                      _hover={{ bg: "#4682B4", color: "white" }}
+                      _hover={{ bg: "rgba(48, 141, 218, 1)", color: "white" }}
                       flexShrink={0}
                     >
                       <Text>Отменить</Text>
                     </Button>
                     <Button
                       onClick={onClose}
-                      boxShadow={"-2px 2px 0 0 #4682B4"}
-                      borderRadius={"0px"}
-                      border={"1px solid #4682B4"}
+                      
+                      borderRadius={"8px"}
+                      border={"2px solid rgba(48, 141, 218, 1)"}
                       bg={"white"}
                       color={"black"}
-                      _hover={{ bg: "#4682B4", color: "white" }}
+                      _hover={{ bg: "rgba(48, 141, 218, 1)", color: "white" }}
                       flexShrink={0}
                     >
                       <Text>Создать</Text>
@@ -216,6 +217,6 @@ const ModalAddContact = () => {
       </Modal>
     </>
   );
-};
+});
 
 export default ModalAddContact;

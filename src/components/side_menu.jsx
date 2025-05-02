@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Box,
   VStack,
@@ -25,6 +25,7 @@ import { FaDatabase } from "react-icons/fa";
 import { MdAnalytics } from "react-icons/md";
 import { MdEmail } from "react-icons/md";
 import { TbAutomation } from "react-icons/tb";
+import { MdOutlineManageAccounts } from "react-icons/md";
 
 const SideMenu = observer(() => {
   const navigate = useNavigate();
@@ -32,12 +33,15 @@ const SideMenu = observer(() => {
   const { width } = useWindowDimensions();
   const { isOpen, onOpen, onClose } = useDisclosure();
 
+  const [selected, setSelected] = useState([1, 0, 0, 0, 0, 0]);
+
   const menuItems = [
     { label: "CRM", icon: MdAnalytics, href: "/crm" },
     { label: "Автоматизация", icon: TbAutomation, href: "/automation" },
     { label: "База", icon: FaDatabase, href: "/base" },
     { label: "Звонки", icon: IoCallSharp, href: "/calls" },
     { label: "Рассылки", icon: MdEmail, href: "/mailing" },
+    { label: "Управление", icon: MdOutlineManageAccounts, href: "/management" },
   ].filter(Boolean); // Убирает `undefined` из массива
 
   const handleExit = () => {
@@ -46,6 +50,7 @@ const SideMenu = observer(() => {
       Cookies.remove("authed");
       localStorage.clear();
       navigate("/");
+      pageStore.resetData();
     }
   };
 
@@ -67,7 +72,7 @@ const SideMenu = observer(() => {
           boxShadow="lg"
           p={2}
         >
-          <Icon as={MdMenu} boxSize={6} color={"#4682B4"} />
+          <Icon as={MdMenu} boxSize={6} color={"rgba(48, 141, 218, 1)"} />
         </Button>
       )}
 
@@ -93,7 +98,7 @@ const SideMenu = observer(() => {
         <VStack spacing="6">
           {/* Логотип */}
           <HStack marginTop="40px">
-            <Text color="#4682B4" fontSize="28px" fontWeight={600}>
+            <Text color="rgba(48, 141, 218, 1)" fontSize="28px" fontWeight={600}>
               OUTREACH
             </Text>
             <Text color="black" fontSize="28px" fontWeight={600}>
@@ -105,15 +110,29 @@ const SideMenu = observer(() => {
           <VStack align="stretch" spacing="4">
             {menuItems.map((item, index) => (
               <Link
+                bg={selected[index] == 1 ? "rgba(240,240,240,1)" : "white"}
                 key={index}
                 _hover={{ bg: "rgba(240,240,240,1)" }}
                 py="2"
                 px="4"
-                onClick={() => navigate(item.href)}
+                onClick={() => {
+                  index == 0
+                    ? setSelected([1, 0, 0, 0, 0, 0])
+                    : index == 1
+                    ? setSelected([0, 1, 0, 0, 0, 0])
+                    : index == 2
+                    ? setSelected([0, 0, 1, 0, 0, 0])
+                    : index == 3
+                    ? setSelected([0, 0, 0, 1, 0, 0])
+                    : index == 4
+                    ? setSelected([0, 0, 0, 0, 1, 0])
+                    : setSelected([0, 0, 0, 0, 0, 1]);
+                  navigate(item.href);
+                }}
                 display="flex"
                 alignItems="center"
               >
-                <Icon as={item.icon} boxSize="5" color="#4682B4" />
+                <Icon as={item.icon} boxSize="5" color="rgba(48, 141, 218, 1)" />
                 <Text ml="3" cursor="pointer" color="black" fontWeight={500}>
                   {item.label}
                 </Text>
@@ -136,7 +155,7 @@ const SideMenu = observer(() => {
           <DrawerBody>
             <VStack spacing="6" pt="50px">
               <HStack>
-                <Text color="#4682B4" fontSize="28px" fontWeight={600}>
+                <Text color="rgba(48, 141, 218, 1)" fontSize="28px" fontWeight={600}>
                   OUTREACH
                 </Text>
                 <Text color="black" fontSize="28px" fontWeight={600}>
@@ -158,7 +177,7 @@ const SideMenu = observer(() => {
                     display="flex"
                     alignItems="center"
                   >
-                    <Icon as={item.icon} boxSize="5" color="#4682B4" />
+                    <Icon as={item.icon} boxSize="5" color="rgba(48, 141, 218, 1)" />
                     <Text
                       ml="3"
                       cursor="pointer"

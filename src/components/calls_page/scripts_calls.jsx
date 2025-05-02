@@ -6,15 +6,16 @@ import {
   Textarea,
   VStack,
 } from "@chakra-ui/react";
+import { observer } from "mobx-react-lite";
 import { MdOutlineStarBorder, MdOutlineStar } from "react-icons/md";
 
-const Patterns = () => {
+const Patterns = observer(() => {
   return (
     <VStack width={"100%"} align={"flex-start"} marginTop={"20px"}>
       <HStack width={"100%"} justify={"space-between"} align={"flex-start"}>
         <VStack width={"40%"} padding={"10px"}>
           <Text fontWeight={"600"} color={"black"}>
-            Шаблоны
+            Скрипты
           </Text>
           <HStack
             marginTop={"10px"}
@@ -24,7 +25,7 @@ const Patterns = () => {
             cursor={"pointer"}
           >
             <Text color={"black"}>Приветственное</Text>
-            <MdOutlineStar size={"30px"} color="#4682B4" />
+            <MdOutlineStar size={"30px"} color="rgba(48, 141, 218, 1)" />
           </HStack>
           <HStack
             marginTop={"10px"}
@@ -34,7 +35,7 @@ const Patterns = () => {
             cursor={"pointer"}
           >
             <Text color={"black"}>Приветственное</Text>
-            <MdOutlineStarBorder size={"30px"} color="#4682B4" />
+            <MdOutlineStarBorder size={"30px"} color="rgba(48, 141, 218, 1)" />
           </HStack>
         </VStack>
         <HStack
@@ -43,7 +44,7 @@ const Patterns = () => {
           width={"60%"}
           padding={"20px"}
           gap={"10px"}
-          border={"2px solid #4682B4"}
+          border={"2px solid rgba(48, 141, 218, 1)"}
         >
           <VStack
             width={"40%"}
@@ -91,24 +92,24 @@ const Patterns = () => {
             <HStack width={"100%"} justify={"flex-end"}>
               <Button
                 marginTop={"10px"}
-                boxShadow={"-2px 2px 0 0 #4682B4"}
-                borderRadius={"0px"}
-                border={"1px solid #4682B4"}
+                
+                borderRadius={"8px"}
+                border={"2px solid rgba(48, 141, 218, 1)"}
                 bg={"white"}
                 color={"black"}
-                _hover={{ bg: "#4682B4", color: "white" }}
+                _hover={{ bg: "rgba(48, 141, 218, 1)", color: "white" }}
                 flexShrink={0}
               >
                 <Text>Сгенерировать текст рассылки</Text>
               </Button>
               <Button
                 marginTop={"10px"}
-                boxShadow={"-2px 2px 0 0 #4682B4"}
-                borderRadius={"0px"}
-                border={"1px solid #4682B4"}
+                
+                borderRadius={"8px"}
+                border={"2px solid rgba(48, 141, 218, 1)"}
                 bg={"white"}
                 color={"black"}
-                _hover={{ bg: "#4682B4", color: "white" }}
+                _hover={{ bg: "rgba(48, 141, 218, 1)", color: "white" }}
                 flexShrink={0}
               >
                 <Text>Сохранить</Text>
@@ -119,6 +120,6 @@ const Patterns = () => {
       </HStack>
     </VStack>
   );
-};
+});
 
 export default Patterns;

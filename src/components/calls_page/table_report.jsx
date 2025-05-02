@@ -8,12 +8,13 @@ import {
   Thead,
   Tr,
 } from "@chakra-ui/react";
+import { observer } from "mobx-react-lite";
 
-const TableReport = () => {
+const TableReport = observer(() => {
   return (
     <>
       <Text width={"100%"} color={"black"} fontWeight={"600"}>
-        Все результаты
+        Все данные
       </Text>
       <HStack
         width={"100%"}
@@ -21,9 +22,9 @@ const TableReport = () => {
         overflowX={"scroll"}
         paddingBottom={"8px"}
       >
-        <Table width={"100%"} padding={"10px"} border={"2px solid #4682B4"}>
-          <Thead bg={"#4682B4"} borderBottom={"none"}>
-            <Tr borderBottom={"2px solid #4682B4"}>
+        <Table width={"100%"} padding={"10px"} border={"2px solid rgba(48, 141, 218, 1)"}>
+          <Thead bg={"rgba(48, 141, 218, 1)"} borderBottom={"none"}>
+            <Tr borderBottom={"2px solid rgba(48, 141, 218, 1)"}>
               <Th color={"white"}>
                 <Text>Название скрипта</Text>
               </Th>
@@ -64,6 +65,6 @@ const TableReport = () => {
       </HStack>
     </>
   );
-};
+});
 
 export default TableReport;

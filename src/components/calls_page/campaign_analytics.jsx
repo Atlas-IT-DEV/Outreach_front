@@ -114,7 +114,7 @@ const CampaignAnalytics = () => {
           <CardBody>
             <Text
               mb={4}
-              color={"#4682B4"}
+              color={"rgba(48, 141, 218, 1)"}
               fontWeight={500}
               fontSize={["14px", "18px"]}
               alignSelf={"center"}
