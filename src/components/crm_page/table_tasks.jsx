@@ -2,142 +2,197 @@ import { HStack, Text, VStack } from "@chakra-ui/react";
 import TaskCard from "./task_card";
 import { observer } from "mobx-react-lite";
 import { useStores } from "../../store/store_context";
+import { useDrag, useDrop, DndProvider } from "react-dnd";
+import { HTML5Backend } from "react-dnd-html5-backend";
+
+// Обертка для DnD контекста
+const DndTable = observer(() => {
+  return (
+    <DndProvider backend={HTML5Backend}>
+      <TableTasks />
+    </DndProvider>
+  );
+});
+
+// Компонент перетаскиваемой карточки
+const DraggableTaskCard = observer(({ task, color, onDrop }) => {
+  const [{ isDragging }, drag] = useDrag(() => ({
+    type: "task",
+    item: { id: task.ID }, // Используем ID вместо id
+    collect: (monitor) => ({
+      isDragging: !!monitor.isDragging(),
+    }),
+  }));
+
+  return (
+    <div
+      ref={drag}
+      style={{
+        opacity: isDragging ? 0.5 : 1,
+        width: "100%",
+        cursor: isDragging ? "grabbing" : "grab",
+      }}
+    >
+      <TaskCard obj={task} color={color} />
+    </div>
+  );
+});
+
+// Компонент колонки, принимающей перетаскиваемые элементы
+const TaskColumn = observer(({ title, color, tasks, onDrop, type }) => {
+  const [{ isOver }, drop] = useDrop(() => ({
+    accept: "task",
+    drop: (item) => {
+      onDrop(item.id, type);
+    },
+    collect: (monitor) => ({
+      isOver: !!monitor.isOver(),
+    }),
+  }));
+
+  return (
+    <VStack
+      ref={drop}
+      width={"100%"}
+      gap={"10px"}
+      bg={isOver ? "rgba(0,0,0,0.05)" : "transparent"}
+      borderRadius="md"
+      p={2}
+      minHeight="200px"
+    >
+      <Text
+        minWidth={"300px"}
+        border={`2px solid ${color}`}
+        padding={"4px 10px"}
+        borderRadius={"8px"}
+        textAlign={"center"}
+        width={"100%"}
+      >
+        {title}
+      </Text>
+      {tasks
+        ?.filter((item) => !item?.is_completed || type === "completed")
+        .map((item) => (
+          <DraggableTaskCard
+            key={item.ID} // Используем ID задачи как ключ
+            task={item}
+            color={color}
+            onDrop={onDrop}
+          />
+        ))}
+    </VStack>
+  );
+});
 
 const TableTasks = observer(() => {
   const { pageStore } = useStores();
-  function distributeTasks(tasks) {
+
+  // Оптимизированная функция распределения задач
+  const distributeTasks = (tasks) => {
     const now = new Date();
-    const todayStart = new Date(now);
-    todayStart.setHours(0, 0, 0, 0); // Начало текущего дня
+    return tasks.reduce(
+      (result, task) => {
+        const taskDate = new Date(task.date_finish);
+        taskDate < now ? result.overdue.push(task) : result.future.push(task);
+        return result;
+      },
+      { overdue: [], future: [] }
+    );
+  };
 
-    const todayEnd = new Date(todayStart);
-    todayEnd.setDate(todayEnd.getDate() + 1); // Конец текущего дня (начало завтра)
+  const handleDrop = async (taskId, targetType) => {
+    const task = pageStore.tasks.find((t) => t.ID === taskId);
+    if (!task) return;
 
-    const tomorrowEnd = new Date(todayEnd);
-    tomorrowEnd.setDate(tomorrowEnd.getDate() + 1); // Конец завтрашнего дня
+    const updatedTask = { ...task };
 
-    const dayAfterTomorrowEnd = new Date(tomorrowEnd);
-    dayAfterTomorrowEnd.setDate(dayAfterTomorrowEnd.getDate() + 1); // Конец послезавтра
+    switch (targetType) {
+      case "overdue":
+        updatedTask.date_finish = new Date(Date.now() - 86400000).toISOString();
+        updatedTask.is_completed = false;
+        break;
+      case "future":
+        updatedTask.date_finish = new Date(Date.now() + 86400000).toISOString();
+        updatedTask.is_completed = false;
+        break;
+      case "completed":
+        updatedTask.is_completed = true;
+        break;
+      default:
+        return;
+    }
 
-    const result = {
-      overdue: [], // Просроченные
-      today: [], // Сегодня
-      tomorrow: [], // Завтра
-      future: [], // Задачи без даты
-    };
-
-    tasks.forEach((task) => {
-      const taskDate = new Date(task.date_finish);
-
-      if (taskDate < now) {
-        result.overdue.push(task);
-      } else {
-        result.future.push(task);
+    try {
+      await pageStore.updateTask(updatedTask.ID, updatedTask);
+      // Локальное обновление без перезагрузки всех задач
+      const index = pageStore.tasks.findIndex((t) => t.ID === updatedTask.ID);
+      if (index !== -1) {
+        pageStore.tasks[index] = updatedTask;
       }
-    });
-
-    return result;
-  }
+    } catch (error) {
+      console.error("Ошибка при обновлении задачи:", error);
+    }
+  };
 
   const distributedTasks = distributeTasks(pageStore.tasks);
 
   return (
-    <VStack width={"100%"} align={"flex-start"}>
+    <VStack width={"100%"} align={"flex-start"} spacing={4}>
+      {/* Поиск и результаты поиска */}
       {pageStore.search_elements?.length > 0 ? (
-        <VStack width={"100%"} align={"flex-start"} justify={"flex-start"}>
+        <VStack width={"100%"} align={"flex-start"}>
           <Text fontWeight={"600"} color={"black"}>
             Найденные результаты
           </Text>
-          <HStack
-            width={"100%"}
-            overflow={"scroll"}
-            // overflowY={"hidden"}
-            paddingBottom={"8px"}
-            paddingLeft={"2px"}
-            gap={"20px"}
-          >
-            {pageStore.search_elements?.map((item, index) => (
-              <TaskCard key={index} obj={item} />
+          <HStack width={"100%"} overflowX="auto" py={2} px={1} spacing={5}>
+            {pageStore.search_elements.map((item) => (
+              <TaskCard key={item.ID} obj={item} />
             ))}
           </HStack>
         </VStack>
-      ) : pageStore.search_elements?.length == 0 &&
-        pageStore.searchValue != "" ? (
+      ) : pageStore.search_elements?.length === 0 && pageStore.searchValue ? (
         <Text fontWeight={"600"} color={"black"}>
           По вашему запросу ничего не найдено
         </Text>
       ) : null}
+
+      {/* Основные колонки с задачами */}
       <Text fontWeight={"600"} color={"black"}>
         Все задачи
       </Text>
       <HStack
         width={"100%"}
-        justify={"flex-start"}
         align={"flex-start"}
-        overflow={"hidden"}
-        overflowX={"scroll"}
-        gap={"10px"}
-        paddingBottom={"8px"}
+        overflowX="auto"
+        spacing={4}
+        pb={2}
       >
-        <VStack width={"100%"} gap={"10px"}>
-          <Text
-            minWidth={"300px"}
-            border={"2px solid rgba(255,0,0)"}
-            padding={"4px 10px"}
-            borderRadius={"8px"}
-            textAlign={"center"}
-            width={"100%"}
-          >
-            Просроченные
-          </Text>
-          {distributedTasks?.overdue.length > 0 &&
-            distributedTasks?.overdue
-              .filter((item) => !item?.is_completed)
-              ?.map((item, index) => (
-                <TaskCard key={index} obj={item} color="rgba(255,0,0)" />
-              ))}
-        </VStack>
+        <TaskColumn
+          title="Просроченные"
+          color="rgb(50, 142, 218)"
+          tasks={distributedTasks.overdue}
+          onDrop={handleDrop}
+          type="overdue"
+        />
 
-        <VStack width={"100%"} gap={"10px"}>
-          <Text
-            minWidth={"300px"}
-            border={"2px solid rgba(255,235,0,1)"}
-            padding={"4px 10px"}
-            borderRadius={"8px"}
-            textAlign={"center"}
-            width={"100%"}
-          >
-            К исполнению
-          </Text>
-          {distributedTasks?.future.length > 0 &&
-            distributedTasks?.future
-              .filter((item) => !item?.is_completed)
-              ?.map((item, index) => (
-                <TaskCard key={index} obj={item} color="rgba(255,235,0,1)" />
-              ))}
-        </VStack>
+        <TaskColumn
+          title="К исполнению"
+          color="rgb(50, 142, 218)"
+          tasks={distributedTasks.future}
+          onDrop={handleDrop}
+          type="future"
+        />
 
-        <VStack width={"100%"} gap={"10px"}>
-          <Text
-            border={"2px solid rgba(0,255,0,1)"}
-            padding={"4px 10px"}
-            borderRadius={"8px"}
-            minWidth={"300px"}
-            textAlign={"center"}
-            width={"100%"}
-          >
-            Завершенные
-          </Text>
-          {pageStore.tasks.length > 0 &&
-            pageStore.tasks
-              .filter((item) => item?.is_completed)
-              ?.map((item, index) => (
-                <TaskCard key={index} obj={item} color="rgba(0,255,0,1)" />
-              ))}
-        </VStack>
+        <TaskColumn
+          title="Завершенные"
+          color="rgb(50, 142, 218)"
+          tasks={pageStore.tasks.filter((t) => t.is_completed)}
+          onDrop={handleDrop}
+          type="completed"
+        />
       </HStack>
     </VStack>
   );
 });
 
-export default TableTasks;
+export default DndTable;

@@ -45,7 +45,7 @@ const LoginForm = observer(() => {
   const handleSubmit = async (values) => {
     const ok = await login(values);
     if (ok) {
-      pageStore.getAllCompanies();
+      await pageStore.getAllCompanies();
       const filterCompany = pageStore.clients.find(
         (item) => item?.ID == pageStore.user_info?.company_id
       );

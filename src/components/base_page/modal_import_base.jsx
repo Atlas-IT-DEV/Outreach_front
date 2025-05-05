@@ -42,10 +42,7 @@ const ModalImportBase = observer(() => {
     formData.append("file", selectedFile);
     const response = await uploadBase(selectName, formData);
     const result = await response.json();
-    console.log("res", result.message);
-    console.log(result?.message.split());
-    if (response?.ok) {
-      pageStore.getAllBases();
+    if (response.ok) {
       toast({
         title: "Успех",
         description: "База успешно импортирована",
@@ -73,6 +70,7 @@ const ModalImportBase = observer(() => {
         status: "error",
       });
     }
+    pageStore.getAllBases();
   };
   return (
     <>

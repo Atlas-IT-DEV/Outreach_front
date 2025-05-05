@@ -13,13 +13,14 @@ import {
   useDisclosure,
   useToast,
   VStack,
+  Select,
 } from "@chakra-ui/react";
 import { observer } from "mobx-react-lite";
 import { useStores } from "../../store/store_context";
 import * as Yup from "yup";
 import { Form, Formik } from "formik";
 
-const TaskCard = observer(({ obj = {}, color = "" }) => {
+const TaskCard = observer(({ obj = {}, color = "", bg_color = "green" }) => {
   const { pageStore } = useStores();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const toast = useToast();
@@ -30,11 +31,13 @@ const TaskCard = observer(({ obj = {}, color = "" }) => {
     date_finish: obj?.date_finish,
     description: obj?.description,
     name: obj?.name,
+    priority: obj?.priority,
   };
   const validationSchema = Yup.object({
     date_finish: Yup.string().required("Обязательное поле"),
     description: Yup.string().required("Обязательное поле"),
     name: Yup.string().required("Обязательное поле"),
+    priority: Yup.string().required("Выберите приоритет задачи"),
   });
 
   const updateTask = async (id, values) => {
@@ -89,7 +92,10 @@ const TaskCard = observer(({ obj = {}, color = "" }) => {
   };
 
   const onSubmit = async (values) => {
-    const ok = await updateTask(obj?.ID, values);
+    const ok = await updateTask(obj?.ID, {
+      ...values,
+      priority: Number(values.priority),
+    });
     if (ok) {
       await pageStore.getAllTasks();
       toast({
@@ -131,6 +137,7 @@ const TaskCard = observer(({ obj = {}, color = "" }) => {
         borderRadius={"8px"}
         border={`2px solid ${color}`}
         onClick={onOpen}
+        position={"relative"}
       >
         <Text width={"100%"} textAlign={"center"} fontWeight={"600"}>
           {obj?.name}
@@ -144,6 +151,18 @@ const TaskCard = observer(({ obj = {}, color = "" }) => {
         <Text marginTop={"10px"} width={"100%"}>
           {obj?.creator?.username || "-"}
         </Text>
+
+        <VStack
+          width={5}
+          height={5}
+          borderRadius={"50%"}
+          position={"absolute"}
+          bottom={5}
+          right={5}
+          backgroundColor={
+            obj.priority == 0 ? "green" : obj.priority == 1 ? "yellow" : "red"
+          }
+        />
       </VStack>
       <Modal isOpen={isOpen} onClose={onClose} size={"3xl"}>
         <ModalOverlay />
@@ -255,6 +274,29 @@ const TaskCard = observer(({ obj = {}, color = "" }) => {
                       />
                       <FormErrorMessage marginTop={"2px"}>
                         {errors?.date_finish}
+                      </FormErrorMessage>
+                    </FormControl>
+                    <FormControl
+                      isInvalid={errors.priority && touched.priority}
+                    >
+                      <Text fontWeight={"500"}>Приоритет</Text>
+                      <Select
+                        value={values.priority}
+                        placeholder="Выберите приоритет"
+                        marginTop={"4px"}
+                        border={"2px solid rgba(48, 141, 218, 1)"}
+                        borderRadius={"8px"}
+                        _hover={{ border: "2px solid rgba(48, 141, 218, 1)" }}
+                        name="priority"
+                        onChange={handleChange}
+                        onBlur={handleBlur}
+                      >
+                        <option value={0}>Низкий</option>
+                        <option value={1}>Средний</option>
+                        <option value={2}>Высокий</option>
+                      </Select>
+                      <FormErrorMessage marginTop={"2px"}>
+                        {errors.priority}
                       </FormErrorMessage>
                     </FormControl>
                     <HStack

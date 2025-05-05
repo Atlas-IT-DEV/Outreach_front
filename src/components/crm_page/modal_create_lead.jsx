@@ -66,37 +66,37 @@ const ModalCreateLead = observer(() => {
       }
     );
     const result = await response.json();
-    setInnData(result.suggestions[0]);
-    if (innData?.value) {
+    // setInnData(result.suggestions[0]);
+    console.log("asdasdasd", result.suggestions[0]?.data);
+    if (result.suggestions[0]?.value) {
       setPairs([
         ...pairs,
         {
           id: Date.now(),
           key: "Наименование компании",
-          value: innData?.value,
+          value: result.suggestions[0]?.value,
         },
       ]);
     }
-    if (innData?.inn) {
-      setPairs([
-        ...pairs,
-        {
-          id: Date.now(),
-          key: "ИНН",
-          value: innData?.inn,
-        },
-      ]);
-    }
-    if (innData?.kpp) {
-      setPairs([
-        ...pairs,
-        {
-          id: Date.now(),
-          key: "КПП",
-          value: innData?.kpp,
-        },
-      ]);
-    }
+    setPairs([
+      ...pairs,
+      ...Object.keys(result.suggestions[0]?.data)
+        .map((key_name) => {
+          if (
+            result.suggestions[0]?.data?.[`${key_name}`] &&
+            typeof result.suggestions[0]?.data?.[`${key_name}`] != "object" &&
+            typeof result.suggestions[0]?.data?.[`${key_name}`] != "symbol" &&
+            typeof result.suggestions[0]?.data?.[`${key_name}`] != "undefined"
+          ) {
+            return {
+              id: Math.random() * 10000,
+              key: key_name,
+              value: result.suggestions[0]?.data?.[key_name],
+            };
+          }
+        })
+        .filter((elem) => elem),
+    ]);
     console.log("pairs", pairs);
   };
 
