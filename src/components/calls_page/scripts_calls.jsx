@@ -100,7 +100,7 @@ const Patterns = observer(() => {
                 _hover={{ bg: "rgba(48, 141, 218, 1)", color: "white" }}
                 flexShrink={0}
               >
-                <Text>Сгенерировать текст рассылки</Text>
+                <Text>Перейти к генерации рассылки</Text>
               </Button>
               <Button
                 marginTop={"10px"}

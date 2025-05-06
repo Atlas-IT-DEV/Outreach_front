@@ -119,7 +119,7 @@ const ModalEditClient = observer(({ obj = {} }) => {
           setEditCompanies(false);
           setEditUsers(false);
         }}
-        size={"3xl"}
+        size={"5xl"}
       >
         <ModalOverlay />
         <ModalContent

@@ -29,9 +29,8 @@ const ModalCreateLead = observer(() => {
   const toast = useToast();
 
   const [innValues, setInnValues] = useState("");
-  const [innData, setInnData] = useState([]);
 
-  const [pairs, setPairs] = useState([{ id: 1, key: "", value: "" }]);
+  const [pairs, setPairs] = useState([]);
 
   const addPair = () => {
     setPairs([...pairs, { id: Date.now(), key: "", value: "" }]);
@@ -66,13 +65,12 @@ const ModalCreateLead = observer(() => {
       }
     );
     const result = await response.json();
-    // setInnData(result.suggestions[0]);
     console.log("asdasdasd", result.suggestions[0]?.data);
     if (result.suggestions[0]?.value) {
       setPairs([
         ...pairs,
         {
-          id: Date.now(),
+          id: Math.random() * 10000,
           key: "Наименование компании",
           value: result.suggestions[0]?.value,
         },
@@ -90,8 +88,44 @@ const ModalCreateLead = observer(() => {
           ) {
             return {
               id: Math.random() * 10000,
-              key: key_name,
-              value: result.suggestions[0]?.data?.[key_name],
+              key:
+                key_name == "kpp"
+                  ? "КПП"
+                  : key_name == "branch_type"
+                  ? "Тип подразделения"
+                  : key_name == "inn"
+                  ? "ИНН"
+                  : key_name == "ogrn"
+                  ? "ОГРН"
+                  : key_name == "ogrn_date"
+                  ? "Дата выдачи ОГРН"
+                  : key_name == "type"
+                  ? "Тип организации"
+                  : key_name == "okpo"
+                  ? "Код ОКПО"
+                  : key_name == "oktmo"
+                  ? "Код ОКТМО"
+                  : key_name == "okato"
+                  ? "Код ОКАТО"
+                  : key_name == "okogu"
+                  ? "Код ОКОГУ"
+                  : key_name == "okfs"
+                  ? "Код ОКФС"
+                  : key_name == "okved"
+                  ? "Код ОКВЭД"
+                  : key_name == "okved_type"
+                  ? "Версия справочника ОКВЭД"
+                  : key_name,
+              value:
+                result.suggestions[0]?.data?.[key_name] == "INDIVIDUAL"
+                  ? "Индивидуальный предприниматель"
+                  : result.suggestions[0]?.data?.[key_name] == "LEGAL"
+                  ? "Юридическое лицо"
+                  : result.suggestions[0]?.data?.[key_name] == "MAIN"
+                  ? "Головная организация"
+                  : result.suggestions[0]?.data?.[key_name] == "BRANCH"
+                  ? "Филиал"
+                  : result.suggestions[0]?.data?.[key_name],
             };
           }
         })
@@ -123,11 +157,7 @@ const ModalCreateLead = observer(() => {
     return await pageStore.createClient(values);
   };
   const onSubmit = async (values) => {
-    const filteredPairs = pairs.filter(
-      (pair) => pair.key.trim() !== "" && pair.value.trim() !== ""
-    );
-
-    values.additions = JSON.stringify(filteredPairs);
+    values.additions = JSON.stringify(pairs);
     const ok = await createClient(values);
     if (ok) {
       pageStore.getAllClients();
@@ -156,7 +186,15 @@ const ModalCreateLead = observer(() => {
           Создать нового лида
         </Text>
       </Button>
-      <Modal isOpen={isOpen} onClose={onClose} onEsc={onClose} size={"3xl"}>
+      <Modal
+        isOpen={isOpen}
+        onClose={() => {
+          setPairs([]);
+          onClose();
+        }}
+        onEsc={onClose}
+        size={"5xl"}
+      >
         <ModalOverlay />
         <ModalContent padding={"20px"}>
           <ModalCloseButton />
@@ -272,7 +310,10 @@ const ModalCreateLead = observer(() => {
                           name="inn"
                         />
                         <Button
-                          onClick={async () => await getCompanyByINN(innValues)}
+                          onClick={async () => {
+                            setPairs([]);
+                            await getCompanyByINN(innValues);
+                          }}
                           borderRadius={"8px"}
                           border={"2px solid rgba(48, 141, 218, 1)"}
                           bg={"white"}

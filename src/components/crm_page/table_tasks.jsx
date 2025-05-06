@@ -1,9 +1,10 @@
-import { HStack, Text, VStack } from "@chakra-ui/react";
+import { HStack, Stack, Text, Tooltip, VStack } from "@chakra-ui/react";
 import TaskCard from "./task_card";
 import { observer } from "mobx-react-lite";
 import { useStores } from "../../store/store_context";
 import { useDrag, useDrop, DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
+import { useState } from "react";
 
 // Обертка для DnD контекста
 const DndTable = observer(() => {
@@ -87,6 +88,10 @@ const TaskColumn = observer(({ title, color, tasks, onDrop, type }) => {
 const TableTasks = observer(() => {
   const { pageStore } = useStores();
 
+  const [overdueFilter, setOverdueFilter] = useState(false);
+  const [futureFilter, setFutureFilter] = useState(false);
+  const [completedFilter, setCompletedFilter] = useState(false);
+
   // Оптимизированная функция распределения задач
   const distributeTasks = (tasks) => {
     const now = new Date();
@@ -167,29 +172,288 @@ const TableTasks = observer(() => {
         spacing={4}
         pb={2}
       >
-        <TaskColumn
-          title="Просроченные"
-          color="rgb(50, 142, 218)"
-          tasks={distributedTasks.overdue}
-          onDrop={handleDrop}
-          type="overdue"
-        />
+        <VStack width={"100%"} align={"flex-start"}>
+          <HStack>
+            <Tooltip
+              label={"Показать задачи с высоким приоритетом"}
+              bg={"rgba(48, 141, 218, 1)"}
+              color={"white"}
+              borderRadius={"10px"}
+              placement="top-start"
+            >
+              <Stack
+                bg={"red"}
+                width={"30px"}
+                height={"30px"}
+                borderRadius={"100px"}
+                cursor={"pointer"}
+                border={
+                  overdueFilter === 2 ? "5px solid rgb(50, 142, 218)" : null
+                }
+                onClick={() =>
+                  overdueFilter === 2
+                    ? setOverdueFilter(false)
+                    : setOverdueFilter(2)
+                }
+              />
+            </Tooltip>
 
-        <TaskColumn
-          title="К исполнению"
-          color="rgb(50, 142, 218)"
-          tasks={distributedTasks.future}
-          onDrop={handleDrop}
-          type="future"
-        />
+            <Tooltip
+              label={"Показать задачи со средним приоритетом"}
+              bg={"rgba(48, 141, 218, 1)"}
+              color={"white"}
+              borderRadius={"10px"}
+              placement="top-start"
+            >
+              <Stack
+                bg={"yellow"}
+                width={"30px"}
+                height={"30px"}
+                borderRadius={"100px"}
+                cursor={"pointer"}
+                border={
+                  overdueFilter === 1 ? "5px solid rgb(50, 142, 218)" : null
+                }
+                onClick={() =>
+                  overdueFilter === 1
+                    ? setOverdueFilter(false)
+                    : setOverdueFilter(1)
+                }
+              />
+            </Tooltip>
+            <Tooltip
+              label={"Показать задачи с низким приоритетом"}
+              bg={"rgba(48, 141, 218, 1)"}
+              color={"white"}
+              borderRadius={"10px"}
+              placement="top-start"
+            >
+              <Stack
+                bg={"green"}
+                width={"30px"}
+                height={"30px"}
+                borderRadius={"100px"}
+                cursor={"pointer"}
+                border={
+                  overdueFilter === 0 ? "5px solid rgb(50, 142, 218)" : null
+                }
+                onClick={() =>
+                  overdueFilter === 0
+                    ? setOverdueFilter(false)
+                    : setOverdueFilter(0)
+                }
+              />
+            </Tooltip>
+          </HStack>
+          <TaskColumn
+            title="Просроченные"
+            color="rgb(50, 142, 218)"
+            tasks={
+              overdueFilter === 0
+                ? distributedTasks.overdue?.filter(
+                    (item) => item?.priority == 0
+                  )
+                : overdueFilter === 1
+                ? distributedTasks.overdue?.filter(
+                    (item) => item?.priority == 1
+                  )
+                : overdueFilter === 2
+                ? distributedTasks.overdue?.filter(
+                    (item) => item?.priority == 2
+                  )
+                : distributedTasks.overdue
+            }
+            onDrop={handleDrop}
+            type="overdue"
+          />
+        </VStack>
 
-        <TaskColumn
-          title="Завершенные"
-          color="rgb(50, 142, 218)"
-          tasks={pageStore.tasks.filter((t) => t.is_completed)}
-          onDrop={handleDrop}
-          type="completed"
-        />
+        <VStack width={"100%"} align={"flex-start"}>
+          <HStack>
+            <Tooltip
+              label={"Показать задачи с высоким приоритетом"}
+              bg={"rgba(48, 141, 218, 1)"}
+              color={"white"}
+              borderRadius={"10px"}
+              placement="top-start"
+            >
+              <Stack
+                bg={"red"}
+                width={"30px"}
+                height={"30px"}
+                borderRadius={"100px"}
+                cursor={"pointer"}
+                border={
+                  futureFilter === 2 ? "5px solid rgb(50, 142, 218)" : null
+                }
+                onClick={() =>
+                  futureFilter === 2
+                    ? setFutureFilter(false)
+                    : setFutureFilter(2)
+                }
+              />
+            </Tooltip>
+
+            <Tooltip
+              label={"Показать задачи со средним приоритетом"}
+              bg={"rgba(48, 141, 218, 1)"}
+              color={"white"}
+              borderRadius={"10px"}
+              placement="top-start"
+            >
+              <Stack
+                bg={"yellow"}
+                width={"30px"}
+                height={"30px"}
+                borderRadius={"100px"}
+                cursor={"pointer"}
+                border={
+                  futureFilter === 1 ? "5px solid rgb(50, 142, 218)" : null
+                }
+                onClick={() =>
+                  futureFilter === 1
+                    ? setFutureFilter(false)
+                    : setFutureFilter(1)
+                }
+              />
+            </Tooltip>
+            <Tooltip
+              label={"Показать задачи с низким приоритетом"}
+              bg={"rgba(48, 141, 218, 1)"}
+              color={"white"}
+              borderRadius={"10px"}
+              placement="top-start"
+            >
+              <Stack
+                bg={"green"}
+                width={"30px"}
+                height={"30px"}
+                borderRadius={"100px"}
+                cursor={"pointer"}
+                border={
+                  futureFilter === 0 ? "5px solid rgb(50, 142, 218)" : null
+                }
+                onClick={() =>
+                  futureFilter === 0
+                    ? setFutureFilter(false)
+                    : setFutureFilter(0)
+                }
+              />
+            </Tooltip>
+          </HStack>
+          <TaskColumn
+            title="К исполнению"
+            color="rgb(50, 142, 218)"
+            tasks={
+              futureFilter === 0
+                ? distributedTasks.future?.filter((item) => item?.priority == 0)
+                : futureFilter === 1
+                ? distributedTasks.future?.filter((item) => item?.priority == 1)
+                : futureFilter === 2
+                ? distributedTasks.future?.filter((item) => item?.priority == 2)
+                : distributedTasks.future
+            }
+            onDrop={handleDrop}
+            type="future"
+          />
+        </VStack>
+
+        <VStack width={"100%"} align={"flex-start"}>
+          <HStack>
+            <Tooltip
+              label={"Показать задачи с высоким приоритетом"}
+              bg={"rgba(48, 141, 218, 1)"}
+              color={"white"}
+              borderRadius={"10px"}
+              placement="top-start"
+            >
+              <Stack
+                bg={"red"}
+                width={"30px"}
+                height={"30px"}
+                borderRadius={"100px"}
+                cursor={"pointer"}
+                border={
+                  completedFilter === 2 ? "5px solid rgb(50, 142, 218)" : null
+                }
+                onClick={() =>
+                  completedFilter === 2
+                    ? setCompletedFilter(false)
+                    : setCompletedFilter(2)
+                }
+              />
+            </Tooltip>
+
+            <Tooltip
+              label={"Показать задачи со средним приоритетом"}
+              bg={"rgba(48, 141, 218, 1)"}
+              color={"white"}
+              borderRadius={"10px"}
+              placement="top-start"
+            >
+              <Stack
+                bg={"yellow"}
+                width={"30px"}
+                height={"30px"}
+                borderRadius={"100px"}
+                cursor={"pointer"}
+                border={
+                  completedFilter === 1 ? "5px solid rgb(50, 142, 218)" : null
+                }
+                onClick={() =>
+                  completedFilter === 1
+                    ? setCompletedFilter(false)
+                    : setCompletedFilter(1)
+                }
+              />
+            </Tooltip>
+            <Tooltip
+              label={"Показать задачи с низким приоритетом"}
+              bg={"rgba(48, 141, 218, 1)"}
+              color={"white"}
+              borderRadius={"10px"}
+              placement="top-start"
+            >
+              <Stack
+                bg={"green"}
+                width={"30px"}
+                height={"30px"}
+                borderRadius={"100px"}
+                cursor={"pointer"}
+                border={
+                  completedFilter === 0 ? "5px solid rgb(50, 142, 218)" : null
+                }
+                onClick={() =>
+                  completedFilter === 0
+                    ? setCompletedFilter(false)
+                    : setCompletedFilter(0)
+                }
+              />
+            </Tooltip>
+          </HStack>
+
+          <TaskColumn
+            title="Завершенные"
+            color="rgb(50, 142, 218)"
+            tasks={
+              completedFilter === 0
+                ? pageStore.tasks.filter(
+                    (t) => t.is_completed && t.priority == 0
+                  )
+                : completedFilter === 1
+                ? pageStore.tasks.filter(
+                    (t) => t.is_completed && t.priority == 1
+                  )
+                : completedFilter === 2
+                ? pageStore.tasks.filter(
+                    (t) => t.is_completed && t.priority == 2
+                  )
+                : pageStore.tasks.filter((t) => t.is_completed)
+            }
+            onDrop={handleDrop}
+            type="completed"
+          />
+        </VStack>
       </HStack>
     </VStack>
   );

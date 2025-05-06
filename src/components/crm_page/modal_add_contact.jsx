@@ -56,7 +56,7 @@ const ModalAddContact = observer(() => {
         </Text>
       </Button>
 
-      <Modal isOpen={isOpen} onClose={onClose} onEsc={onClose} size={"3xl"}>
+      <Modal isOpen={isOpen} onClose={onClose} onEsc={onClose} size={"5xl"}>
         <ModalOverlay />
         <ModalContent
           margin={"auto"}

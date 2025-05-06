@@ -88,7 +88,7 @@ const ModalEditUser = observer(({ obj = {} }) => {
           onClose();
           setEditUsers(false);
         }}
-        size={"3xl"}
+        size={"5xl"}
       >
         <ModalOverlay />
         <ModalContent

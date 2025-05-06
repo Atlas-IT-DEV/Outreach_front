@@ -16,6 +16,7 @@ import ModalEditLead from "./modal_edit_lead";
 import { observer } from "mobx-react-lite";
 import { useStores } from "../../store/store_context";
 import ModalDeleteLead from "./modal_delete_lead";
+import ModalCreateTask from "./modal_create_task";
 
 const TableLeads = observer(() => {
   const { pageStore } = useStores();
@@ -77,43 +78,13 @@ const TableLeads = observer(() => {
                     <Td border={"1px solid rgba(200,200,200,1)"}>
                       <Text>{item?.phone || "-"}</Text>
                     </Td>
-                    <Tooltip
-                      label={
-                        parse?.length > 0 &&
-                        parse?.map((item2, index2) => (
-                          <Text width={"max-content"} key={index2}>
-                            {index2 + 1}. {item2?.key}: {item2?.value}
-                          </Text>
-                        ))
-                      }
-                      bg={"rgba(48, 141, 218, 1)"}
-                      color={"white"}
-                      borderRadius={"10px"}
-                      placement="right"
-                    >
-                      <Td border={"1px solid rgba(200,200,200,1)"}>
-                        {parse?.length > 1 ? (
-                          <>
-                            <Text width={"max-content"}>
-                              1. {parse[0]?.key}: {parse[0]?.value}
-                            </Text>
-                            <Text width={"max-content"}>
-                              2. {parse[1]?.key}: {parse[1]?.value}
-                            </Text>
-                          </>
-                        ) : (
-                          <Text width={"max-content"}>
-                            1. {parse[0]?.key}: {parse[0]?.value}
-                          </Text>
-                        )}
-                        {parse.length > 2 ? (
-                          <Text fontWeight={"300"} fontSize={"14px"}>
-                            Подсказка: наведитесь для отображения полного списка
-                          </Text>
-                        ) : null}
-                      </Td>
-                    </Tooltip>
-
+                    <Td maxW={"400px"} border={"1px solid rgba(200,200,200,1)"}>
+                      {parse?.map((item2, index) => (
+                        <Text key={index}>
+                          {item2?.key}: {item2?.value}
+                        </Text>
+                      ))}
+                    </Td>
                     <Td border={"1px solid rgba(200,200,200,1)"}>
                       <Text>{item?.creator || "-"}</Text>
                     </Td>
@@ -208,40 +179,16 @@ const TableLeads = observer(() => {
                       <Td border={"1px solid rgba(200,200,200,1)"}>
                         <Text>{item?.phone || "-"}</Text>
                       </Td>
-                      <Tooltip
-                        label={parse?.map((item2, index) => (
-                          <Text width={"max-content"}>
-                            {index + 1}. {item2?.key}: {item2?.value}
+                      <Td
+                        maxW={"400px"}
+                        border={"1px solid rgba(200,200,200,1)"}
+                      >
+                        {parse?.map((item2, index) => (
+                          <Text key={index}>
+                            {item2?.key}: {item2?.value}
                           </Text>
                         ))}
-                        bg={"rgba(48, 141, 218, 1)"}
-                        color={"white"}
-                        borderRadius={"10px"}
-                        placement="right"
-                      >
-                        <Td border={"1px solid rgba(200,200,200,1)"}>
-                          {parse.length > 1 ? (
-                            <>
-                              <Text width={"max-content"}>
-                                1. {parse[0].key}: {parse[0].value}
-                              </Text>
-                              <Text width={"max-content"}>
-                                2. {parse[1].key}: {parse[1].value}
-                              </Text>
-                            </>
-                          ) : (
-                            <Text width={"max-content"}>
-                              1. {parse[0].key}: {parse[0].value}
-                            </Text>
-                          )}
-                          {parse.length > 2 ? (
-                            <Text fontWeight={"300"} fontSize={"14px"}>
-                              Подсказка: наведитесь для отображения полного
-                              списка
-                            </Text>
-                          ) : null}
-                        </Td>
-                      </Tooltip>
+                      </Td>
 
                       <Td border={"1px solid rgba(200,200,200,1)"}>
                         <Text>{item?.creator || "-"}</Text>
@@ -251,6 +198,7 @@ const TableLeads = observer(() => {
                         border={"1px solid rgba(200,200,200,1)"}
                       >
                         <HStack justify={"center"}>
+                          <ModalCreateTask ID={item?.ID} isTable={true} />
                           <ModalEditLead obj={item} />
                           <ModalDeleteLead obj={item} />
                         </HStack>

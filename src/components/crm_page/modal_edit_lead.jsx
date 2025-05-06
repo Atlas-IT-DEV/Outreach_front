@@ -25,7 +25,7 @@ import { AddIcon, DeleteIcon } from "@chakra-ui/icons";
 
 const ModalEditLead = observer(({ obj = {} }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const { width, height } = useWindowDimensions();
+  const [innValues, setInnValues] = useState("");
   const { pageStore } = useStores();
   const toast = useToast();
 
@@ -55,6 +55,91 @@ const ModalEditLead = observer(({ obj = {} }) => {
     return await pageStore.editClient(id, values);
   };
 
+  const getCompanyByINN = async (values) => {
+    const response = await fetch(
+      "http://suggestions.dadata.ru/suggestions/api/4_1/rs/findById/party",
+      {
+        method: "POST",
+        headers: {
+          accept: "application/json",
+          "Content-Type": "application/json",
+          Authorization: "Token 96d81fed256fcf8842ec456e35e134f5aa9e1fa0",
+        },
+        body: JSON.stringify({
+          query: values,
+        }),
+      }
+    );
+    const result = await response.json();
+    console.log("asdasdasd", result.suggestions[0]?.data);
+    if (result.suggestions[0]?.value) {
+      setPairs([
+        ...pairs,
+        {
+          id: Math.random() * 10000,
+          key: "Наименование компании",
+          value: result.suggestions[0]?.value,
+        },
+      ]);
+    }
+    setPairs([
+      ...pairs,
+      ...Object.keys(result.suggestions[0]?.data)
+        .map((key_name) => {
+          if (
+            result.suggestions[0]?.data?.[`${key_name}`] &&
+            typeof result.suggestions[0]?.data?.[`${key_name}`] != "object" &&
+            typeof result.suggestions[0]?.data?.[`${key_name}`] != "symbol" &&
+            typeof result.suggestions[0]?.data?.[`${key_name}`] != "undefined"
+          ) {
+            return {
+              id: Math.random() * 10000,
+              key:
+                key_name == "kpp"
+                  ? "КПП"
+                  : key_name == "branch_type"
+                  ? "Тип подразделения"
+                  : key_name == "inn"
+                  ? "ИНН"
+                  : key_name == "ogrn"
+                  ? "ОГРН"
+                  : key_name == "ogrn_date"
+                  ? "Дата выдачи ОГРН"
+                  : key_name == "type"
+                  ? "Тип организации"
+                  : key_name == "okpo"
+                  ? "Код ОКПО"
+                  : key_name == "oktmo"
+                  ? "Код ОКТМО"
+                  : key_name == "okato"
+                  ? "Код ОКАТО"
+                  : key_name == "okogu"
+                  ? "Код ОКОГУ"
+                  : key_name == "okfs"
+                  ? "Код ОКФС"
+                  : key_name == "okved"
+                  ? "Код ОКВЭД"
+                  : key_name == "okved_type"
+                  ? "Версия справочника ОКВЭД"
+                  : key_name,
+              value:
+                result.suggestions[0]?.data?.[key_name] == "INDIVIDUAL"
+                  ? "Индивидуальный предприниматель"
+                  : result.suggestions[0]?.data?.[key_name] == "LEGAL"
+                  ? "Юридическое лицо"
+                  : result.suggestions[0]?.data?.[key_name] == "MAIN"
+                  ? "Головная организация"
+                  : result.suggestions[0]?.data?.[key_name] == "BRANCH"
+                  ? "Филиал"
+                  : result.suggestions[0]?.data?.[key_name],
+            };
+          }
+        })
+        .filter((elem) => elem),
+    ]);
+    console.log("pairs", pairs);
+  };
+
   const clientValues = {
     additions: obj?.additions,
     email: obj?.email,
@@ -72,11 +157,7 @@ const ModalEditLead = observer(({ obj = {} }) => {
   });
 
   const onUserSumbit = async (values) => {
-    const filteredPairs = pairs.filter(
-      (pair) => pair.key.trim() !== "" && pair.value.trim() !== ""
-    );
-    console.log("filteredPairs", filteredPairs);
-    values.additions = JSON.stringify(filteredPairs);
+    values.additions = JSON.stringify(pairs);
     console.log("vals", values);
     const ok = await editClient(obj?.ID, values);
     if (ok) {
@@ -109,12 +190,14 @@ const ModalEditLead = observer(({ obj = {} }) => {
         onClose={() => {
           onClose();
           setEditUsers(false);
+          setPairs([]);
         }}
         onEsc={() => {
           onClose();
           setEditUsers(false);
+          setPairs([]);
         }}
-        size={"3xl"}
+        size={"5xl"}
       >
         <ModalOverlay />
         <ModalContent padding={"20px"}>
@@ -236,6 +319,37 @@ const ModalEditLead = observer(({ obj = {} }) => {
                         isInvalid={errors?.additions && touched?.additions}
                       >
                         <Text fontWeight={"500"}>Доп. информация</Text>
+                        <HStack width={"100%"}>
+                          <Input
+                            value={innValues}
+                            onChange={(e) => setInnValues(e.target.value)}
+                            placeholder="ПОИСК ПО ИНН"
+                            marginTop={"4px"}
+                            border={"2px solid rgba(48, 141, 218, 1)"}
+                            borderRadius={"8px"}
+                            _hover={{
+                              border: "2px solid rgba(48, 141, 218, 1)",
+                            }}
+                            name="inn"
+                          />
+                          <Button
+                            onClick={async () => {
+                              setPairs([]);
+                              await getCompanyByINN(innValues);
+                            }}
+                            borderRadius={"8px"}
+                            border={"2px solid rgba(48, 141, 218, 1)"}
+                            bg={"white"}
+                            color={"black"}
+                            _hover={{
+                              bg: "rgba(48, 141, 218, 1)",
+                              color: "white",
+                            }}
+                            flexShrink={0}
+                          >
+                            <Text>Найти</Text>
+                          </Button>
+                        </HStack>
                         <VStack width={"100%"} marginTop={"10px"}>
                           {pairs?.map((pair) => (
                             <HStack key={pair.id} spacing={3} width={"100%"}>
