@@ -8,6 +8,9 @@ import {
   ModalCloseButton,
   ModalContent,
   ModalOverlay,
+  Radio,
+  RadioGroup,
+  Select,
   Text,
   Textarea,
   useDisclosure,
@@ -19,21 +22,24 @@ import { observer } from "mobx-react-lite";
 import * as Yup from "yup";
 import { useStores } from "../../store/store_context";
 
-const ModalCreateTask = observer(() => {
+const ModalCreateTask = observer(({ ID, isTable = false }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { pageStore } = useStores();
   const toast = useToast();
 
   const initialValues = {
+    client_id: ID,
     date_finish: "",
     description: "",
     name: "",
+    priority: 0,
   };
 
   const validationSchema = Yup.object({
     date_finish: Yup.string().required("Обязательное поле"),
     description: Yup.string().required("Обязательное поле"),
     name: Yup.string().required("Обязательное поле"),
+    priority: Yup.number().required("Выберите приоритет задачи"),
   });
 
   const createTask = async (values) => {
@@ -41,7 +47,10 @@ const ModalCreateTask = observer(() => {
   };
 
   const onSubmit = async (values) => {
-    const ok = await createTask(values);
+    const ok = await createTask({
+      ...values,
+      priority: Number(values?.priority),
+    });
     if (ok) {
       pageStore.getAllTasks();
       toast({
@@ -53,6 +62,8 @@ const ModalCreateTask = observer(() => {
       onClose();
     }
   };
+
+  const findLead = pageStore?.leads?.find((item) => item?.ID == ID);
 
   return (
     <>
@@ -67,7 +78,7 @@ const ModalCreateTask = observer(() => {
       >
         <Text>Создать задачу</Text>
       </Button>
-      <Modal isOpen={isOpen} onClose={onClose} size={"3xl"}>
+      <Modal isOpen={isOpen} onClose={onClose} size={"5xl"}>
         <ModalOverlay />
         <ModalContent padding={"20px"}>
           <ModalCloseButton />
@@ -93,6 +104,7 @@ const ModalCreateTask = observer(() => {
               setFieldValue,
             }) => (
               <Form>
+                {console.log("vals", values)}
                 <VStack
                   width={"100%"}
                   justify={"flex-start"}
@@ -174,6 +186,62 @@ const ModalCreateTask = observer(() => {
                       {errors?.date_finish}
                     </FormErrorMessage>
                   </FormControl>
+                  <FormControl isInvalid={errors.priority && touched.priority}>
+                    <Text fontWeight={"500"}>Приоритет</Text>
+                    <Select
+                      value={values.priority}
+                      placeholder="Выберите приоритет"
+                      marginTop={"4px"}
+                      border={"2px solid rgba(48, 141, 218, 1)"}
+                      borderRadius={"8px"}
+                      _hover={{ border: "2px solid rgba(48, 141, 218, 1)" }}
+                      name="priority"
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                    >
+                      <option value={0}>Низкий</option>
+                      <option value={1}>Средний</option>
+                      <option value={2}>Высокий</option>
+                    </Select>
+                    <FormErrorMessage marginTop={"2px"}>
+                      {errors.priority}
+                    </FormErrorMessage>
+                  </FormControl>
+
+                  <FormControl>
+                    <Text fontWeight={"500"}>привязка к лиду</Text>
+                    {pageStore.leads?.length > 0 && !isTable ? (
+                      <RadioGroup
+                        value={Number(values?.client_id)}
+                        onChange={(e) => {
+                          setFieldValue("client_id", Number(e));
+                        }}
+                      >
+                        <VStack
+                          width={"100%"}
+                          align={"flex-start"}
+                          justify={"flex-start"}
+                          gap={"4px"}
+                          marginTop={"10px"}
+                        >
+                          <Radio value={Number(0)}>Не привязывать</Radio>
+                          {pageStore.leads?.map((item, index) => (
+                            <Radio key={index} value={Number(item?.ID)}>
+                              {item?.ID}. {item?.last_name} {item?.first_name}
+                            </Radio>
+                          ))}
+                        </VStack>
+                      </RadioGroup>
+                    ) : !isTable ? (
+                      <Text>Нет лидов для привязки</Text>
+                    ) : (
+                      <Text>
+                        {findLead?.ID}. {findLead?.last_name}{" "}
+                        {findLead?.first_name}
+                      </Text>
+                    )}
+                  </FormControl>
+
                   <HStack
                     marginTop={"20px"}
                     justify={"flex-end"}

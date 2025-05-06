@@ -33,6 +33,7 @@ const ModalScript = observer(({ obj = {} }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const toast = useToast();
   const [showInputs, setShowInputs] = useState(false);
+  const [isGenerate, setIsGenerate] = useState(false);
 
   const [target, setTarget] = useState("");
   const [audit, setAudit] = useState("");
@@ -93,6 +94,7 @@ const ModalScript = observer(({ obj = {} }) => {
   };
 
   const generate = async (setFieldValue) => {
+    setIsGenerate(true);
     const ok = await generateText(
       `Сгенерируй мне текст email письма для рассылки клиентам с целью ${target}, целевая аудитория: ${audit}, предложение ${product}, образ автора: ${author}. ${pro}`
     );
@@ -159,7 +161,7 @@ const ModalScript = observer(({ obj = {} }) => {
           />
         )}
       </HStack>
-      <Modal isOpen={isOpen} onClose={onClose} size={"3xl"}>
+      <Modal isOpen={isOpen} onClose={onClose} size={"5xl"}>
         <ModalOverlay />
         <ModalContent
           width={"100%"}
@@ -210,6 +212,7 @@ const ModalScript = observer(({ obj = {} }) => {
                     <Text fontWeight={"500"}>Текст</Text>
                     <Textarea
                       value={values?.text}
+                      minH={"500px"}
                       height={"auto"}
                       placeholder="Текст"
                       marginTop={"4px"}
@@ -227,25 +230,15 @@ const ModalScript = observer(({ obj = {} }) => {
 
                   {showInputs && (
                     <>
-                      <Text fontWeight={"500"}> Цель рассылки</Text>
+                      <Text fontWeight={"500"}>Информация о компании</Text>
                       <Textarea
-                        value={target}
+                        value={author}
                         placeholder="Текст"
                         marginTop={"4px"}
                         border={"2px solid rgba(48, 141, 218, 1)"}
                         borderRadius={"8px"}
                         _hover={{ border: "2px solid rgba(48, 141, 218, 1)" }}
-                        onChange={(e) => setTarget(e.target.value)}
-                      />
-                      <Text fontWeight={"500"}>Целевая аудитория</Text>
-                      <Textarea
-                        value={audit}
-                        placeholder="Текст"
-                        marginTop={"4px"}
-                        border={"2px solid rgba(48, 141, 218, 1)"}
-                        borderRadius={"8px"}
-                        _hover={{ border: "2px solid rgba(48, 141, 218, 1)" }}
-                        onChange={(e) => setAudit(e.target.value)}
+                        onChange={(e) => setAuthor(e.target.value)}
                       />
                       <Text fontWeight={"500"}>Предложение/продукт</Text>
                       <Textarea
@@ -257,30 +250,16 @@ const ModalScript = observer(({ obj = {} }) => {
                         _hover={{ border: "2px solid rgba(48, 141, 218, 1)" }}
                         onChange={(e) => setProduct(e.target.value)}
                       />
-                      <Text fontWeight={"500"}>Образ автора</Text>
-                      <Textarea
-                        value={author}
-                        placeholder="Текст"
-                        marginTop={"4px"}
-                        border={"2px solid rgba(48, 141, 218, 1)"}
-                        borderRadius={"8px"}
-                        _hover={{ border: "2px solid rgba(48, 141, 218, 1)" }}
-                        onChange={(e) => setAuthor(e.target.value)}
-                      />
-                      <Text fontWeight={"500"}>Прочее</Text>
-                      <Textarea
-                        value={pro}
-                        placeholder="Текст"
-                        marginTop={"4px"}
-                        border={"2px solid rgba(48, 141, 218, 1)"}
-                        borderRadius={"8px"}
-                        _hover={{ border: "2px solid rgba(48, 141, 218, 1)" }}
-                        onChange={(e) => setPro(e.target.value)}
-                      />
                       <Button
                         onClick={async () => await generate(setFieldValue)}
+                        borderRadius={"8px"}
+                        border={"2px solid rgba(48, 141, 218, 1)"}
+                        bg={"white"}
+                        color={"black"}
+                        _hover={{ bg: "rgba(48, 141, 218, 1)", color: "white" }}
+                        flexShrink={0}
                       >
-                        Сгенерировать
+                        Сгенерировать текст {isGenerate ? "повторно" : null}
                       </Button>
                     </>
                   )}
@@ -300,7 +279,11 @@ const ModalScript = observer(({ obj = {} }) => {
                       _hover={{ bg: "rgba(48, 141, 218, 1)", color: "white" }}
                       flexShrink={0}
                     >
-                      <Text>Сгенерировать текст</Text>
+                      <Text>
+                        {!showInputs
+                          ? "Перейти к генерации"
+                          : "Скрыть генерацию"}
+                      </Text>
                     </Button>
 
                     <Button
@@ -323,7 +306,7 @@ const ModalScript = observer(({ obj = {} }) => {
                       _hover={{ bg: "rgba(48, 141, 218, 1)", color: "white" }}
                       flexShrink={0}
                     >
-                      <Text>Обновить</Text>
+                      <Text>Сохранить обновлённую версию скрипта</Text>
                     </Button>
                   </HStack>
                 </VStack>

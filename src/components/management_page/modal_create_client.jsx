@@ -86,7 +86,7 @@ const ModalCreateClient = observer(() => {
           Создать нового клиента
         </Text>
       </Button>
-      <Modal isOpen={isOpen} onClose={onClose} onEsc={onClose} size={"3xl"}>
+      <Modal isOpen={isOpen} onClose={onClose} onEsc={onClose} size={"5xl"}>
         <ModalOverlay />
         <ModalContent padding={"20px"}>
           <ModalCloseButton />

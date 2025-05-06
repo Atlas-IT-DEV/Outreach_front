@@ -42,10 +42,7 @@ const ModalImportBase = observer(() => {
     formData.append("file", selectedFile);
     const response = await uploadBase(selectName, formData);
     const result = await response.json();
-    console.log("res", result.message);
-    console.log(result?.message.split());
-    if (response?.ok) {
-      pageStore.getAllBases();
+    if (response.ok) {
       toast({
         title: "Успех",
         description: "База успешно импортирована",
@@ -73,6 +70,7 @@ const ModalImportBase = observer(() => {
         status: "error",
       });
     }
+    pageStore.getAllBases();
   };
   return (
     <>
@@ -87,7 +85,13 @@ const ModalImportBase = observer(() => {
       >
         <Text>Импортировать базу</Text>
       </Button>
-      <Modal isOpen={isOpen} onClose={onClose}>
+      <Modal
+        isOpen={isOpen}
+        onClose={() => {
+          onClose();
+          // setSelectedFile({});
+        }}
+      >
         <ModalOverlay />
         <ModalContent padding={"20px"}>
           <ModalCloseButton />
@@ -105,6 +109,7 @@ const ModalImportBase = observer(() => {
             marginTop={"20px"}
             gap={"10px"}
           >
+            <Text fontWeight={"500"}>Название базы</Text>
             <Input
               border={"2px solid rgba(48, 141, 218, 1)"}
               borderRadius={"8px"}
@@ -113,11 +118,15 @@ const ModalImportBase = observer(() => {
               value={selectName}
               onChange={(e) => setSelectName(e.target.value)}
             />
+            <Text fontWeight={"500"}>Файл</Text>
             <Input
               type="file"
               accept=".csv, .xlsx"
               border={"none"}
-              onChange={(e) => setSelectedFile(e.target.files[0])}
+              onChange={(e) => {
+                setSelectedFile(e.target.files[0]);
+                setSelectName(e.target.files[0].name?.split(".")[0]); // имя без .csv/.xlsx и т.д.
+              }}
             />
             <Text fontWeight={300} fontSize={"14px"}>
               Подсказка: можно выбрать файлы с форматами .csv или .xlsx

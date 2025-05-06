@@ -152,7 +152,8 @@ class PageStore {
       }
     );
     const result = await response.json();
-    this.bases = result;
+    if (response)
+      this.bases = result;
   };
   getBaseByName = async (name, selected_department, page, size) => {
     const response = await fetch(

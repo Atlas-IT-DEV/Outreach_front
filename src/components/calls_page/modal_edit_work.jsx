@@ -78,7 +78,7 @@ const ModalEditWork = observer(({ obj = {} }) => {
       >
         <Text fontSize={width >= 1000 ? "16px" : "14px"}>Редактировать</Text>
       </Button>
-      <Modal isOpen={isOpen} onClose={onClose} size={"3xl"}>
+      <Modal isOpen={isOpen} onClose={onClose} size={"5xl"}>
         <ModalOverlay />
         <ModalContent padding={"20px"}>
           <ModalCloseButton />

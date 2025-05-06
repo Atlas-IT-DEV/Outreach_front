@@ -161,7 +161,7 @@ const ScriptsPanel = () => {
     } catch (error) {
       toast({
         title: "Ошибка генерации",
-        description: "Не удалось сгенерировать текст",
+        description: "Не удалось Перейти к генерации",
         status: "error",
         duration: 3000,
         isClosable: true,
@@ -257,7 +257,7 @@ const ScriptsPanel = () => {
                     variant="outline"
                     onClick={() => setIsGenerateModalOpen(true)}
                   >
-                    Сгенерировать текст
+                    Перейти к генерации
                   </Button>
                 </Flex>
 
@@ -378,7 +378,7 @@ const ScriptsPanel = () => {
               loadingText="Генерация..."
               leftIcon={!isGenerating ? <FiRefreshCw /> : undefined}
             >
-              Сгенерировать
+              Сгенерировать текст
             </Button>
           </ModalFooter>
         </ModalContent>

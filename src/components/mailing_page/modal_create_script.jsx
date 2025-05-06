@@ -36,6 +36,8 @@ const ModalCreateScript = observer(() => {
   const [author, setAuthor] = useState("");
   const [pro, setPro] = useState("");
 
+  const [isGenerate, setIsGenerate] = useState(false);
+
   useEffect(() => {
     setTarget("");
     setAudit("");
@@ -83,6 +85,7 @@ const ModalCreateScript = observer(() => {
   };
 
   const generate = async (setFieldValue) => {
+    setIsGenerate(true);
     const ok = await generateText(
       `Сгенерируй мне текст email письма для рассылки клиентам с целью ${target}, целевая аудитория: ${audit}, предложение ${product}, образ автора: ${author}. ${pro}`
     );
@@ -110,7 +113,7 @@ const ModalCreateScript = observer(() => {
         <Text fontSize={width >= 1000 ? "16px" : "14px"}>Новый скрипт</Text>
       </Button>
 
-      <Modal isOpen={isOpen} onClose={onClose} size={"3xl"}>
+      <Modal isOpen={isOpen} onClose={onClose} size={"5xl"}>
         <ModalOverlay />
         <ModalContent padding={"20px"}>
           <ModalCloseButton />
@@ -158,6 +161,7 @@ const ModalCreateScript = observer(() => {
                     <Text fontWeight={"500"}>Текст</Text>
                     <Textarea
                       value={values?.text}
+                      minH={"500px"}
                       height={"auto"}
                       placeholder="Текст"
                       marginTop={"4px"}
@@ -175,25 +179,15 @@ const ModalCreateScript = observer(() => {
 
                   {showInputs && (
                     <>
-                      <Text fontWeight={"500"}> Цель рассылки</Text>
+                      <Text fontWeight={"500"}>Информация о компании</Text>
                       <Textarea
-                        value={target}
+                        value={author}
                         placeholder="Текст"
                         marginTop={"4px"}
                         border={"2px solid rgba(48, 141, 218, 1)"}
                         borderRadius={"8px"}
                         _hover={{ border: "2px solid rgba(48, 141, 218, 1)" }}
-                        onChange={(e) => setTarget(e.target.value)}
-                      />
-                      <Text fontWeight={"500"}>Целевая аудитория</Text>
-                      <Textarea
-                        value={audit}
-                        placeholder="Текст"
-                        marginTop={"4px"}
-                        border={"2px solid rgba(48, 141, 218, 1)"}
-                        borderRadius={"8px"}
-                        _hover={{ border: "2px solid rgba(48, 141, 218, 1)" }}
-                        onChange={(e) => setAudit(e.target.value)}
+                        onChange={(e) => setAuthor(e.target.value)}
                       />
                       <Text fontWeight={"500"}>Предложение/продукт</Text>
                       <Textarea
@@ -205,30 +199,17 @@ const ModalCreateScript = observer(() => {
                         _hover={{ border: "2px solid rgba(48, 141, 218, 1)" }}
                         onChange={(e) => setProduct(e.target.value)}
                       />
-                      <Text fontWeight={"500"}>Образ автора</Text>
-                      <Textarea
-                        value={author}
-                        placeholder="Текст"
-                        marginTop={"4px"}
-                        border={"2px solid rgba(48, 141, 218, 1)"}
-                        borderRadius={"8px"}
-                        _hover={{ border: "2px solid rgba(48, 141, 218, 1)" }}
-                        onChange={(e) => setAuthor(e.target.value)}
-                      />
-                      <Text fontWeight={"500"}>Прочее</Text>
-                      <Textarea
-                        value={pro}
-                        placeholder="Текст"
-                        marginTop={"4px"}
-                        border={"2px solid rgba(48, 141, 218, 1)"}
-                        borderRadius={"8px"}
-                        _hover={{ border: "2px solid rgba(48, 141, 218, 1)" }}
-                        onChange={(e) => setPro(e.target.value)}
-                      />
+
                       <Button
                         onClick={async () => await generate(setFieldValue)}
+                        borderRadius={"8px"}
+                        border={"2px solid rgba(48, 141, 218, 1)"}
+                        bg={"white"}
+                        color={"black"}
+                        _hover={{ bg: "rgba(48, 141, 218, 1)", color: "white" }}
+                        flexShrink={0}
                       >
-                        Сгенерировать
+                        Сгенерировать текст {isGenerate ? "повторно" : null}
                       </Button>
                     </>
                   )}
@@ -247,7 +228,11 @@ const ModalCreateScript = observer(() => {
                         _hover={{ bg: "rgba(48, 141, 218, 1)", color: "white" }}
                         flexShrink={0}
                       >
-                        <Text>Сгенерировать текст</Text>
+                        <Text>
+                          {!showInputs
+                            ? "Перейти к генерации"
+                            : "Скрыть генерацию"}
+                        </Text>
                       </Button>
                       <Button
                         onClick={onClose}
@@ -269,7 +254,7 @@ const ModalCreateScript = observer(() => {
                         _hover={{ bg: "rgba(48, 141, 218, 1)", color: "white" }}
                         flexShrink={0}
                       >
-                        <Text>Создать</Text>
+                        <Text>Создать скрипт</Text>
                       </Button>
                     </HStack>
                   ) : (
@@ -287,7 +272,11 @@ const ModalCreateScript = observer(() => {
                         _hover={{ bg: "rgba(48, 141, 218, 1)", color: "white" }}
                         flexShrink={0}
                       >
-                        <Text>Сгенерировать текст</Text>
+                        <Text>
+                          {!showInputs
+                            ? "Перейти к генерации"
+                            : "Скрыть генерацию"}
+                        </Text>
                       </Button>
                       <HStack width={"100%"} justify={"flex-end"}>
                         <Button
@@ -316,7 +305,7 @@ const ModalCreateScript = observer(() => {
                           }}
                           flexShrink={0}
                         >
-                          <Text>Создать</Text>
+                          <Text>Создать скрипт</Text>
                         </Button>
                       </HStack>
                     </VStack>
